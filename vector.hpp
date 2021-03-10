@@ -227,10 +227,32 @@ namespace ft{
 		}
 	};
 
-	template <class T, class Alloc>
+	template <typename T, typename Alloc>
 	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y) {
 		x.swap(y);
 	}
+
+	template <typename T, typename Alloc>
+	bool operator==(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+		if (lhs.size() != rhs.size())
+			return (false);
+		for (size_t i = 0; i < lhs.size(); i++)
+		{
+			if (lhs[i] != rhs[i])
+				return (false);
+		}
+		return (true);
+	}
+
+	template <typename T, typename Alloc>
+	bool operator!=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+		return (!(lhs==rhs));
+	}
+
+	// template <class T, class Alloc>
+	// bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+
+	// }
 }
 
 #endif

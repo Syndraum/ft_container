@@ -45,4 +45,6 @@ int main(){
 	ft::vector<int> list_cpy(4, 5);
 	list.swap(list_cpy);
 	list.print();
+	ft::swap(list_cpy, list);
+	list.print();
 }

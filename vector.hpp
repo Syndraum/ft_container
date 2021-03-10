@@ -5,21 +5,52 @@
 #include <algorithm>
 #include <memory>
 #include <stdexcept>
+#include <iterator>
 
 namespace ft{
 	template < typename T, typename Alloc = std::allocator<T> >
 	class vector
 	{
-	private:
-		typedef T								value_type;
-		typedef std::allocator< value_type >	allocator_type;
-		typedef value_type&						reference;
-		typedef const value_type&				const_reference;
-		typedef value_type*						pointer;
-		typedef const value_type*				const_pointer;
-		typedef std::ptrdiff_t					differrence_type;
-		typedef size_t							size_type;
+	public:
+		class iterator : std::iterator <std::random_access_iterator_tag, T > {
+			private:
+				T *		_p;
+			public:
+				iterator(void) : _p(0) {}
+				iterator(T & x) : _p(&x) {}
+				iterator(const iterator & x) {*this = x;}
+				iterator &	operator=(const iterator & x) {
+					_p = x._p;
+					return (*this);
+				}
 
+				friend bool	operator==(const iterator & x, const iterator & y){
+					return (x._p == y._p);
+				}
+
+				friend bool	operator!=(const iterator & x, const iterator & y){
+					return (!(x == y));
+				}
+
+				const T & operator*() const{
+					return (*_p);
+				}
+		};
+
+		typedef T										value_type;
+		typedef std::allocator< value_type >			allocator_type;
+		typedef value_type&								reference;
+		typedef const value_type&						const_reference;
+		typedef value_type*								pointer;
+		typedef const value_type*						const_pointer;
+		typedef iterator								iterator;
+		typedef const iterator							const_iterator;
+		typedef std::reverse_iterator< iterator >		reverse_iterator;
+		typedef const std::reverse_iterator< iterator >	const_reverse_iterator;
+		typedef std::ptrdiff_t							differrence_type;
+		typedef size_t									size_type;
+
+	private:
 		size_type		_size;
 		size_type		_capacity;
 		allocator_type	_allocator;
@@ -99,6 +130,14 @@ namespace ft{
 					this->_data[i] = x->_data[i];
 			}
 			return (*this);
+		}
+
+		iterator begin() {
+			return (iterator(_data[0]));
+		}
+
+		const_iterator begin() const {
+			return (begin());
 		}
 
 		size_type	size() const {

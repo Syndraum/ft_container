@@ -47,6 +47,10 @@ int main(){
 	list.print();
 	ft::swap(list_cpy, list);
 	list.print();
+	ft::vector<int>::iterator it = list.begin();
+
 	std::cout << std::boolalpha << "!= " << (list != list_cpy) << std::endl;
 	std::cout << std::boolalpha << "== " << (list == list) << std::endl;
+	std::cout << "begin : " << *it << std::endl;
+	std::cout << "== " << (it == list.begin()) << std::endl;
 }

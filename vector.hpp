@@ -3,23 +3,27 @@
 
 #include <iostream>
 #include <algorithm>
+#include <memory>
 
 namespace ft{
-	template < typename T >
+	template < typename T, typename Alloc = std::allocator<T> >
 	class vector
 	{
 	private:
-		typedef T					value_type;
-		typedef value_type&			reference;
-		typedef const value_type&	const_reference;
-		typedef value_type*			pointer;
-		typedef const value_type*	const_pointer;
-		typedef std::ptrdiff_t		differrence_type;
-		typedef size_t				size_type;
+		typedef T								value_type;
+		typedef std::allocator< value_type >	allocator_type;
+		typedef value_type&						reference;
+		typedef const value_type&				const_reference;
+		typedef value_type*						pointer;
+		typedef const value_type*				const_pointer;
+		typedef std::ptrdiff_t					differrence_type;
+		typedef size_t							size_type;
 
-		size_type					_size;
-		size_type					_capacity;
-		T *							_data;
+		size_type		_size;
+		size_type		_capacity;
+		allocator_type	_allocator;
+		pointer			_data;
+
 
 		static size_type	get_fit_capacity(size_type target){
 			size_type	capacity = 8;
@@ -28,38 +32,58 @@ namespace ft{
 			return (capacity);
 		}
 
+		pointer	allocate(size_type n) {
+			return (_allocator.allocate(n));
+		}
+
+		void	deallocate() {
+			_allocator.deallocate(_data, _capacity);
+		}
+
+		void	construct(size_type index, const_reference val) {
+			_allocator.construct(_allocator.address(_data[index]), val);
+		}
+
+		void	destroy(size_type index) {
+			_allocator.destroy(_allocator.address(_data[index]));
+		}
+
 		void	realloc() {
 			_capacity *= 2;
-			T *	new_data = new T[_capacity]();
+			pointer	new_data = allocate(_capacity);
 			for (size_t i = 0; i < _size; i++)
 				new_data[i] = this->_data[i];
-			delete[] _data;
+			deallocate();
 			_data = new_data;
 		}
 		void	realloc(size_type target) {
 			_capacity = get_fit_capacity(target);
 			size_type limit = std::min(_size, _capacity);
-			T *	new_data = new T[_capacity]();
+			pointer	new_data = allocate(_capacity);
 			for (size_t i = 0; i < limit; i++)
 				new_data[i] = this->_data[i];
-			delete[] _data;
+			deallocate();
 			_data = new_data;
 		}
+
 	public:
-		vector(void) : _size(0), _capacity(8), _data(new T[_capacity]()) {}
-		vector(size_type n, const value_type &val = value_type()) : _size(n), _capacity(get_fit_capacity(n)), _data(new T[_capacity]()) {
+		vector(const allocator_type& alloc = allocator_type()) : _size(0), _capacity(8), _allocator(alloc), _data(_allocator.allocate(_capacity)) {}
+		vector(
+			size_type n,
+			const value_type &val = value_type(),
+			const allocator_type& alloc = allocator_type()) : _size(n), _capacity(get_fit_capacity(n)), _allocator(alloc), _data(_allocator.allocate(_capacity)) {
 			for (size_t i = 0; i < n; i++)
-				_data[i] = val;
+				construct(i, val);
 		}
 		~vector(void) {
-			delete[] _data;
+			deallocate();
 		}
 		vector& operator= (const vector& x) {
 			if (this != &x){
-				delete[] this->_data;
+				deallocate();
 				this->_size = x->_size;
 				this->_capacity = x->_capacity;
-				this->_data = new T[_capacity];
+				this->_data = allocate(_capacity);
 				for (size_t i = 0; i < this->_capacity; i++)
 					this->_data[i] = x->_data[i];
 			}
@@ -75,14 +99,11 @@ namespace ft{
 				realloc(n);
 			if (n < this->_size){
 				for (size_type i = n; i < _size; i++)
-				{
-					_data[i] = value_type();
-					// delete _data[i];
-				}
+					destroy(i);
 			}
 			else {
 				for (size_type i = _size; i < n; i++)
-					_data[i] = val;
+					construct(i, val);
 			}
 			this->_size = n;
 		}
@@ -108,20 +129,18 @@ namespace ft{
 		void assign (size_type n, const value_type& val) {
 			if (n > _capacity)
 				realloc(n);
-			else {
-				delete[] _data;
-				_data = new value_type[_capacity]();
-			}
+			for (size_type i = 0; i < _size; i++)
+				destroy(i);
 			_size = n;
 			for (size_t i = 0; i < n; i++)
-				_data[i] = val;
+				construct(i, val);
 		}
 
 		void push_back (const value_type& val) {
 			size_type	size = this->size();
 			if (size == capacity())
 				realloc();
-			_data[size] = val;
+			construct(size, val);
 			_size++;
 		}
 

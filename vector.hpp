@@ -32,8 +32,21 @@ namespace ft{
 					return (!(x == y));
 				}
 
-				const T & operator*() const{
-					return (*_p);
+				const T & operator*() const{return (*_p);}
+				const T * operator->() const {return (_p);}
+
+				iterator & operator++() {this->_p++; return (*this);}
+				iterator operator++(int) {
+					T tmp = *_p;
+					++*this;
+					return (tmp);
+				}
+
+				iterator & operator--() {this->_p--; return (*this);}
+				iterator operator--(int) {
+					T tmp = *_p;
+					--*this;
+					return (tmp);
 				}
 		};
 
@@ -133,11 +146,23 @@ namespace ft{
 		}
 
 		iterator begin() {
+			if (empty())
+				return (iterator());
 			return (iterator(_data[0]));
 		}
 
 		const_iterator begin() const {
 			return (begin());
+		}
+
+		iterator end() {
+			if (empty())
+				return (iterator());
+			return (iterator(_data[size()]));
+		}
+
+		const_iterator end() const {
+			return (end());
 		}
 
 		size_type	size() const {

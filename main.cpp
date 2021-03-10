@@ -47,10 +47,19 @@ int main(){
 	list.print();
 	ft::swap(list_cpy, list);
 	list.print();
+	ft::swap(list_cpy, list);
 	ft::vector<int>::iterator it = list.begin();
 
 	std::cout << std::boolalpha << "!= " << (list != list_cpy) << std::endl;
 	std::cout << std::boolalpha << "== " << (list == list) << std::endl;
+	std::cout << "empty ? " << list.empty() << std::endl;
 	std::cout << "begin : " << *it << std::endl;
 	std::cout << "== " << (it == list.begin()) << std::endl;
+	int i = 0;
+	for (ft::vector<int>::iterator it = list.begin(); it != list.end(); it++)
+	{
+		std::cout << i << " : " << *it << std::endl;
+		i++;
+	}
+	
 }

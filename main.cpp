@@ -1,6 +1,7 @@
 #include "list.hpp"
 #include "vector.hpp"
 #include <iostream>
+#include <string>
 
 int main(){
 	ft::vector<int> list;
@@ -16,4 +17,13 @@ int main(){
 	list.print();
 	list.assign(3, 3);
 	list.print();
+	list.resize(2);
+	list.print();
+	list.resize(6);
+	list.print();
+
+	ft::vector< std::string > list2(5, "test");
+	list2.print();
+	list2.resize(8);
+	list2.print();
 }

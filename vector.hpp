@@ -65,11 +65,28 @@ namespace ft{
 		}
 
 		size_type	size() const {
-			return (_size);
+			return (this->_size);
+		}
+
+		void resize (size_type n, value_type val = value_type()) {
+			if (n > this->_capacity)
+				realloc(n);
+			if (n < this->_size){
+				for (size_type i = n; i < _size; i++)
+				{
+					_data[i] = value_type();
+					// delete _data[i];
+				}
+			}
+			else {
+				for (size_type i = _size; i < n; i++)
+					_data[i] = val;
+			}
+			this->_size = n;
 		}
 
 		size_type	capacity() const {
-			return (_capacity);
+			return (this->_capacity);
 		}
 
 		bool		empty() const {

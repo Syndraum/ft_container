@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 #include <memory>
+#include <stdexcept>
 
 namespace ft{
 	template < typename T, typename Alloc = std::allocator<T> >
@@ -24,6 +25,11 @@ namespace ft{
 		allocator_type	_allocator;
 		pointer			_data;
 
+		void	setCapacity(size_type capacity){
+			if (capacity > max_size())
+				throw std::length_error("");
+			_capacity = capacity;
+		}
 
 		static size_type	get_fit_capacity(size_type target){
 			size_type	capacity = 8;
@@ -40,30 +46,35 @@ namespace ft{
 			_allocator.deallocate(_data, _capacity);
 		}
 
+		void	construct(size_type index, const_reference val, pointer data) {
+			_allocator.construct(_allocator.address(data[index]), val);
+		}
+
 		void	construct(size_type index, const_reference val) {
-			_allocator.construct(_allocator.address(_data[index]), val);
+			construct(index, val, _data);
+		}
+
+		void	destroy(size_type index, pointer data) {
+			_allocator.destroy(_allocator.address(data[index]));
 		}
 
 		void	destroy(size_type index) {
-			_allocator.destroy(_allocator.address(_data[index]));
+			destroy(index, _data);
+		}
+
+		void	realloc(size_type target) {
+			setCapacity(get_fit_capacity(target));
+			pointer	new_data = allocate(_capacity);
+			for (size_t i = 0; i < _size; i++){
+				construct(i, _data[i], new_data);
+				destroy(i);
+			}
+			deallocate();
+			_data = new_data;
 		}
 
 		void	realloc() {
-			_capacity *= 2;
-			pointer	new_data = allocate(_capacity);
-			for (size_t i = 0; i < _size; i++)
-				new_data[i] = this->_data[i];
-			deallocate();
-			_data = new_data;
-		}
-		void	realloc(size_type target) {
-			_capacity = get_fit_capacity(target);
-			size_type limit = std::min(_size, _capacity);
-			pointer	new_data = allocate(_capacity);
-			for (size_t i = 0; i < limit; i++)
-				new_data[i] = this->_data[i];
-			deallocate();
-			_data = new_data;
+			realloc(_capacity * 2);
 		}
 
 	public:
@@ -94,7 +105,11 @@ namespace ft{
 			return (this->_size);
 		}
 
-		void resize (size_type n, value_type val = value_type()) {
+		size_type	max_size() const {
+			return (_allocator.max_size());
+		}
+
+		void		resize (size_type n, value_type val = value_type()) {
 			if (n > this->_capacity)
 				realloc(n);
 			if (n < this->_size){
@@ -106,6 +121,11 @@ namespace ft{
 					construct(i, val);
 			}
 			this->_size = n;
+		}
+
+		void		reserve (size_type n) {
+			if (n > _capacity)
+				realloc(get_fit_capacity(n));
 		}
 
 		size_type	capacity() const {
@@ -146,6 +166,7 @@ namespace ft{
 
 		// DELETE
 		void print(void) {
+			std::cout << "capacity : " << _capacity << "\t| ";
 			for (size_t i = 0; i < this->size(); i++)
 			{
 				std::cout << _data[i];

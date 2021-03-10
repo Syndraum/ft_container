@@ -25,10 +25,14 @@ int main(){
 	ft::vector< std::string > list_str(5, "test");
 	list_str.print();
 	list_str.push_back("bonjour");
-	list_str.resize(8);
+	list_str.resize(9);
 	list_str.print();
 	list_str.assign(3, "none");
 	list_str.print();
 	list_str.resize(1);
+	list_str.print();
+	list_str.reserve(3);
+	list_str.print();
+	list_str.reserve(17);
 	list_str.print();
 }

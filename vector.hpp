@@ -143,7 +143,33 @@ namespace ft{
 		}
 
 		const_reference operator[](size_type n) const {
+			return (_data[n]);
+		}
+
+		reference at (size_type n) {
+			if (n >= size())
+				throw std::out_of_range("");
 			return (_data + n);
+		}
+
+		const_reference at (size_type n) const {
+			return (at(n));
+		}
+
+		reference front() {
+			return (_data[0]);
+		}
+
+		const_reference front() const {
+			return (front());
+		}
+
+		reference back() {
+			return (_data[size() - 1]);
+		}
+
+		const_reference back() const {
+			return (back());
 		}
 
 		void assign (size_type n, const value_type& val) {

@@ -35,4 +35,8 @@ int main(){
 	list_str.print();
 	list_str.reserve(17);
 	list_str.print();
+
+	const int &test = list.back();
+
+	std::cout << list.front() << ", " << test << std::endl;
 }

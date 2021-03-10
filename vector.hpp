@@ -190,6 +190,13 @@ namespace ft{
 			_size++;
 		}
 
+		void pop_back() {
+			if (!empty()){
+				destroy(size() - 1);
+				_size--;
+			}
+		}
+
 		// DELETE
 		void print(void) {
 			std::cout << "capacity : " << _capacity << "\t| ";

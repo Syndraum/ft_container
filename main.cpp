@@ -40,4 +40,9 @@ int main(){
 	list.print();
 	const int &test = list.back();
 	std::cout << list.front() << ", " << test << std::endl;
+	list.clear();
+	list.print();
+	ft::vector<int> list_cpy(4, 5);
+	list.swap(list_cpy);
+	list.print();
 }

@@ -197,17 +197,33 @@ namespace ft{
 			}
 		}
 
+		void swap (vector& x) {
+			std::swap(this->_size, x._size);
+			std::swap(this->_capacity, x._capacity);
+			std::swap(this->_allocator, x._allocator);
+			std::swap(this->_data, x._data);
+			// pointer tmp = this->_data;
+
+			// this->_data = x._data;
+			// x._data = tmp;
+		}
+
+		void clear() {
+			for (size_type i = 0; i < size(); i++)
+				destroy(i);
+			_size = 0;
+		}
+
 		// DELETE
 		void print(void) {
 			std::cout << "capacity : " << _capacity << "\t| ";
 			for (size_t i = 0; i < this->size(); i++)
 			{
 				std::cout << _data[i];
-				if (i == this->size() -1)
-					std::cout << std::endl;
-				else
+				if (i != this->size() -1)
 					std::cout << ", ";
 			}
+			std::cout << std::endl;
 		}
 	};
 }

@@ -2,6 +2,7 @@
 # define VECTOR_H
 
 #include <iostream>
+#include <algorithm>
 
 namespace ft{
 	template < typename T >
@@ -37,8 +38,9 @@ namespace ft{
 		}
 		void	realloc(size_type target) {
 			_capacity = get_fit_capacity(target);
+			size_type limit = std::min(_size, _capacity);
 			T *	new_data = new T[_capacity]();
-			for (size_t i = 0; i < _size; i++)
+			for (size_t i = 0; i < limit; i++)
 				new_data[i] = this->_data[i];
 			delete[] _data;
 			_data = new_data;
@@ -104,7 +106,12 @@ namespace ft{
 		}
 
 		void assign (size_type n, const value_type& val) {
-			realloc(n);
+			if (n > _capacity)
+				realloc(n);
+			else {
+				delete[] _data;
+				_data = new value_type[_capacity]();
+			}
 			_size = n;
 			for (size_t i = 0; i < n; i++)
 				_data[i] = val;

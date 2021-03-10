@@ -20,7 +20,7 @@ namespace ft{
 		size_type					_capacity;
 		T *							_data;
 
-		size_type	get_fit_capacity(size_type target){
+		static size_type	get_fit_capacity(size_type target){
 			size_type	capacity = 8;
 			while (capacity < target)
 				capacity *= 2;
@@ -44,7 +44,11 @@ namespace ft{
 			_data = new_data;
 		}
 	public:
-		vector(void) : _size(0), _capacity(8), _data(new T[8]()) {}
+		vector(void) : _size(0), _capacity(8), _data(new T[_capacity]()) {}
+		vector(size_type n, const value_type &val = value_type()) : _size(n), _capacity(get_fit_capacity(n)), _data(new T[_capacity]()) {
+			for (size_t i = 0; i < n; i++)
+				_data[i] = val;
+		}
 		~vector(void) {
 			delete[] _data;
 		}

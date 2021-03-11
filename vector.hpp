@@ -158,6 +158,22 @@ namespace ft{
 			for (size_t i = 0; i < n; i++)
 				construct(i, val);
 		}
+		template <typename InputIterator>
+		vector (
+			InputIterator first,
+			InputIterator last,
+			const allocator_type& alloc = allocator_type()) : _size(std::distance< InputIterator >(first, last)), _capacity(get_fit_capacity(std::distance< InputIterator >(first, last))), _allocator(alloc), _data(_allocator.allocate(_capacity)) {
+				int i = 0;
+
+					std::cout << "NIQUE\n" << std::endl;
+				for (InputIterator it = first; it != last; it++) {
+					construct(i, *it);
+					i++;
+				}
+			}
+		vector (const vector& x) : vector() {
+			this = x;
+		}
 		~vector(void) {
 			deallocate();
 		}

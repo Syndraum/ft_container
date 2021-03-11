@@ -42,7 +42,7 @@ int main(){
 	std::cout << list.front() << ", " << test << std::endl;
 	list.clear();
 	list.print();
-	ft::vector<int> list_cpy(4, 5);
+	ft::vector<int> list_cpy(4u, 5);
 	list.swap(list_cpy);
 	list.print();
 	ft::swap(list_cpy, list);
@@ -90,12 +90,12 @@ int main(){
 	ft::vector<std::string>::iterator its = list_str.begin();
 	std::cout << its->data() << std::endl;
 
-	// ft::vector<int> myvector (5);
-	// i = 0;
 	ft::vector<int>::reverse_iterator rit = list_inc.rbegin();
-	// std::cout << *(rit) << std::endl;
-	// ++rit;
 	for (; rit!= list_inc.rend(); ++rit)
-		std::cout << *(rit) << std::endl;
-    // 	*rit = ++i;
+		std::cout << *(rit) << ", ";
+	std::cout << std::endl;
+
+	it = list_inc.begin();
+	ft::vector<int> myvector(it, list_inc.end() - 1);
+	myvector.print();
 }

@@ -82,5 +82,9 @@ int main(){
 	it = it2 += 4;
 	std::cout << "begin + " << 4 <<" : " << *it << std::endl;
 	std::cout << "begin + " << 4 <<" : " << *it2 << std::endl;
-
+	it = list_inc.begin();
+	std::cout << "< " << (it < it2) << std::endl;
+	std::cout << "> " << (it > it2) << std::endl;
+	std::cout << "<= " << (it <= it2) << std::endl;
+	std::cout << ">= " << (it >= it2) << std::endl;
 }

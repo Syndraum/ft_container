@@ -55,6 +55,18 @@ namespace ft{
 				iterator operator+(const int &n) {return (iterator(_p[n]));}
 				iterator operator-(const int &n) {return (iterator(_p[-n]));}
 				T	operator-(const iterator &it) {return(*_p - *(it._p));}
+				friend bool	operator<(const iterator & x, const iterator & y) {
+					return (x._p < y._p);
+				}
+				friend bool	operator>(const iterator & x, const iterator & y) {
+					return (x._p > y._p);
+				}
+				friend bool	operator<=(const iterator & x, const iterator & y) {
+					return (!(x > y));
+				}
+				friend bool	operator>=(const iterator & x, const iterator & y) {
+					return (!(x < y));
+				}
 				iterator	&operator+=(const int &n) {
 					_p += n;
 					return (*this); 

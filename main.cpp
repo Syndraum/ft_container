@@ -56,7 +56,7 @@ int main(){
 	std::cout << "begin : " << *it << std::endl;
 	std::cout << "== " << (it == list.begin()) << std::endl;
 	int i = 0;
-	for (ft::vector<int>::iterator it = list.begin(); it != list.end(); it++)
+	for (ft::vector<int>::iterator it = (list.begin() + 3) - 2; it != list.end(); it++)
 	{
 		std::cout << i << " : " << *it << std::endl;
 		i++;

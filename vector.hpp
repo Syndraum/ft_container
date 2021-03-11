@@ -48,6 +48,22 @@ namespace ft{
 					--*this;
 					return (tmp);
 				}
+
+				iterator operator+(const int &n) {
+					_p = _p + n;
+					return (*this);
+				}
+
+				iterator operator-(const int &n) {
+					_p = _p - n;
+					return (*this);
+				}
+
+				// TEST
+				iterator operator-(const iterator &it) {
+					_p = _p - std::distance(*this, it);
+					return(*this);
+				}
 		};
 
 		typedef T										value_type;

@@ -26,7 +26,7 @@ namespace ft{
 					return (*this);
 				}
 
-				friend bool	operator==(const iterator & x, const iterator & y){
+				friend bool	operator==(const iterator & x, const iterator & y) {
 					return (x._p == y._p);
 				}
 
@@ -34,7 +34,8 @@ namespace ft{
 					return (!(x == y));
 				}
 
-				const T & operator*() const{return (*_p);}
+				T & operator*() const {return (*_p);}
+				// T & operator*() const {return (*_p);}
 				const T * operator->() const {return (_p);}
 
 				iterator & operator++() {this->_p++; return (*this);}
@@ -54,6 +55,14 @@ namespace ft{
 				iterator operator+(const int &n) {return (iterator(_p[n]));}
 				iterator operator-(const int &n) {return (iterator(_p[-n]));}
 				T	operator-(const iterator &it) {return(*_p - *(it._p));}
+				iterator	&operator+=(const int &n) {
+					_p += n;
+					return (*this); 
+				}
+				iterator	&operator-=(const int &n) {
+					_p -= n;
+					return (*this); 
+				}
 				T	&operator[](const int index) {return (_p[index]);}
 		};
 

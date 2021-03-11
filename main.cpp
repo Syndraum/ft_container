@@ -73,7 +73,14 @@ int main(){
 	it = list_inc.begin();
 	i = 2;
 	std::cout << "begin + " << i <<" : " << it[i] << std::endl;
+	*(it + i) = 42;
+	std::cout << "begin + " << i <<" : " << it[i] << std::endl;
 	std::cout << "begin + " << i - 1<<" : " << *((it + i) - 1) << std::endl;
 	ft::vector<int>::iterator it2 = it + 2;
 	std::cout << it - it2 << std::endl;
+	it2 = list_inc.begin();
+	it = it2 += 4;
+	std::cout << "begin + " << 4 <<" : " << *it << std::endl;
+	std::cout << "begin + " << 4 <<" : " << *it2 << std::endl;
+
 }

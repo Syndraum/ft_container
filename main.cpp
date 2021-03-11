@@ -87,4 +87,15 @@ int main(){
 	std::cout << "> " << (it > it2) << std::endl;
 	std::cout << "<= " << (it <= it2) << std::endl;
 	std::cout << ">= " << (it >= it2) << std::endl;
+	ft::vector<std::string>::iterator its = list_str.begin();
+	std::cout << its->data() << std::endl;
+
+	// ft::vector<int> myvector (5);
+	// i = 0;
+	ft::vector<int>::reverse_iterator rit = list_inc.rbegin();
+	// std::cout << *(rit) << std::endl;
+	// ++rit;
+	for (; rit!= list_inc.rend(); ++rit)
+		std::cout << *(rit) << std::endl;
+    // 	*rit = ++i;
 }

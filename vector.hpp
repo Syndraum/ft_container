@@ -12,7 +12,7 @@ namespace ft{
 	class vector
 	{
 	public:
-		class iterator : std::iterator <std::random_access_iterator_tag, T > {
+		class iterator : public std::iterator <std::random_access_iterator_tag, T > {
 			private:
 				T *		_p;
 			public:
@@ -36,7 +36,7 @@ namespace ft{
 
 				T & operator*() const {return (*_p);}
 				// T & operator*() const {return (*_p);}
-				const T * operator->() const {return (_p);}
+				T * operator->() const {return (_p);}
 
 				iterator & operator++() {this->_p++; return (*this);}
 				iterator operator++(int) {
@@ -79,7 +79,7 @@ namespace ft{
 		};
 
 		typedef T										value_type;
-		typedef std::allocator< value_type >			allocator_type;
+		typedef Alloc									allocator_type;
 		typedef value_type&								reference;
 		typedef const value_type&						const_reference;
 		typedef value_type*								pointer;
@@ -191,6 +191,22 @@ namespace ft{
 
 		const_iterator end() const {
 			return (end());
+		}
+
+		reverse_iterator rbegin(){
+			return (reverse_iterator(_data[size()]));
+		}
+
+		const_reverse_iterator rbegin() const {
+			return(rbegin());
+		}
+
+		reverse_iterator rend(){
+			return(reverse_iterator(_data[0]));
+		}
+
+		const_reverse_iterator rend() const {
+			return(rend());
 		}
 
 		size_type	size() const {

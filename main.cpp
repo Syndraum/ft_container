@@ -48,18 +48,32 @@ int main(){
 	ft::swap(list_cpy, list);
 	list.print();
 	ft::swap(list_cpy, list);
-	ft::vector<int>::iterator it = list.begin();
-
 	std::cout << std::boolalpha << "!= " << (list != list_cpy) << std::endl;
 	std::cout << std::boolalpha << "== " << (list == list) << std::endl;
 	std::cout << "empty ? " << list.empty() << std::endl;
+
+	ft::vector<int> list_inc;
+	list_inc.push_back(1);
+	list_inc.push_back(2);
+	list_inc.push_back(3);
+	list_inc.push_back(4);
+	list_inc.push_back(5);
+	list_inc.push_back(6);
+	list_inc.push_back(7);
+	list_inc.push_back(8);
+	ft::vector<int>::iterator it = list_inc.begin();
 	std::cout << "begin : " << *it << std::endl;
-	std::cout << "== " << (it == list.begin()) << std::endl;
+	std::cout << "== " << (it == list_inc.begin()) << std::endl;
 	int i = 0;
-	for (ft::vector<int>::iterator it = (list.begin() + 3) - 2; it != list.end(); it++)
+	for (ft::vector<int>::iterator it = list_inc.begin(); it != list_inc.end(); it++)
 	{
 		std::cout << i << " : " << *it << std::endl;
 		i++;
 	}
-	
+	it = list_inc.begin();
+	i = 2;
+	std::cout << "begin + " << i <<" : " << it[i] << std::endl;
+	std::cout << "begin + " << i - 1<<" : " << *((it + i) - 1) << std::endl;
+	ft::vector<int>::iterator it2 = it + 2;
+	std::cout << it - it2 << std::endl;
 }

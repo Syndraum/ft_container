@@ -19,6 +19,8 @@ namespace ft{
 				iterator(void) : _p(0) {}
 				iterator(T & x) : _p(&x) {}
 				iterator(const iterator & x) {*this = x;}
+				virtual ~iterator(void) {}
+
 				iterator &	operator=(const iterator & x) {
 					_p = x._p;
 					return (*this);
@@ -49,21 +51,10 @@ namespace ft{
 					return (tmp);
 				}
 
-				iterator operator+(const int &n) {
-					_p = _p + n;
-					return (*this);
-				}
-
-				iterator operator-(const int &n) {
-					_p = _p - n;
-					return (*this);
-				}
-
-				// TEST
-				iterator operator-(const iterator &it) {
-					_p = _p - std::distance(*this, it);
-					return(*this);
-				}
+				iterator operator+(const int &n) {return (iterator(_p[n]));}
+				iterator operator-(const int &n) {return (iterator(_p[-n]));}
+				T	operator-(const iterator &it) {return(*_p - *(it._p));}
+				T	&operator[](const int index) {return (_p[index]);}
 		};
 
 		typedef T										value_type;

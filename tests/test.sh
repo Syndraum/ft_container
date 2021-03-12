@@ -10,6 +10,9 @@ reset=$'\033[0;39m'
 STANDAR_OUPUT_FILE=std.out
 FT_OUPUT_FILE=ft.out
 DEBUG=0
+VERBOSE=1
+
+
 
 #			print_message(message, type)
 function	print_message {
@@ -38,11 +41,11 @@ function	print_success {
 #			unit_test(path)
 function	unit_test {
 	IN=$1
-	CONTAINER=$(echo "$IN" | cut -d/ -f 2)
-	TEST_NAME=$(echo "$IN" | cut -d/ -f 3 | cut -d. -f 1)
-	STD_LOG=./log/"$CONTAINER"_"$TEST_NAME"_std
-	FT_LOG=./log/"$CONTAINER"_"$TEST_NAME"_ft
-	print_message $TEST_NAME
+	container_name=$(echo "$IN" | cut -d/ -f 2)
+	test_name=$(echo "$IN" | cut -d/ -f 3 | cut -d. -f 1)
+	STD_LOG=./log/"$container_name"_"$test_name"_std
+	FT_LOG=./log/"$container_name"_"$test_name"_ft
+	print_message $test_name
 	clang++ -Werror -Wextra -Wall -std=c++98 -I ../ -I./includes $file -o std.out &>> $STD_LOG || { print_warning "complilation with standar namespace fail, skip test"; return 1; }
 	./std.out &>> $STD_LOG || { print_warning "exec with standar namespace fail, skip test"; return 1; }
 	clang++ -Werror -Wextra -Wall -std=c++98 -I ../ -I./includes $file -D NAMESPACE=ft -o ft.out &>> $FT_LOG || { print_error "compilation fail"; return 1; }
@@ -56,9 +59,23 @@ function	unit_test {
 	fi
 }
 
+#			container_test(name, n=none)
+function	container_test {
+	# if [ -n $2 ];then
+	# 	container_test vector
+	for file in ./$1/$2*
+	do
+		unit_test $file
+	done
+}
+
+containers=(vector)
+
 rm -rf log
 mkdir -p log
-for file in ./vector/*
-do
-	unit_test $file
-done
+
+if [ -z $1 ];then
+	container_test vector
+else
+	container_test $1 $2
+fi

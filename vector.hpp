@@ -180,11 +180,11 @@ namespace ft{
 		vector& operator= (const vector& x) {
 			if (this != &x){
 				deallocate();
-				this->_size = x->_size;
-				this->_capacity = x->_capacity;
+				this->_size = x._size;
+				this->_capacity = x._capacity;
 				this->_data = allocate(_capacity);
 				for (size_t i = 0; i < this->_capacity; i++)
-					this->_data[i] = x->_data[i];
+					this->_data[i] = x._data[i];
 			}
 			return (*this);
 		}

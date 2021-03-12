@@ -50,6 +50,7 @@ function	unit_test {
 	diff $STD_LOG $FT_LOG
 	if [ $? -eq 0 ];then
 		print_success "[OK]"
+		rm -rf $FT_LOG $STD_LOG
 	else
 		print_message "[K0]" $error
 	fi

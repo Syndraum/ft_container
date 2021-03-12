@@ -263,7 +263,7 @@ namespace ft{
 		}
 
 		reference operator[](size_type n) {
-			return (_data + n);
+			return (*(_data + n));
 		}
 
 		const_reference operator[](size_type n) const {

@@ -4,8 +4,8 @@ using namespace NAMESPACE;
 
 int main ()
 {
-  vector<int> foo (3,100);   // three ints with a value of 100
-  vector<int> bar (5,200);   // five ints with a value of 200
+  vector<int> foo (3);   // three ints with a value of 100
+  vector<int> bar (5);   // five ints with a value of 200
 
   foo.swap(bar);
 

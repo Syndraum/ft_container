@@ -197,7 +197,9 @@ namespace ft{
 		}
 
 		const_iterator begin() const {
-			return (begin());
+			if (empty())
+				return (const_iterator());
+			return (const_iterator(_data[0]));
 		}
 
 		iterator end() {
@@ -207,7 +209,9 @@ namespace ft{
 		}
 
 		const_iterator end() const {
-			return (end());
+			if (empty())
+				return (const_iterator());
+			return (const_iterator(_data[size()]));
 		}
 
 		reverse_iterator rbegin(){
@@ -377,10 +381,25 @@ namespace ft{
 		return (!(lhs==rhs));
 	}
 
-	// template <class T, class Alloc>
-	// bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+	template <typename T, typename Alloc>
+	bool operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+		return(std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
 
-	// }
+	template <typename T, typename Alloc>
+	bool operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+		return((rhs < lhs));
+	}
+
+	template <typename T, typename Alloc>
+	bool operator<=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+		return(!(lhs > rhs));
+	}
+
+	template <typename T, typename Alloc>
+	bool operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+		return(!(lhs < rhs));
+	}
 }
 
 #endif

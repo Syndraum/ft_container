@@ -4,10 +4,13 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "vector.hpp"
+
+# define NAMESPACE_FT ft
 
 # ifndef NAMESPACE
 #  define NAMESPACE std
 # endif
+
+
 
 #endif

@@ -21,7 +21,7 @@ int main ()
   }
   catch(const std::out_of_range& e)
   {
-    std::cerr << e.what() << '\n';
+    std::cerr << "out_of_range" << '\n';
   }
   
 

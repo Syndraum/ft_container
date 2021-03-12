@@ -10,7 +10,7 @@ reset=$'\033[0;39m'
 STANDAR_OUPUT_FILE=std.out
 FT_OUPUT_FILE=ft.out
 DEBUG=0
-VERBOSE=0
+VERBOSE=1
 newline=1
 
 
@@ -51,10 +51,10 @@ function	unit_test {
 	STD_LOG=./log/"$container_name"_"$test_name"_std
 	FT_LOG=./log/"$container_name"_"$test_name"_ft
 
+	newline=0
 	if [ $VERBOSE -eq 1 ];then
-		print_message $test_name
-	else
-		newline=0
+		print_message $test_name" : "
+		newline=1
 	fi;
 	clang++ -Werror -Wextra -Wall -std=c++98 -I ../ -I./includes $file -D NAMESPACE=std -o std.out &>> $STD_LOG || { print_warning "complilation with standar namespace fail, skip test " ; return 1; }
 	./std.out &>> $STD_LOG || { print_warning "exec with standar namespace fail, skip test "; return 1; }

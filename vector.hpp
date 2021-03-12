@@ -6,6 +6,7 @@
 #include <memory>
 #include <stdexcept>
 #include <iterator>
+#include <sstream>
 
 namespace ft{
 	template < typename T, typename Alloc = std::allocator<T> >
@@ -271,9 +272,12 @@ namespace ft{
 		}
 
 		reference at (size_type n) {
-			if (n >= size())
-				throw std::out_of_range("");
-			return (_data + n);
+			std::stringstream tmp;
+			if (n >= size()){
+				tmp << "vector::_M_range_check: __n (which is " << n << ") >= this->size() (which is " << size() << ")";
+				throw std::out_of_range(tmp.str());
+			}
+			return (_data[n]);
 		}
 
 		const_reference at (size_type n) const {

@@ -10,9 +10,10 @@
 
 #include "utils.hpp"
 #include "vector_iterator.hpp"
+#include "allocator.hpp"
 
 namespace ft{
-	template < typename T, typename Alloc = std::allocator<T> >
+	template < typename T, typename Alloc = ft::allocator<T> >
 	class vector
 	{
 	public:
@@ -53,7 +54,8 @@ namespace ft{
 		}
 
 		void	deallocate() {
-			_allocator.deallocate(_data, _capacity);
+			_allocator.deallocate(_data);
+			// _allocator.deallocate(_data, _capacity);
 		}
 
 		void	construct(size_type index, const_reference val, pointer data) {
@@ -285,18 +287,6 @@ namespace ft{
 			for (size_type i = 0; i < size(); i++)
 				destroy(i);
 			_size = 0;
-		}
-
-		// DELETE
-		void print(void) {
-			std::cout << "capacity : " << _capacity << "\t| ";
-			for (size_t i = 0; i < this->size(); i++)
-			{
-				std::cout << _data[i];
-				if (i != this->size() -1)
-					std::cout << ", ";
-			}
-			std::cout << std::endl;
 		}
 	};
 

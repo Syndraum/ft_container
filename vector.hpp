@@ -41,7 +41,7 @@ namespace ft{
 	public:
 		class iterator : public std::iterator <std::random_access_iterator_tag, T > {
 			private:
-				typedef std::ptrdiff_t			differrence_type;
+				typedef std::ptrdiff_t			difference_type;
 
 				T *		_p;
 			public:
@@ -81,13 +81,16 @@ namespace ft{
 					return (tmp);
 				}
 
-				iterator operator+(const int &n) {
+				iterator operator+(const difference_type &n) {
 					return (iterator(_p[n]));
+				}
+				friend iterator operator+(const difference_type n, iterator & x){
+					return (x + n);
 				}
 				iterator operator-(const int &n) {
 					return (iterator(*(_p - n)));
 				}
-				differrence_type	operator-(const iterator &it) {
+				difference_type	operator-(const iterator &it) {
 					return(_p - it._p);
 				}
 				friend bool	operator<(const iterator & x, const iterator & y) {
@@ -123,7 +126,7 @@ namespace ft{
 		typedef const iterator							const_iterator;
 		typedef std::reverse_iterator< iterator >		reverse_iterator;
 		typedef const std::reverse_iterator< iterator >	const_reverse_iterator;
-		typedef std::ptrdiff_t							differrence_type;
+		typedef std::ptrdiff_t							difference_type;
 		typedef size_t									size_type;
 
 	private:

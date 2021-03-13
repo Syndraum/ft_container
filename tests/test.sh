@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 #color
 output=$'\033[94m'
@@ -58,7 +58,7 @@ function	unit_test {
 	fi;
 	clang++ -Werror -Wextra -Wall -std=c++98 -I ../ -I./includes $file -D NAMESPACE=std -o std.out &>> $STD_LOG || { print_warning "complilation with standar namespace fail, skip test " ; return 1; }
 	./std.out &>> $STD_LOG || { print_warning "exec with standar namespace fail, skip test "; return 1; }
-	clang++ -Werror -Wextra -Wall -std=c++98 -I ../ -I./includes -include ./includes/ft_utils.hpp $file -D NAMESPACE=ft -o ft.out &>> $FT_LOG || { print_error "compilation fail " ; return 1; }
+	clang++ -Werror -Wextra -Wall -std=c++98 -I ../ -I./includes -include ./includes/ft_utils.hpp $file -D NAMESPACE=ft -o ft.out &>> $FT_LOG || { print_error "compilation_fail " ; return 1; }
 	./ft.out &>> $FT_LOG || { print_error "SEGFAULT " $newline; return 1; }
 	diff $STD_LOG $FT_LOG
 	if [ $? -eq 0 ];then
@@ -89,3 +89,4 @@ if [ -z $1 ];then
 else
 	container_test $1 $2
 fi
+

@@ -9,12 +9,6 @@
 #include <sstream>
 
 namespace ft{
-	// template <typename A, typename B>
-	// struct is_same { static const bool value = false; };
-
-	// template <typename T>
-	// struct is_same<T, T> { static const bool value = true; };
-
 	template <typename T, T val>
 	struct storage
 	{
@@ -26,8 +20,6 @@ namespace ft{
 
 	template <class T> struct is_integral : public false_type {};
 	template <> struct is_integral<int> : public true_type {};
-	
-	
 
 	template<bool B, class T = void>
 		struct enable_if {};
@@ -35,11 +27,19 @@ namespace ft{
 	template<class T>
 		struct enable_if<true, T> { typedef T type; };
 
+	template<class InputIterator>
+	std::ptrdiff_t distance (InputIterator first, InputIterator last){
+		std::ptrdiff_t diff = 0;
+		for (InputIterator it = first; it != last; it++)
+			diff++;
+		return (diff);
+	}
+
 	template < typename T, typename Alloc = std::allocator<T> >
 	class vector
 	{
 	public:
-		class iterator : public std::iterator <std::random_access_iterator_tag, T > {
+		class iterator {
 			private:
 				typedef std::ptrdiff_t			difference_type;
 
@@ -64,7 +64,6 @@ namespace ft{
 				}
 
 				T & operator*() const {return (*_p);}
-				// T & operator*() const {return (*_p);}
 				T * operator->() const {return (_p);}
 
 				iterator & operator++() {this->_p++; return (*this);}
@@ -200,7 +199,7 @@ namespace ft{
 		vector (
 			InputIterator first,
 			typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last,
-			const allocator_type& alloc = allocator_type()) : _size(std::distance< InputIterator >(first, last)), _capacity(get_fit_capacity(std::distance< InputIterator >(first, last))), _allocator(alloc), _data(_allocator.allocate(_capacity)) {
+			const allocator_type& alloc = allocator_type()) : _size(ft::distance< InputIterator >(first, last)), _capacity(get_fit_capacity(ft::distance< InputIterator >(first, last))), _allocator(alloc), _data(_allocator.allocate(_capacity)) {
 				int i = 0;
 
 				for (InputIterator it = first; it != last; it++) {

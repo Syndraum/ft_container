@@ -9,6 +9,32 @@
 #include <sstream>
 
 namespace ft{
+	// template <typename A, typename B>
+	// struct is_same { static const bool value = false; };
+
+	// template <typename T>
+	// struct is_same<T, T> { static const bool value = true; };
+
+	template <typename T, T val>
+	struct my_bool
+	{
+		static const T value = val;
+	};
+
+	struct false_type : public my_bool<bool, false> {};
+	struct true_type : public my_bool<bool, true> {};
+
+	template <class T> struct is_integral : public false_type {};
+	template <> struct is_integral<int> : public true_type {};
+	
+	
+
+	template<bool B, class T = void>
+		struct enable_if {};
+
+	template<class T>
+		struct enable_if<true, T> { typedef T type; };
+
 	template < typename T, typename Alloc = std::allocator<T> >
 	class vector
 	{
@@ -163,17 +189,22 @@ namespace ft{
 		vector (
 			InputIterator first,
 			InputIterator last,
-			const allocator_type& alloc = allocator_type()) : _size(std::distance< InputIterator >(first, last)), _capacity(get_fit_capacity(std::distance< InputIterator >(first, last))), _allocator(alloc), _data(_allocator.allocate(_capacity)) {
+			const allocator_type& alloc = allocator_type(),
+			typename enable_if <!is_integral <InputIterator>::value, bool >::type = 0) : _size(std::distance< InputIterator >(first, last)), _capacity(get_fit_capacity(std::distance< InputIterator >(first, last))), _allocator(alloc), _data(_allocator.allocate(_capacity)) {
 				int i = 0;
 
-					std::cout << "NIQUE\n" << std::endl;
 				for (InputIterator it = first; it != last; it++) {
+					std::cout << *it << " ";
 					construct(i, *it);
 					i++;
 				}
 			}
-		vector (const vector& x) : vector() {
-			this = x;
+		vector (const vector& x) : _size(0), _capacity(0), _allocator(x._allocator) {
+			this->_size = x._size;
+			this->_capacity = x._capacity;
+			this->_data = allocate(_capacity);
+			for (size_t i = 0; i < this->_capacity; i++)
+				this->_data[i] = x._data[i];
 		}
 		~vector(void) {
 			deallocate();

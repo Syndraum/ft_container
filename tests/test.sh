@@ -11,6 +11,7 @@ STANDAR_OUPUT_FILE=std.out
 FT_OUPUT_FILE=ft.out
 DEBUG=0
 VERBOSE=1
+LEAKS=1
 newline=1
 
 
@@ -56,9 +57,9 @@ function	unit_test {
 		print_message $test_name" : "
 		newline=1
 	fi;
-	clang++ -Werror -Wextra -Wall -std=c++98 -I ../ -I./includes $file -D NAMESPACE=std -o std.out &>> $STD_LOG || { print_warning "complilation with standar namespace fail, skip test " ; return 1; }
+	clang++ -Werror -Wextra -Wall -std=c++98 -I./includes $file -D NAMESPACE=std -o std.out &>> $STD_LOG || { print_warning "complilation with standar namespace fail, skip test " ; return 1; }
 	./std.out &>> $STD_LOG || { print_warning "exec with standar namespace fail, skip test "; return 1; }
-	clang++ -Werror -Wextra -Wall -std=c++98 -I ../ -I./includes -include ./includes/ft_utils.hpp $file -D NAMESPACE=ft -o ft.out &>> $FT_LOG || { print_error "compilation_fail " ; return 1; }
+	clang++ -Werror -Wextra -Wall -g -std=c++98 -I ../ -I./includes -include ./includes/ft_utils.hpp $file -D NAMESPACE=ft -o ft.out &>> $FT_LOG || { print_error "compilation_fail " ; return 1; }
 	./ft.out &>> $FT_LOG || { print_error "SEGFAULT "; return 1; }
 	diff $STD_LOG $FT_LOG &>> $FT_LOG
 	if [ $? -eq 0 ];then
@@ -77,6 +78,11 @@ function	container_test {
 	do
 		unit_test $file
 	done
+	if [ "$2" != "" ];then
+		if [ $LEAKS -eq 1 ];then
+		valgrind --leak-check=full ./ft.out
+		fi
+	fi
 }
 
 containers=(vector)

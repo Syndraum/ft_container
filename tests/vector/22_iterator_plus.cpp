@@ -25,7 +25,7 @@ int main()
 
 	it = it + 3;
 	std::cout << "it + 3 : " << *(it + 3) << std::endl;
-	// std::cout << *(2 + it) << std::endl;
+	std::cout << "2 + it : "<< *(2 + it) << std::endl;
 	std::cout << "it - 2 : " << *(it - 2) << std::endl;
 	std::cout << "it - it_copy : " << it - it_copy << std::endl;
 
@@ -50,6 +50,11 @@ int main()
 
 	vector<std::string>::iterator its = myvector_str.begin();
 	std::cout << its->size() << std::endl;
+	vector<std::string>::iterator its_copy(its);
+	std::cout << *its_copy << std::endl;
+
+	std::cout << std::boolalpha << (its == its_copy) << std::endl;
+	std::cout << std::boolalpha << (its != its_copy) << std::endl;
 
 	std::cout << "++its : " << *(++its) << std::endl;
 	std::cout << "its++ : " << *(its++) << std::endl;

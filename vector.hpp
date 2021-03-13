@@ -9,95 +9,20 @@
 #include <sstream>
 
 #include "utils.hpp"
+#include "vector_iterator.hpp"
 
 namespace ft{
 	template < typename T, typename Alloc = std::allocator<T> >
 	class vector
 	{
 	public:
-		class iterator {
-			private:
-				typedef std::ptrdiff_t			difference_type;
-
-				T *		_p;
-			public:
-				iterator(void) : _p(0) {}
-				iterator(T & x) : _p(&x) {}
-				iterator(const iterator & x) {*this = x;}
-				virtual ~iterator(void) {}
-
-				iterator &	operator=(const iterator & x) {
-					_p = x._p;
-					return (*this);
-				}
-
-				friend bool	operator==(const iterator & x, const iterator & y) {
-					return (x._p == y._p);
-				}
-
-				friend bool	operator!=(const iterator & x, const iterator & y){
-					return (!(x == y));
-				}
-
-				T & operator*() const {return (*_p);}
-				T * operator->() const {return (_p);}
-
-				iterator & operator++() {this->_p++; return (*this);}
-				iterator operator++(int) {
-					iterator tmp = *this;
-					++(this->_p);
-					return (tmp);
-				}
-
-				iterator & operator--() {this->_p--; return (*this);}
-				iterator operator--(int) {
-					iterator tmp = *this;
-					--(this->_p);
-					return (tmp);
-				}
-
-				iterator operator+(const difference_type &n) {
-					return (iterator(_p[n]));
-				}
-				friend iterator operator+(const difference_type n, iterator & x){
-					return (x + n);
-				}
-				iterator operator-(const int &n) {
-					return (iterator(*(_p - n)));
-				}
-				difference_type	operator-(const iterator &it) {
-					return(_p - it._p);
-				}
-				friend bool	operator<(const iterator & x, const iterator & y) {
-					return (x._p < y._p);
-				}
-				friend bool	operator>(const iterator & x, const iterator & y) {
-					return (x._p > y._p);
-				}
-				friend bool	operator<=(const iterator & x, const iterator & y) {
-					return (!(x > y));
-				}
-				friend bool	operator>=(const iterator & x, const iterator & y) {
-					return (!(x < y));
-				}
-				iterator	&operator+=(const int &n) {
-					_p += n;
-					return (*this); 
-				}
-				iterator	&operator-=(const int &n) {
-					_p -= n;
-					return (*this); 
-				}
-				T	&operator[](const int index) {return (_p[index]);}
-		};
-
 		typedef T										value_type;
 		typedef Alloc									allocator_type;
 		typedef value_type&								reference;
 		typedef const value_type&						const_reference;
 		typedef value_type*								pointer;
 		typedef const value_type*						const_pointer;
-		typedef iterator								iterator;
+		typedef ft::vector_iterator<value_type>			iterator;
 		typedef const iterator							const_iterator;
 		typedef std::reverse_iterator< iterator >		reverse_iterator;
 		typedef const std::reverse_iterator< iterator >	const_reverse_iterator;

@@ -69,19 +69,21 @@ namespace ft{
 
 				iterator & operator++() {this->_p++; return (*this);}
 				iterator operator++(int) {
-					T tmp = *_p;
-					++*this;
+					iterator tmp = *this;
+					++(this->_p);
 					return (tmp);
 				}
 
 				iterator & operator--() {this->_p--; return (*this);}
 				iterator operator--(int) {
-					T tmp = *_p;
-					--*this;
+					iterator tmp = *this;
+					--(this->_p);
 					return (tmp);
 				}
 
-				iterator operator+(const int &n) {return (iterator(_p[n]));}
+				iterator operator+(const int &n) {
+					return (iterator(_p[n]));
+				}
 				iterator operator-(const int &n) {
 					return (iterator(*(_p - n)));
 				}

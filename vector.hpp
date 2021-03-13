@@ -16,13 +16,13 @@ namespace ft{
 	// struct is_same<T, T> { static const bool value = true; };
 
 	template <typename T, T val>
-	struct my_bool
+	struct storage
 	{
 		static const T value = val;
 	};
 
-	struct false_type : public my_bool<bool, false> {};
-	struct true_type : public my_bool<bool, true> {};
+	struct false_type : public storage<bool, false> {};
+	struct true_type : public storage<bool, true> {};
 
 	template <class T> struct is_integral : public false_type {};
 	template <> struct is_integral<int> : public true_type {};
@@ -41,6 +41,8 @@ namespace ft{
 	public:
 		class iterator : public std::iterator <std::random_access_iterator_tag, T > {
 			private:
+				typedef std::ptrdiff_t			differrence_type;
+
 				T *		_p;
 			public:
 				iterator(void) : _p(0) {}
@@ -80,8 +82,12 @@ namespace ft{
 				}
 
 				iterator operator+(const int &n) {return (iterator(_p[n]));}
-				iterator operator-(const int &n) {return (iterator(_p[-n]));}
-				T	operator-(const iterator &it) {return(*_p - *(it._p));}
+				iterator operator-(const int &n) {
+					return (iterator(*(_p - n)));
+				}
+				differrence_type	operator-(const iterator &it) {
+					return(_p - it._p);
+				}
 				friend bool	operator<(const iterator & x, const iterator & y) {
 					return (x._p < y._p);
 				}
@@ -188,9 +194,8 @@ namespace ft{
 		template <typename InputIterator>
 		vector (
 			InputIterator first,
-			InputIterator last,
-			const allocator_type& alloc = allocator_type(),
-			typename enable_if <!is_integral <InputIterator>::value, bool >::type = 0) : _size(std::distance< InputIterator >(first, last)), _capacity(get_fit_capacity(std::distance< InputIterator >(first, last))), _allocator(alloc), _data(_allocator.allocate(_capacity)) {
+			typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last,
+			const allocator_type& alloc = allocator_type()) : _size(std::distance< InputIterator >(first, last)), _capacity(get_fit_capacity(std::distance< InputIterator >(first, last))), _allocator(alloc), _data(_allocator.allocate(_capacity)) {
 				int i = 0;
 
 				for (InputIterator it = first; it != last; it++) {

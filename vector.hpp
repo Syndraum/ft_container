@@ -105,7 +105,6 @@ namespace ft{
 				int i = 0;
 
 				for (InputIterator it = first; it != last; it++) {
-					std::cout << *it << " ";
 					construct(i, *it);
 					i++;
 				}
@@ -114,7 +113,7 @@ namespace ft{
 			this->_size = x._size;
 			this->_capacity = x._capacity;
 			this->_data = allocate(_capacity);
-			for (size_t i = 0; i < this->_capacity; i++)
+			for (size_t i = 0; i < this->_size; i++)
 				this->_data[i] = x._data[i];
 		}
 		~vector(void) {
@@ -126,7 +125,7 @@ namespace ft{
 				this->_size = x._size;
 				this->_capacity = x._capacity;
 				this->_data = allocate(_capacity);
-				for (size_t i = 0; i < this->_capacity; i++)
+				for (size_t i = 0; i < this->_size; i++)
 					this->_data[i] = x._data[i];
 			}
 			return (*this);

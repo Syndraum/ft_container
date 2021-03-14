@@ -2,23 +2,19 @@
 #define VECTOR_ITERATOR_HPP
 
 #include <cstddef>
+#include "iterator.hpp"
 
 namespace ft
 {
 	template < typename T >
-	class vector_iterator
+	class vector_iterator : public ft::iterator< T >
 	{
 	private:
 		T *_p;
 
 	public:
-		typedef std::ptrdiff_t		difference_type;
+		typedef typename ft::iterator< T >::difference_type			difference_type;
 		typedef vector_iterator		iterator;
-		typedef T					value_type;
-		// typedef Distance			difference_type;
-		typedef T *				pointer;
-		typedef T&				reference;
-		// typedef Categoryiterator_category	;
 
 		vector_iterator(void) : _p(0) {}
 		vector_iterator(T &x) : _p(&x) {}
@@ -112,6 +108,6 @@ namespace ft
 		}
 		T &operator[](const int index) { return (_p[index]); }
 	};
-} // namespace ft
+}
 
 #endif

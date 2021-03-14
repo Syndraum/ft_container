@@ -9,12 +9,17 @@ namespace ft
 	class vector_iterator
 	{
 	private:
-		typedef std::ptrdiff_t		difference_type;
-		typedef vector_iterator		iterator;
-
 		T *_p;
 
 	public:
+		typedef std::ptrdiff_t		difference_type;
+		typedef vector_iterator		iterator;
+		typedef T					value_type;
+		// typedef Distance			difference_type;
+		typedef T *				pointer;
+		typedef T&				reference;
+		// typedef Categoryiterator_category	;
+
 		vector_iterator(void) : _p(0) {}
 		vector_iterator(T &x) : _p(&x) {}
 		vector_iterator(const iterator &x) { *this = x; }

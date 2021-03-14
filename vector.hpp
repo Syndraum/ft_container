@@ -3,14 +3,13 @@
 
 #include <iostream>
 #include <algorithm>
-#include <memory>
 #include <stdexcept>
-#include <iterator>
 #include <sstream>
 
 #include "utils.hpp"
 #include "vector_iterator.hpp"
 #include "allocator.hpp"
+#include "reverse_iterator.hpp"
 
 namespace ft{
 	template < typename T, typename Alloc = ft::allocator<T> >
@@ -25,8 +24,8 @@ namespace ft{
 		typedef const value_type*						const_pointer;
 		typedef ft::vector_iterator<value_type>			iterator;
 		typedef const iterator							const_iterator;
-		typedef std::reverse_iterator< iterator >		reverse_iterator;
-		typedef const std::reverse_iterator< iterator >	const_reverse_iterator;
+		typedef ft::reverse_iterator< iterator >		reverse_iterator;
+		typedef const ft::reverse_iterator< iterator >	const_reverse_iterator;
 		typedef std::ptrdiff_t							difference_type;
 		typedef size_t									size_type;
 

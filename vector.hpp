@@ -288,6 +288,57 @@ namespace ft{
 			}
 		}
 
+		iterator insert (iterator position, const value_type& val) {
+			difference_type	tmp = position - begin();
+			insert(position, 1, val);
+			return (begin() + tmp);
+		}
+
+		void insert (iterator position, size_type n, const value_type& val) {
+			size_type j = 0;
+			size_type i = 0;
+
+			if (size() == capacity())
+				realloc();
+			for (iterator it = end(); it != position; it--)
+			{
+				if (j >= n)
+					destroy(size() - j);
+				construct(size() - 1 + n - j, _data[size() - 1 - j]);
+				j++;
+			}
+			destroy(size() - j);
+			for (i = 0; i < n; i++)
+				construct(size() - 1 + n - j - i, val);
+			_size += n;
+		}
+
+		template <class InputIterator>
+		void insert (
+			iterator position,
+			InputIterator first,
+			typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last) {
+			size_type j = 0;
+			size_type i = 0;
+			size_type n = ft::distance(first, last);
+
+			if (size() == capacity())
+				realloc();
+			for (iterator it = end(); it != position; it--)
+			{
+				if (j >= n)
+					destroy(size() - j);
+				construct(size() - 1 + n - j, _data[size() - 1 - j]);
+				j++;
+			}
+			destroy(size() - j);
+			for (InputIterator it = last - 1; it != first - 1; it--){
+				construct(size() - 1 + n - j - i, *it);
+				i++;
+			}
+			_size += n;
+		}
+
 		void swap (vector& x) {
 			std::swap(this->_size, x._size);
 			std::swap(this->_capacity, x._capacity);

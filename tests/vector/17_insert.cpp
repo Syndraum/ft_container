@@ -10,13 +10,15 @@ int main ()
   it = myvector.begin();
   it = myvector.insert ( it , 200 );
 
+  std::cout << "new it :" << *it << std::endl;
+
   myvector.insert (it,2,300);
 
   // "it" no longer valid, get a new one:
   it = myvector.begin();
 
-  vector<int> anothervector (2,400);
-  myvector.insert (it+2,anothervector.begin(),anothervector.end());
+  // vector<int> anothervector (2,400);
+  // myvector.insert (it+2,anothervector.begin(),anothervector.end());
 
   int myarray [] = { 501,502,503 };
   myvector.insert (myvector.begin(), myarray, myarray+3);

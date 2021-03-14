@@ -295,20 +295,18 @@ namespace ft{
 		}
 
 		void insert (iterator position, size_type n, const value_type& val) {
+			size_type diff_incert_end = ft::distance(position, end());
 			size_type j = 0;
-			size_type i = 0;
 
-			if (size() == capacity())
-				realloc();
-			for (iterator it = end(); it != position; it--)
+			if (size() + n > capacity())
+				realloc(size() + n);
+			for (j = 0; j < diff_incert_end; j++)
 			{
-				if (j >= n)
-					destroy(size() - j);
 				construct(size() - 1 + n - j, _data[size() - 1 - j]);
-				j++;
+				destroy(size() - 1 - j);
 			}
 			destroy(size() - j);
-			for (i = 0; i < n; i++)
+			for (size_type i = 0; i < n; i++)
 				construct(size() - 1 + n - j - i, val);
 			_size += n;
 		}
@@ -318,20 +316,19 @@ namespace ft{
 			iterator position,
 			InputIterator first,
 			typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last) {
-			size_type j = 0;
-			size_type i = 0;
 			size_type n = ft::distance(first, last);
+			size_type diff_incert_end = ft::distance(position, end());
+			size_type i = 0;
+			size_type j = 0;
 
-			if (size() == capacity())
-				realloc();
-			for (iterator it = end(); it != position; it--)
-			{
-				if (j >= n)
-					destroy(size() - j);
-				construct(size() - 1 + n - j, _data[size() - 1 - j]);
-				j++;
+			if (size() + n > capacity()) {
+				realloc(size() + n);
 			}
-			destroy(size() - j);
+			for (j = 0; j < diff_incert_end; j++)
+			{
+				construct(size() - 1 + n - j, _data[size() - 1 - j]);
+				destroy(size() - 1 - j);
+			}
 			for (InputIterator it = last - 1; it != first - 1; it--){
 				construct(size() - 1 + n - j - i, *it);
 				i++;

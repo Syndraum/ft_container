@@ -245,6 +245,24 @@ namespace ft{
 			return (back());
 		}
 
+		template <class InputIterator>
+		void assign (
+				InputIterator first, 
+				typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last) {
+			size_type n = ft::distance(first, last);
+			if (n > _capacity)
+				realloc(n);
+			for (size_type i = 0; i < _size; i++)
+				destroy(i);
+			_size = n;
+			int i = 0;
+			for (InputIterator it = first; it != last; it++){
+				construct(i, *it);
+				i++;
+			}
+
+		}
+
 		void assign (size_type n, const value_type& val) {
 			if (n > _capacity)
 				realloc(n);

@@ -7,13 +7,17 @@
 namespace ft
 {
 	template < typename T >
-	class vector_iterator : public ft::iterator< T >
+	class vector_iterator
 	{
 	private:
 		T *_p;
 
 	public:
-		typedef typename ft::iterator< T >::difference_type			difference_type;
+		typedef T				value_type;
+		typedef std::ptrdiff_t			difference_type;
+		typedef T*		pointer;
+		typedef T&	reference;
+		typedef ft::random_access_iterator_tag	iterator_category;
 		typedef vector_iterator		iterator;
 
 		vector_iterator(void) : _p(0) {}

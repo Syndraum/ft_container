@@ -7,14 +7,18 @@ int	main()
 	// constructors used in the same order as described above:
 	vector<int> first;                                // empty vector of ints
 	vector<int> second (4,100);                       // four ints with value 100
-	vector<int> third (second.begin(), second.end() - 1);  // iterating through second
+	vector<int> third (second.begin(), second.end());  // iterating through second
 	vector<int> fourth (third);
 
-	std::cout << third.size() << std::endl;
+	std::cout << std::endl;
+	for (unsigned i=0; i<second.size(); i++)
+    	std::cout << ' ' << second.at(i);
+
+	std::cout << std::endl;
 	for (unsigned i=0; i<third.size(); i++)
     	std::cout << ' ' << third[i];
 
-	// the iterator constructor can also be used to construct from arrays:
+	//the iterator constructor can also be used to construct from arrays:
 	int myints[] = {16,2,77,29};
 	vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
 	

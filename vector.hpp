@@ -73,6 +73,17 @@ namespace ft{
 			destroy(index, _data);
 		}
 
+		void	destroy(iterator position) {
+			size_type i = 0;
+			iterator first = begin();
+			while (first != position)
+			{
+				first++;
+				i++;
+			}
+			destroy(i);
+		}
+
 		void	realloc(size_type target) {
 			setCapacity(get_fit_capacity(target));
 			pointer	new_data = allocate(_capacity);
@@ -334,6 +345,22 @@ namespace ft{
 				i++;
 			}
 			_size += n;
+		}
+
+		iterator erase (iterator position) {
+			iterator next = position + 1;
+			difference_type diff = position - begin();
+			size_type to_end = end() - (position + 1);
+			// std::cout << "diff : " << diff << std::endl;
+			destroy(diff);
+			for (size_type i = 0; i < to_end ; i++)
+			{
+				// std::cout << "i : " << i << std::endl;
+				construct(diff + i, _data[(diff + i + 1)]);
+				destroy(diff + i + 1);
+			}
+			_size--;
+			return next;
 		}
 
 		void swap (vector& x) {

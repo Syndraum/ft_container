@@ -368,14 +368,10 @@ namespace ft{
 		}
 
 		void swap (vector& x) {
-			std::swap(this->_size, x._size);
-			std::swap(this->_capacity, x._capacity);
-			std::swap(this->_allocator, x._allocator);
-			std::swap(this->_data, x._data);
-			// pointer tmp = this->_data;
-
-			// this->_data = x._data;
-			// x._data = tmp;
+			ft::swap(this->_size, x._size);
+			ft::swap(this->_capacity, x._capacity);
+			ft::swap(this->_allocator, x._allocator);
+			ft::swap(this->_data, x._data);
 		}
 
 		void clear() {

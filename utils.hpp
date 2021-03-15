@@ -27,18 +27,25 @@ namespace ft{
 	template <> struct is_integral<long long> : public true_type {};
 	template <> struct is_integral<unsigned long long> : public true_type {};
 
-	template<bool B, class T = void>
+	template<bool B, typename T = void>
 		struct enable_if {};
 
-	template<class T>
+	template<typename T>
 		struct enable_if<true, T> { typedef T type; };
 
-	template<class InputIterator>
+	template<typename InputIterator>
 	std::ptrdiff_t distance (InputIterator first, InputIterator last){
 		std::ptrdiff_t diff = 0;
 		for (InputIterator it = first; it != last; it++)
 			diff++;
 		return (diff);
+	}
+
+	template<typename T>
+	void swap(T & x, T &y) {
+		T	tmp = x;
+		x = y;
+		y = tmp;
 	}
 }
 

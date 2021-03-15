@@ -71,7 +71,7 @@ namespace ft{
 
 		size_type max_size() const throw() {
 			unsigned long long n = ((pow(2, ENVIRONMENT) - 1.0) / sizeof(T));
-			return (n);
+			return (n - 1);
 		}
 
 		void construct ( pointer p, const_reference val ) {

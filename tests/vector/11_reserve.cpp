@@ -1,4 +1,4 @@
-#include "utils.hpp"
+#include "test_utils.hpp"
 
 using namespace NAMESPACE;
 
@@ -21,7 +21,7 @@ int main ()
   }
   catch(std::length_error& e)
   {
-	  std::cout << "Exception !\n" << e.what();
+	  std::cout << "Exception !\n";
   }
   return 0;
 }

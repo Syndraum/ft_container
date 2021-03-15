@@ -13,12 +13,12 @@ namespace ft
 		T *_p;
 
 	public:
-		typedef T				value_type;
-		typedef std::ptrdiff_t			difference_type;
-		typedef T*		pointer;
-		typedef T&	reference;
+		typedef T								value_type;
+		typedef std::ptrdiff_t					difference_type;
+		typedef T*								pointer;
+		typedef T&								reference;
 		typedef ft::random_access_iterator_tag	iterator_category;
-		typedef vector_iterator		iterator;
+		typedef vector_iterator					iterator;
 
 		vector_iterator(void) : _p(0) {}
 		vector_iterator(T &x) : _p(&x) {}
@@ -68,35 +68,35 @@ namespace ft
 			return (tmp);
 		}
 
-		iterator operator+(const difference_type &n)
+		iterator operator+(const difference_type &n) const
 		{
 			return (iterator(_p[n]));
 		}
-		friend iterator operator+(const difference_type n, iterator &x)
+		friend iterator operator+(const difference_type n, const iterator &x)
 		{
 			return (x + n);
 		}
-		iterator operator-(const int &n)
+		iterator operator-(const int &n) const
 		{
 			return (iterator(*(_p - n)));
 		}
-		difference_type operator-(const iterator &it)
+		difference_type operator-(const iterator &it) const
 		{
 			return (_p - it._p);
 		}
-		friend bool operator<(const iterator &x, const iterator &y)
+		friend bool operator<(const iterator &x, const iterator &y) 
 		{
 			return (x._p < y._p);
 		}
-		friend bool operator>(const iterator &x, const iterator &y)
+		friend bool operator>(const iterator &x, const iterator &y) 
 		{
 			return (x._p > y._p);
 		}
-		friend bool operator<=(const iterator &x, const iterator &y)
+		friend bool operator<=(const iterator &x, const iterator &y) 
 		{
 			return (!(x > y));
 		}
-		friend bool operator>=(const iterator &x, const iterator &y)
+		friend bool operator>=(const iterator &x, const iterator &y) 
 		{
 			return (!(x < y));
 		}
@@ -110,7 +110,7 @@ namespace ft
 			_p -= n;
 			return (*this);
 		}
-		T &operator[](const int index) { return (_p[index]); }
+		T &operator[](const int index) const { return (_p[index]); }
 	};
 }
 

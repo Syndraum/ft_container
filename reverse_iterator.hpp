@@ -7,7 +7,7 @@ namespace ft {
 	{
 	public:
 		typedef Iterator					iterator_type;
-		// typedef Iterator::iterator_category	iterator_category;
+		typedef typename Iterator::iterator_category	iterator_category;
 		typedef typename Iterator::value_type		value_type;
 		typedef typename Iterator::difference_type	difference_type;
 		typedef typename Iterator::pointer			pointer;

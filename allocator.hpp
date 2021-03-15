@@ -19,6 +19,10 @@
 # endif
 #endif
 
+#ifndef ENVIRONMENT
+# define ENVIRONMENT 32
+#endif
+
 namespace ft{
 	template < typename T >
 	class allocator
@@ -60,8 +64,8 @@ namespace ft{
 		}
 
 		size_type max_size() const throw() {
-			long long n = ((pow(2, ENVIRONMENT))/sizeof(T));
-			return (n - 1);
+			unsigned long long n = ((pow(2, ENVIRONMENT) - 1.0) / sizeof(T));
+			return (n);
 		}
 
 		void construct ( pointer p, const_reference val ) {

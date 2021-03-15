@@ -348,19 +348,23 @@ namespace ft{
 		}
 
 		iterator erase (iterator position) {
-			iterator next = position + 1;
-			difference_type diff = position - begin();
-			size_type to_end = end() - (position + 1);
-			// std::cout << "diff : " << diff << std::endl;
-			destroy(diff);
-			for (size_type i = 0; i < to_end ; i++)
+			return (erase(position, position + 1));
+		}
+
+		iterator erase (iterator first, iterator last) {
+			iterator next = first + 1;
+			difference_type diff = last - first;
+			difference_type to_first = first - begin();
+			difference_type to_end = end() - (first + diff);
+			for (difference_type i = 0; i < diff; i++)
+				destroy(diff + i);
+			for (difference_type i = 0; i < to_end; i++)
 			{
-				// std::cout << "i : " << i << std::endl;
-				construct(diff + i, _data[(diff + i + 1)]);
-				destroy(diff + i + 1);
+				construct(to_first + i, _data[(to_first + i + diff)]);
+				destroy(diff + i + diff);
 			}
-			_size--;
-			return next;
+			_size -= diff;
+			return (next);
 		}
 
 		void swap (vector& x) {

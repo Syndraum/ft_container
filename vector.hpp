@@ -2,7 +2,6 @@
 # define VECTOR_H
 
 #include <iostream>
-#include <algorithm>
 #include <stdexcept>
 #include <sstream>
 
@@ -405,7 +404,7 @@ namespace ft{
 
 	template <typename T, typename Alloc>
 	bool operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-		return(std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+		return(ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 	}
 
 	template <typename T, typename Alloc>

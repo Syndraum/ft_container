@@ -126,10 +126,12 @@ namespace ft{
 				this->_data[i] = x._data[i];
 		}
 		~vector(void) {
+			clear();
 			deallocate();
 		}
 		vector& operator= (const vector& x) {
 			if (this != &x){
+				clear();
 				deallocate();
 				this->_size = x._size;
 				this->_capacity = x._capacity;

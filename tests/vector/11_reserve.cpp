@@ -14,5 +14,14 @@ int main ()
   for (int i=0; i<100; ++i) {
     bar.push_back(i);
   }
+
+  try
+  {
+	bar.reserve(bar.max_size() * 2);
+  }
+  catch(std::length_error& e)
+  {
+	  std::cout << "Exception !\n" << e.what();
+  }
   return 0;
 }

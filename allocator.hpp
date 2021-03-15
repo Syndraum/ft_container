@@ -2,6 +2,9 @@
 # define ALLOCATOR_HPP
 
 #include <cmath>
+#include <stdexcept>
+
+#include <iostream> //
 
 #if _WIN32 || _WIN64
 # if _WIN64
@@ -54,6 +57,9 @@ namespace ft{
 		}
 
 		pointer allocate (size_type n) {
+			if (n > max_size()){
+				throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
+			}
 			pointer p = 0;
 			p = reinterpret_cast<pointer>(::operator new (sizeof(value_type) * n));
 			return p;

@@ -35,8 +35,6 @@ namespace ft{
 		pointer			_data;
 
 		void	setCapacity(size_type capacity){
-			if (capacity > max_size())
-				throw std::length_error("");
 			_capacity = capacity;
 		}
 
@@ -85,7 +83,8 @@ namespace ft{
 
 		void	realloc(size_type target) {
 			setCapacity(get_fit_capacity(target));
-			pointer	new_data = allocate(_capacity);
+			pointer	new_data = 0;
+			new_data = allocate(_capacity);
 			for (size_t i = 0; i < _size; i++){
 				construct(i, _data[i], new_data);
 				destroy(i);
@@ -204,8 +203,12 @@ namespace ft{
 		}
 
 		void		reserve (size_type n) {
-			if (n > _capacity)
-				realloc(get_fit_capacity(n));
+			try {
+				if (n > _capacity)
+					realloc(get_fit_capacity(n));
+			} catch (std::exception& e) {
+				throw;
+			}
 		}
 
 		size_type	capacity() const {

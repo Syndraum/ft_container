@@ -360,12 +360,13 @@ namespace ft{
 			difference_type diff = last - first;
 			difference_type to_first = first - begin();
 			difference_type to_end = end() - (first + diff);
+
 			for (difference_type i = 0; i < diff; i++)
-				destroy(diff + i);
+				destroy(to_first + i);
 			for (difference_type i = 0; i < to_end; i++)
 			{
 				construct(to_first + i, _data[(to_first + i + diff)]);
-				destroy(diff + i + diff);
+				destroy(to_first + i + diff);
 			}
 			_size -= diff;
 			return (next);

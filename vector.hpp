@@ -310,17 +310,16 @@ namespace ft{
 		}
 
 		void insert (iterator position, size_type n, const value_type& val) {
-			size_type diff_incert_end = ft::distance(position, end());
+			size_type to_end = end() - position;
 			size_type j = 0;
 
 			if (size() + n > capacity())
 				realloc(size() + n);
-			for (j = 0; j < diff_incert_end; j++)
+			for (j = 0; j < to_end; j++)
 			{
 				construct(size() - 1 + n - j, _data[size() - 1 - j]);
 				destroy(size() - 1 - j);
 			}
-			destroy(size() - j);
 			for (size_type i = 0; i < n; i++)
 				construct(size() - 1 + n - j - i, val);
 			_size += n;

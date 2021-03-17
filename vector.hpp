@@ -249,7 +249,7 @@ namespace ft{
 		}
 
 		const_reference front() const {
-			return (front());
+			return (_data[0]);
 		}
 
 		reference back() {
@@ -257,7 +257,7 @@ namespace ft{
 		}
 
 		const_reference back() const {
-			return (back());
+			return (_data[size() - 1]);
 		}
 
 		template <class InputIterator>

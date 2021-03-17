@@ -41,6 +41,8 @@ namespace ft{
 		static size_type	get_fit_capacity(size_type target){
 			size_type	capacity = 1;
 
+			if (target == 0)
+				return (0);
 			while (capacity < target)
 				capacity *= 2;
 			return (capacity);
@@ -97,11 +99,12 @@ namespace ft{
 		void	realloc() {
 			if (_capacity == 0)
 				realloc(1);
-			realloc(_capacity * 2);
+			else
+				realloc(_capacity * 2);
 		}
 
 	public:
-		vector(const allocator_type& alloc = allocator_type()) : _size(0), _capacity(1), _allocator(alloc), _data(_allocator.allocate(_capacity)) {}
+		vector(const allocator_type& alloc = allocator_type()) : _size(0), _capacity(0), _allocator(alloc), _data(_allocator.allocate(_capacity)) {}
 		vector(
 			size_type n,
 			const value_type &val = value_type(),

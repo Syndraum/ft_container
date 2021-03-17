@@ -57,12 +57,14 @@ namespace ft{
 		}
 
 		pointer allocate (size_type n) {
+			if (n == 0)
+				return (0);
 			if (n > max_size()){
 				throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
 			}
 			pointer p = 0;
 			p = reinterpret_cast<pointer>(::operator new (sizeof(value_type) * n));
-			return p;
+			return (p);
 		}
 
 		void deallocate (pointer p) {

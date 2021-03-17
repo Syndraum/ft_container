@@ -116,15 +116,6 @@ namespace ft
 	protected:
 		value_type *_p;
 	};
-
-	// template < typename T>
-	// class vector_iterator< T, true >  {
-	// 	iterator &operator=(const vector_iterator< T > &x)
-	// 	{
-	// 		_p = x._p;
-	// 		return (*this);
-	// 	}
-	// };
 }
 
 #endif

@@ -39,7 +39,8 @@ namespace ft{
 		}
 
 		static size_type	get_fit_capacity(size_type target){
-			size_type	capacity = 8;
+			size_type	capacity = 1;
+
 			while (capacity < target)
 				capacity *= 2;
 			return (capacity);
@@ -94,11 +95,13 @@ namespace ft{
 		}
 
 		void	realloc() {
+			if (_capacity == 0)
+				realloc(1);
 			realloc(_capacity * 2);
 		}
 
 	public:
-		vector(const allocator_type& alloc = allocator_type()) : _size(0), _capacity(8), _allocator(alloc), _data(_allocator.allocate(_capacity)) {}
+		vector(const allocator_type& alloc = allocator_type()) : _size(0), _capacity(1), _allocator(alloc), _data(_allocator.allocate(_capacity)) {}
 		vector(
 			size_type n,
 			const value_type &val = value_type(),
@@ -123,7 +126,7 @@ namespace ft{
 			this->_capacity = x._capacity;
 			this->_data = allocate(_capacity);
 			for (size_t i = 0; i < this->_size; i++)
-				this->_data[i] = x._data[i];
+				construct(i, x._data[i]);
 		}
 		~vector(void) {
 			clear();
@@ -135,9 +138,10 @@ namespace ft{
 				deallocate();
 				this->_size = x._size;
 				this->_capacity = x._capacity;
+				this->_allocator = x._allocator;
 				this->_data = allocate(_capacity);
 				for (size_t i = 0; i < this->_size; i++)
-					this->_data[i] = x._data[i];
+					construct(i, x._data[i]);
 			}
 			return (*this);
 		}

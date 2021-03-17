@@ -20,5 +20,21 @@ int main ()
     std::cout << ' ' << myvector[i];
   std::cout << '\n';
 
+  vector<vector<int> >	erase_in_me;
+	for (int i = 0; i < 15; i++)
+	{
+		vector<int>	j(1, i);
+		erase_in_me.push_back(j);
+	}
+
+	for (size_t i = 0; i < erase_in_me.size(); i++)
+		std::cout << erase_in_me.at(i).front() << ' ';
+	std::cout << '\n';
+
+  erase_in_me.erase(erase_in_me.begin() + 7);
+	for (size_t i = 0; i < erase_in_me.size(); i++)
+		std::cout << erase_in_me.at(i).front() << ' ';
+	std::cout << '\n';
+
   return 0;
 }

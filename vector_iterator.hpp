@@ -3,25 +3,23 @@
 
 #include <cstddef>
 #include "iterator.hpp"
+#include "utils.hpp"
 
 namespace ft
 {
 	template < typename T >
 	class vector_iterator
 	{
-	private:
-		T *_p;
-
 	public:
-		typedef T								value_type;
-		typedef std::ptrdiff_t					difference_type;
-		typedef T*								pointer;
-		typedef T&								reference;
-		typedef ft::random_access_iterator_tag	iterator_category;
-		typedef vector_iterator					iterator;
+		typedef T	value_type;
+		typedef std::ptrdiff_t								difference_type;
+		typedef T*											pointer;
+		typedef T&											reference;
+		typedef ft::random_access_iterator_tag				iterator_category;
+		typedef vector_iterator								iterator;
 
-		vector_iterator(void) : _p(0) {}
-		vector_iterator(T &x) : _p(&x) {}
+		vector_iterator() : _p(0) {}
+		vector_iterator(value_type &x) : _p(&x) {}
 		vector_iterator(const iterator &x) { *this = x; }
 		virtual ~vector_iterator(void) {}
 
@@ -41,8 +39,12 @@ namespace ft
 			return (!(x == y));
 		}
 
-		T &operator*() const { return (*_p); }
-		T *operator->() const { return (_p); }
+		operator vector_iterator<const T>() {
+			return vector_iterator<const T>(*this->_p);
+		}
+
+		value_type &operator*() const { return (*_p); }
+		value_type *operator->() const { return (_p); }
 
 		iterator &operator++()
 		{
@@ -110,8 +112,19 @@ namespace ft
 			_p -= n;
 			return (*this);
 		}
-		T &operator[](const int index) const { return (_p[index]); }
+		value_type &operator[](const int index) const { return (_p[index]); }
+	protected:
+		value_type *_p;
 	};
+
+	// template < typename T>
+	// class vector_iterator< T, true >  {
+	// 	iterator &operator=(const vector_iterator< T > &x)
+	// 	{
+	// 		_p = x._p;
+	// 		return (*this);
+	// 	}
+	// };
 }
 
 #endif

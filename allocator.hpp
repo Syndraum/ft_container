@@ -4,8 +4,6 @@
 #include <cmath>
 #include <stdexcept>
 
-#include <iostream> //
-
 #if _WIN32 || _WIN64
 # if _WIN64
 #  define ENVIRONMENT 64
@@ -30,8 +28,6 @@ namespace ft{
 	template < typename T >
 	class allocator
 	{
-	private:
-		/* data */
 	public:
 		allocator () throw() {}
 		allocator (const allocator& alloc) throw() {(void)alloc;}

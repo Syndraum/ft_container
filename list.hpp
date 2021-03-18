@@ -4,47 +4,53 @@
 #include <cstdlib>
 
 namespace ft {
-	template < typename T >
+	template < typename T, class Alloc = ft::allocator<T> >
 	class list
 	{
-		class node
-		{
+		public:
+			typedef T					value_type;
+			typedef Alloc				allocator_type;
+			typedef value_type&			reference;
+			typedef const value_type&	const_reference;
+			typedef value_type*			pointer;
+			typedef const value_type*	const_pointer;
+			typedef std::ptrdiff_t		differrence_type;
+			typedef size_t				size_type;
+
 		private:
-			T		_data;
-			node *	_before;
-			node *	_next;
-			node(void) : _data(T()), _before(0), _next(0) {}
-		public:
-			node(const T & data) : _data(data), _before(0), _next(0) {}
-			~node(void);
+			class node
+			{
+			private:
+				node(void) : data(T()), previous(0), next(0) {}
+			public:
+				node(const T & data) : data(data), previous(0), next(0) {}
+				~node(void) {}
 
-			void	setData(T const & data) {_data = data;}
-			T &		getData(void) const {return _data;}
-			void	setBefore(node * before) {_before = before;}
-			node *	getBefore(void) const {return _before;}
-			void	setNext(node * next) {_next = next;}
-			node *	getNext(void) const {return _next;}
-		};
-		
-		typedef T					value_type;
-		typedef value_type&			reference;
-		typedef const value_type&	const_reference;
-		typedef value_type*			pointer;
-		typedef const value_type*	const_pointer;
-		typedef std::ptrdiff_t		differrence_type;
-		typedef size_t				size_type;
+				T		data;
+				node *	previous;
+				node *	next;
+			};
 
-		node *	_front;
-		node *	_back;
+			node *		_front;
+			node *		_back;
+			size_type	_size;
+			Alloc		_allocator;
+
+			// node *	allocate(T & val) {
+			// 	pointer value = _allocator.allocatate(1);
+			// return (_allocator.allocate(n));
+			// }
 
 		public:
-			list(void) : _front(0), _back(0) {}
-			list(size_type n, const value_type& val = value_type()) {
-				for (size_type i = 0; i < n; i++)
-					push_front(val);
+			list (const allocator_type& alloc = allocator_type()): _front(0), _back(0), _size(0), _allocator(alloc) {}
+			// list(size_type n, const value_type& val = value_type()) {
+			// 	for (size_type i = 0; i < n; i++)
+			// 		push_front(val);
+			// }
+			// list(const list & x) {this = x;}
+			~list(void) {
+				clear();
 			}
-			list(const list & x) {this = x;}
-			~list(void) {}
 
 			bool	empty() const{
 				if (!_front)
@@ -52,17 +58,48 @@ namespace ft {
 				return true;
 			}
 
+			size_type	sise() const {
+				return (_size);
+			}
+
+			size_type max_size() const {
+				return (_allocator.max_size());
+			}
+
 			reference front(){
-				return (*_front);
+				return (_front->data);
+			}
+
+			reference back(){
+				return (_back->data);
 			}
 
 			void push_front (const value_type& val){
 				list::node * elm = new node(val);
-				elm->setNext(_front);
-				_front->setBefore(elm);
+				elm->next = _front;
+				if (_front)
+					_front->previous = elm;
 				_front = elm;
 				if (!_back)
 					_back = elm;
+				_size++;
+			}
+
+			void pop_front () {
+				node * next_node = _front->next;
+				delete _front;
+				_front = next_node;
+				_front->previous = 0;
+				_size--;
+			}
+
+			void clear () {
+				node * next_node = 0;
+				while (_front) {
+					next_node = _front->next;
+					delete _front;
+					_front = next_node;
+				}
 			}
 	};
 }

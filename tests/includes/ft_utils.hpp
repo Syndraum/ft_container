@@ -3,5 +3,6 @@
 # define FT_UTILS_H
 
 #include "vector.hpp"
+#include "list.hpp"
 
 #endif

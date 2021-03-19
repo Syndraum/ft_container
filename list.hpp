@@ -41,6 +41,14 @@ namespace ft {
 				clear();
 			}
 
+			iterator begin() {
+				return (iterator(_front));
+			}
+
+			iterator end() {
+				return (iterator(_back->next));
+			}
+
 			bool	empty() const{
 				if (!_front)
 					return false;

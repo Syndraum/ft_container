@@ -93,6 +93,18 @@ namespace ft {
 				_size--;
 			}
 
+			void push_back (const value_type& val) {
+				list::node * elm = new node(val);
+				elm->previous = _back;
+				if (_back)
+					_back->next = elm;
+				
+				_back = elm;
+				if (!_front)
+					_front = elm;
+				_size++;
+			}
+
 			void clear () {
 				node * next_node = 0;
 				while (_front) {

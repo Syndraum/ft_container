@@ -21,9 +21,9 @@ namespace ft
 		typedef ft::node<T>									node;
 
 		list_iterator() : _node(0) {}
-		list_iterator(node &x) : _node(&x) {}
+		list_iterator(node *x) : _node(x) {}
 		list_iterator(const iterator &x) { *this = x; }
-		~list_iterator();
+		~list_iterator() {}
 
 		iterator &operator=(const iterator &x)
 		{
@@ -56,7 +56,7 @@ namespace ft
 		iterator operator++(int)
 		{
 			iterator tmp = *this;
-			++(this->_node);
+			this->_node = this->_node->next;
 			return (tmp);
 		}
 
@@ -68,7 +68,7 @@ namespace ft
 		iterator operator--(int)
 		{
 			iterator tmp = *this;
-			--(this->_node);
+			this->_node = this->_node->previous;
 			return (tmp);
 		}
 

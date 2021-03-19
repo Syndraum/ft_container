@@ -2,35 +2,29 @@
 # define LIST_H
 
 #include <cstdlib>
+#include "list_iterator.hpp"
+#include "node.hpp"
 
 namespace ft {
 	template < typename T, class Alloc = ft::allocator<T> >
 	class list
 	{
 		public:
-			typedef T					value_type;
-			typedef Alloc				allocator_type;
-			typedef value_type&			reference;
-			typedef const value_type&	const_reference;
-			typedef value_type*			pointer;
-			typedef const value_type*	const_pointer;
-			typedef std::ptrdiff_t		differrence_type;
-			typedef size_t				size_type;
+			typedef T										value_type;
+			typedef Alloc									allocator_type;
+			typedef value_type&								reference;
+			typedef const value_type&						const_reference;
+			typedef value_type*								pointer;
+			typedef const value_type*						const_pointer;
+			typedef ft::list_iterator<value_type>			iterator;
+			typedef ft::list_iterator<const value_type>		const_iterator;
+			typedef ft::reverse_iterator< iterator >		reverse_iterator;
+			typedef ft::reverse_iterator< const_iterator >	const_reverse_iterator;
+			typedef std::ptrdiff_t							differrence_type;
+			typedef size_t									size_type;
+			typedef ft::node<T>								node;
 
 		private:
-			class node
-			{
-			private:
-				node(void) : data(T()), previous(0), next(0) {}
-			public:
-				node(const T & data) : data(data), previous(0), next(0) {}
-				~node(void) {}
-
-				T		data;
-				node *	previous;
-				node *	next;
-			};
-
 			node *		_front;
 			node *		_back;
 			size_type	_size;

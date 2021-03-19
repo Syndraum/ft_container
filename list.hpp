@@ -37,11 +37,11 @@ namespace ft {
 			Alloc		_allocator;
 
 		public:
-			list (const allocator_type& alloc = allocator_type()): _front(0), _back(0), _size(0), _allocator(alloc) {}
-			// list(size_type n, const value_type& val = value_type()) {
-			// 	for (size_type i = 0; i < n; i++)
-			// 		push_front(val);
-			// }
+			list (const allocator_type& alloc = allocator_type()) : _front(0), _back(0), _size(0), _allocator(alloc) {}
+			list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _front(0), _back(0), _size(0), _allocator(alloc) {
+				for (size_type i = 0; i < n; i++)
+					push_front(val);
+			}
 			// list(const list & x) {this = x;}
 			~list(void) {
 				clear();

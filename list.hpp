@@ -36,11 +36,6 @@ namespace ft {
 			size_type	_size;
 			Alloc		_allocator;
 
-			// node *	allocate(T & val) {
-			// 	pointer value = _allocator.allocatate(1);
-			// return (_allocator.allocate(n));
-			// }
-
 		public:
 			list (const allocator_type& alloc = allocator_type()): _front(0), _back(0), _size(0), _allocator(alloc) {}
 			// list(size_type n, const value_type& val = value_type()) {
@@ -58,7 +53,7 @@ namespace ft {
 				return true;
 			}
 
-			size_type	sise() const {
+			size_type	size() const {
 				return (_size);
 			}
 
@@ -111,6 +106,17 @@ namespace ft {
 				_back = previous_node;
 				_back->next = 0;
 				_size--;
+			}
+
+			void resize (size_type n, value_type val = value_type()) {
+				if (n < size()){
+					while (size() > n)
+						pop_back();
+				}
+				else{
+					while (size() < n)
+						push_back(val);
+				}
 			}
 
 			void clear () {

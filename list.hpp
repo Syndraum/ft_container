@@ -105,6 +105,14 @@ namespace ft {
 				_size++;
 			}
 
+			void pop_back() {
+				node * previous_node = _back->previous;
+				delete _back;
+				_back = previous_node;
+				_back->next = 0;
+				_size--;
+			}
+
 			void clear () {
 				node * next_node = 0;
 				while (_front) {

@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include "list_iterator.hpp"
 #include "node.hpp"
+#include "reverse_iterator.hpp"
 
 namespace ft {
 	template < typename T, class Alloc = ft::allocator<T> >
@@ -45,8 +46,24 @@ namespace ft {
 				return (iterator(_front));
 			}
 
+			const_iterator begin() const {
+				return (iterator(_front));
+			}
+
 			iterator end() {
 				return (iterator(_back->next));
+			}
+
+			const_iterator end() const {
+				return (iterator(_back->next));
+			}
+
+			reverse_iterator rbegin() {
+				return (reverse_iterator(_back->next));
+			}
+
+			reverse_iterator rend() {
+				return (reverse_iterator(_front));
 			}
 
 			bool	empty() const{

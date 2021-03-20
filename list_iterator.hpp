@@ -41,8 +41,10 @@ namespace ft
 			return (!(x == y));
 		}
 
-		operator vector_iterator<const T>() {
-			return vector_iterator<const T>(*this->_node);
+		operator list_iterator<const T>() {
+			ft::node<const T> new_node(*this->_node);
+			// new_node.previous = *this->_node->previous;
+			return list_iterator<const T>(&new_node);
 		}
 
 		value_type &operator*() const { return (_node->data); }

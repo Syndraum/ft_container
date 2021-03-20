@@ -47,6 +47,15 @@ namespace ft {
 				clear();
 			}
 
+			list& operator= (const list& x) {
+				this->clear();
+				const_iterator it;
+				for (it = x.begin(); it != x.end(); it++){
+					this->push_back(*it);
+				}
+				return (*this);
+			}
+
 			iterator begin() {
 				return (iterator(_front.next));
 			}
@@ -154,14 +163,19 @@ namespace ft {
 			}
 
 			void clear () {
-				node * next_node = 0;
-				node * cursor = _front.next;
+				// node * next_node = 0;
+				// node * cursor = _front.next;
 
-				while (cursor != &_back) {
-					next_node = cursor->next;
-					delete cursor;
-					cursor = next_node;
+				while (size() > 0) {
+					// next_node = cursor->next;
+					// delete cursor;
+					// cursor = next_node;
+					pop_front();
+					std::cout << "CLEAR\n";
 				}
+				std::cout << "END\n";
+				// _front.next = &_back;
+				// _back.next = &_front;
 			}
 	};
 }

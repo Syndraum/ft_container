@@ -9,14 +9,16 @@ void print_list(list<T> & list) {
 
 int main() {
 	list<int> myList;
+	myList.push_front(1);
+	print_list(myList);
 	myList.push_front(3);
 	print_list(myList);
 	myList.push_front(42);
 	print_list(myList);
-	myList.push_front(5);
-	print_list(myList);
 	myList.pop_front();
-	myList.push_back(7);
+	myList.push_back(5);
+	print_list(myList);
+	
 	myList.push_back(767);
 	myList.push_back(0);
 	print_list(myList);
@@ -31,19 +33,17 @@ int main() {
 	print_list(myFillList);
 
 	for (list<int>::iterator it = myList.begin(); it != myList.end() ; it++)
-	{
 		std::cout << *it << std::endl;
-	}
 
-	list<int>::iterator it = myList.begin();
-	it++;
-	it--;
-	std::cout << *it << std::endl;
 	for (list<int>::reverse_iterator rit = myList.rbegin(); rit != myList.rend() ; rit++)
-	{
 		std::cout << *rit << std::endl;
-	}
 	
+	// list<int> copyList;
+	// copyList = myList;
+	list<int>::const_iterator cit = myList.begin();
+	std::cout << *cit << std::endl;
+	// for (list<int>::iterator it = copyList.begin(); it != copyList.end() ; it++)
+	// 	std::cout << *it << std::endl;
 
 	return 0;
 }

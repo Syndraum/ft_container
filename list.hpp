@@ -26,48 +26,52 @@ namespace ft {
 			typedef ft::node<T>								node;
 
 		private:
-			node *		_front;
-			node *		_back;
+			node		_front;
+			node		_back;
 			size_type	_size;
 			Alloc		_allocator;
 
 		public:
-			list (const allocator_type& alloc = allocator_type()) : _front(0), _back(0), _size(0), _allocator(alloc) {}
-			list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _front(0), _back(0), _size(0), _allocator(alloc) {
-				for (size_type i = 0; i < n; i++)
-					push_front(val);
+			list (const allocator_type& alloc = allocator_type()) : _front(node(T())), _back(node(T())), _size(0), _allocator(alloc) {
+				_front.next = &_back;
+				_back.next = &_front;
 			}
+			// list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _front(node(T()), _back(node(T()), _size(0), _allocator(alloc) {
+			// 	for (size_type i = 0; i < n; i++)
+			// 		push_front(val);
+			// }
 			// list(const list & x) {this = x;}
 			~list(void) {
 				clear();
 			}
 
-			iterator begin() {
-				return (iterator(_front));
-			}
+			// iterator begin() {
+			// 	return (iterator(_front));
+			// }
 
-			const_iterator begin() const {
-				return (iterator(_front));
-			}
+			// const_iterator begin() const {
+			// 	return (iterator(_front));
+			// }
 
-			iterator end() {
-				return (iterator(_back->next));
-			}
+			// iterator end() {
+			// 	return (iterator(_back->next));
+			// }
 
-			const_iterator end() const {
-				return (iterator(_back->next));
-			}
+			// const_iterator end() const {
+			// 	return (iterator(_back->next));
+			// }
 
-			reverse_iterator rbegin() {
-				return (reverse_iterator(_back->next));
-			}
+			// reverse_iterator rbegin() {
+			// 	return (reverse_iterator(_back->next));
+			// }
 
-			reverse_iterator rend() {
-				return (reverse_iterator(_front));
-			}
+			// reverse_iterator rend() {
+			// 	return (reverse_iterator(_front));
+			// }
 
 			bool	empty() const{
-				if (!_front)
+
+				if (_front.next != &_back)
 					return false;
 				return true;
 			}
@@ -81,69 +85,72 @@ namespace ft {
 			}
 
 			reference front(){
-				return (_front->data);
+				return (_front.next->data);
 			}
 
 			reference back(){
-				return (_back->data);
+				return (_back.previous->data);
 			}
 
 			void push_front (const value_type& val){
 				list::node * elm = new node(val);
-				elm->next = _front;
-				if (_front)
-					_front->previous = elm;
-				_front = elm;
-				if (!_back)
-					_back = elm;
+
+				elm->next = _front.next;
+				elm->previous = &_front;
+				_front.next->previous = elm;
+				_front.next = elm;
 				_size++;
 			}
 
 			void pop_front () {
-				node * next_node = _front->next;
-				delete _front;
-				_front = next_node;
-				_front->previous = 0;
+				if (empty())
+					return ;
+				node * next_node = _front.next->next;
+				delete _front.next;
+				_front.next = next_node;
+				next_node->previous = &_front;
 				_size--;
 			}
 
 			void push_back (const value_type& val) {
 				list::node * elm = new node(val);
-				elm->previous = _back;
-				if (_back)
-					_back->next = elm;
-				
-				_back = elm;
-				if (!_front)
-					_front = elm;
+
+				elm->next = &_back;
+				elm->previous = _back.previous;
+				_back.previous->next = elm;
+				_back.previous = elm;
 				_size++;
 			}
 
 			void pop_back() {
-				node * previous_node = _back->previous;
-				delete _back;
-				_back = previous_node;
-				_back->next = 0;
+				if (empty())
+					return ;
+				node * previous_node = _back.previous->previous;
+				delete _back.previous;
+				_back.previous = previous_node;
+				previous_node->next = &_back;
 				_size--;
 			}
 
-			void resize (size_type n, value_type val = value_type()) {
-				if (n < size()){
-					while (size() > n)
-						pop_back();
-				}
-				else{
-					while (size() < n)
-						push_back(val);
-				}
-			}
+			// void resize (size_type n, value_type val = value_type()) {
+			// 	if (n < size()){
+			// 		while (size() > n)
+			// 			pop_back();
+			// 	}
+			// 	else{
+			// 		while (size() < n)
+			// 			push_back(val);
+			// 	}
+			// }
 
 			void clear () {
 				node * next_node = 0;
-				while (_front) {
-					next_node = _front->next;
-					delete _front;
-					_front = next_node;
+				node * cursor = _front.next;
+
+				while (cursor != &_back) {
+					next_node = cursor->next;
+					delete cursor;
+					cursor = next_node;
 				}
 			}
 	};

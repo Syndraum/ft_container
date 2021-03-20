@@ -36,38 +36,48 @@ namespace ft {
 				_front.next = &_back;
 				_back.next = &_front;
 			}
-			// list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _front(node(T()), _back(node(T()), _size(0), _allocator(alloc) {
-			// 	for (size_type i = 0; i < n; i++)
-			// 		push_front(val);
-			// }
+			list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _front(node(T())), _back(node(T())), _size(0), _allocator(alloc) {
+				_front.next = &_back;
+				_back.next = &_front;
+				for (size_type i = 0; i < n; i++)
+					push_front(val);
+			}
 			// list(const list & x) {this = x;}
 			~list(void) {
 				clear();
 			}
 
-			// iterator begin() {
-			// 	return (iterator(_front));
-			// }
+			iterator begin() {
+				return (iterator(_front.next));
+			}
 
-			// const_iterator begin() const {
-			// 	return (iterator(_front));
-			// }
+			const_iterator begin() const {
+				return (const_iterator(_front.next));
+			}
 
-			// iterator end() {
-			// 	return (iterator(_back->next));
-			// }
+			iterator end() {
+				return (iterator(&_back));
+			}
 
-			// const_iterator end() const {
-			// 	return (iterator(_back->next));
-			// }
+			const_iterator end() const {
+				return (const_iterator(&_back));
+			}
 
-			// reverse_iterator rbegin() {
-			// 	return (reverse_iterator(_back->next));
-			// }
+			reverse_iterator rbegin() {
+				return (reverse_iterator(&_back));
+			}
 
-			// reverse_iterator rend() {
-			// 	return (reverse_iterator(_front));
-			// }
+			const_reverse_iterator rbegin() const {
+				return (reverse_iterator(&_back));
+			}
+
+			reverse_iterator rend() {
+				return (reverse_iterator(_front.next));
+			}
+
+			const_reverse_iterator rend() const {
+				return (reverse_iterator(_front.next));
+			}
 
 			bool	empty() const{
 
@@ -132,16 +142,16 @@ namespace ft {
 				_size--;
 			}
 
-			// void resize (size_type n, value_type val = value_type()) {
-			// 	if (n < size()){
-			// 		while (size() > n)
-			// 			pop_back();
-			// 	}
-			// 	else{
-			// 		while (size() < n)
-			// 			push_back(val);
-			// 	}
-			// }
+			void resize (size_type n, value_type val = value_type()) {
+				if (n < size()){
+					while (size() > n)
+						pop_back();
+				}
+				else{
+					while (size() < n)
+						push_back(val);
+				}
+			}
 
 			void clear () {
 				node * next_node = 0;

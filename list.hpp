@@ -127,6 +127,15 @@ namespace ft {
 				return (_back.previous->data);
 			}
 
+			template <class InputIterator>
+			void assign (
+				InputIterator first,
+				typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last) {
+				clear();
+				for (InputIterator it = first; it != last; it++)
+					push_back(*it);
+			}
+
 			void assign (size_type n, const value_type& val) {
 				clear();
 				for (size_type i = 0; i < n; i++)

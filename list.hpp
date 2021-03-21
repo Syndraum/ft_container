@@ -244,6 +244,24 @@ namespace ft {
 				return (cursor);
 			}
 
+			iterator erase (iterator first, iterator last) {
+				iterator	cursor;
+				node		*elm;
+				size_type	diff = ft::distance(first, last);
+
+				for (cursor = begin(); cursor != first; cursor++) { continue; }
+				for (size_type i = 0; i < diff; i++)
+				{
+					elm = cursor.getNode();
+					elm->previous->next = elm->next;
+					elm->next->previous = elm->previous;
+					cursor++;
+					delete elm;
+				}
+				_size -= diff;
+				return (cursor);
+			}
+
 			void resize (size_type n, value_type val = value_type()) {
 				if (n < size()){
 					while (size() > n)

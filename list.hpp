@@ -182,6 +182,19 @@ namespace ft {
 				_size--;
 			}
 
+			iterator insert (iterator position, const value_type& val) {
+				iterator cursor;
+				node * elm = new node(val);
+
+				for (cursor = begin(); cursor != position; cursor++) { continue; }
+				elm->previous = cursor.getNode()->previous;
+				elm->next = cursor.getNode();
+				elm->next->previous = elm;
+				elm->previous->next = elm;
+				_size++;
+				return (elm);
+			}
+
 			void resize (size_type n, value_type val = value_type()) {
 				if (n < size()){
 					while (size() > n)

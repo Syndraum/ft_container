@@ -74,6 +74,10 @@ namespace ft
 			return (tmp);
 		}
 
+		node *	getNode(){
+			return (this->_node);
+		}
+
 	protected:
 		node *_node;
 	};

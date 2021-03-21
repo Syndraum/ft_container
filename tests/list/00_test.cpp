@@ -38,10 +38,14 @@ int main() {
 	for (list<int>::reverse_iterator rit = myList.rbegin(); rit != myList.rend() ; rit++)
 		std::cout << *rit << std::endl;
 	
+	std::cout << "Iterator LIst :\n";
+	list<int> itList(myList.begin(), myList.end());
+	for (list<int>::iterator it = itList.begin(); it != itList.end() ; it++)
+		std::cout << *it << std::endl;
 	// list<int> copyList;
 	// copyList = myList;
-	list<int>::const_iterator cit = myList.begin();
-	std::cout << *cit << std::endl;
+	// list<int>::const_iterator cit = myList.begin();
+	// std::cout << *cit << std::endl;
 	// for (list<int>::iterator it = copyList.begin(); it != copyList.end() ; it++)
 	// 	std::cout << *it << std::endl;
 

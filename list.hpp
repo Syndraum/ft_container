@@ -42,51 +42,67 @@ namespace ft {
 				for (size_type i = 0; i < n; i++)
 					push_front(val);
 			}
+
+			template <class InputIterator>
+			list (
+				InputIterator first,
+				typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last,
+				const allocator_type& alloc = allocator_type()) : _front(node(T())), _back(node(T())), _size(0), _allocator(alloc) {
+				_front.next = &_back;
+				_back.next = &_front;
+				for (InputIterator it = first; it != last; it++)
+					push_back(*it);
+			}
+
 			// list(const list & x) {this = x;}
 			~list(void) {
 				clear();
 			}
 
-			list& operator= (const list& x) {
-				this->clear();
-				const_iterator it;
-				for (it = x.begin(); it != x.end(); it++){
-					this->push_back(*it);
-				}
-				return (*this);
-			}
+			// list& operator= (const list& x) {
+			// 	this->clear();
+			// 	const_iterator it;
+			// 	for (it = x.begin(); it != x.end(); it++){
+			// 		this->push_back(*it);
+			// 	}
+			// 	return (*this);
+			// }
 
 			iterator begin() {
+				if (empty())
+					return (iterator());
 				return (iterator(_front.next));
 			}
 
-			const_iterator begin() const {
-				return (const_iterator(_front.next));
-			}
+			// const_iterator begin() const {
+			// 	return (const_iterator(_front.next));
+			// }
 
 			iterator end() {
+				if (empty())
+					return (iterator());
 				return (iterator(&_back));
 			}
 
-			const_iterator end() const {
-				return (const_iterator(&_back));
-			}
+			// const_iterator end() const {
+			// 	return (const_iterator(&_back));
+			// }
 
 			reverse_iterator rbegin() {
 				return (reverse_iterator(&_back));
 			}
 
-			const_reverse_iterator rbegin() const {
-				return (reverse_iterator(&_back));
-			}
+			// const_reverse_iterator rbegin() const {
+			// 	return (reverse_iterator(&_back));
+			// }
 
 			reverse_iterator rend() {
 				return (reverse_iterator(_front.next));
 			}
 
-			const_reverse_iterator rend() const {
-				return (reverse_iterator(_front.next));
-			}
+			// const_reverse_iterator rend() const {
+			// 	return (reverse_iterator(_front.next));
+			// }
 
 			bool	empty() const{
 
@@ -163,19 +179,8 @@ namespace ft {
 			}
 
 			void clear () {
-				// node * next_node = 0;
-				// node * cursor = _front.next;
-
-				while (size() > 0) {
-					// next_node = cursor->next;
-					// delete cursor;
-					// cursor = next_node;
+				while (size() > 0) 
 					pop_front();
-					std::cout << "CLEAR\n";
-				}
-				std::cout << "END\n";
-				// _front.next = &_back;
-				// _back.next = &_front;
 			}
 	};
 }

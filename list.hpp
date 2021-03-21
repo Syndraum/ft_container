@@ -34,11 +34,11 @@ namespace ft {
 		public:
 			list (const allocator_type& alloc = allocator_type()) : _front(node(T())), _back(node(T())), _size(0), _allocator(alloc) {
 				_front.next = &_back;
-				_back.next = &_front;
+				_back.previous = &_front;
 			}
 			list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _front(node(T())), _back(node(T())), _size(0), _allocator(alloc) {
 				_front.next = &_back;
-				_back.next = &_front;
+				_back.previous = &_front;
 				for (size_type i = 0; i < n; i++)
 					push_front(val);
 			}
@@ -49,7 +49,7 @@ namespace ft {
 				typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last,
 				const allocator_type& alloc = allocator_type()) : _front(node(T())), _back(node(T())), _size(0), _allocator(alloc) {
 				_front.next = &_back;
-				_back.next = &_front;
+				_back.previous = &_front;
 				for (InputIterator it = first; it != last; it++)
 					push_back(*it);
 			}
@@ -150,8 +150,8 @@ namespace ft {
 			void push_back (const value_type& val) {
 				list::node * elm = new node(val);
 
-				elm->next = &_back;
 				elm->previous = _back.previous;
+				elm->next = &_back;
 				_back.previous->next = elm;
 				_back.previous = elm;
 				_size++;

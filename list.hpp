@@ -210,6 +210,26 @@ namespace ft {
 				_size += n;
 			}
 
+			template <class InputIterator>
+			void insert (
+					iterator position,
+					InputIterator first,
+					typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last
+				) {
+				iterator cursor;
+				node * elm = 0;
+
+				for (cursor = begin(); cursor != position; cursor++) { continue; }
+				for (InputIterator it = first; it != last; it++){
+					elm = new node(*it);
+					elm->previous = cursor.getNode()->previous;
+					elm->next = cursor.getNode();
+					elm->next->previous = elm;
+					elm->previous->next = elm;
+				}
+				_size += ft::distance(first, last);
+			}
+
 			void resize (size_type n, value_type val = value_type()) {
 				if (n < size()){
 					while (size() > n)

@@ -127,6 +127,12 @@ namespace ft {
 				return (_back.previous->data);
 			}
 
+			void assign (size_type n, const value_type& val) {
+				clear();
+				for (size_type i = 0; i < n; i++)
+					push_back(val);
+			}
+
 			void push_front (const value_type& val){
 				list::node * elm = new node(val);
 

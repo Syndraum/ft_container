@@ -192,7 +192,22 @@ namespace ft {
 				elm->next->previous = elm;
 				elm->previous->next = elm;
 				_size++;
-				return (elm);
+				return (iterator(elm));
+			}
+
+			void insert (iterator position, size_type n, const value_type& val) {
+				iterator cursor;
+				node * elm = 0;
+
+				for (cursor = begin(); cursor != position; cursor++) { continue; }
+				for (size_type i = 0; i < n; i++){
+					elm = new node(val);
+					elm->previous = cursor.getNode()->previous;
+					elm->next = cursor.getNode();
+					elm->next->previous = elm;
+					elm->previous->next = elm;
+				}
+				_size += n;
 			}
 
 			void resize (size_type n, value_type val = value_type()) {

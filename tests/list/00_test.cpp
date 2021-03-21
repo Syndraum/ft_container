@@ -2,9 +2,17 @@
 
 using namespace NAMESPACE;
 
+// template < typename T>
+// void print_list(list<T> & list) {
+// 	std::cout << "front : " << list.front() << "\tback : " << list.back() << "\tsize : " << list.size() << "\n";
+// }
+
 template < typename T>
-void print_list(list<T> & list) {
-	std::cout << "front : " << list.front() << "\tback : " << list.back() << "\tsize : " << list.size() << "\n";
+void print_list(list<T> & myList) {
+	std::cout << "front : " << myList.front() << "\tback : " << myList.back() << "\tsize : " << myList.size() << "\n";
+	for (typename list<T>::iterator it = myList.begin(); it != myList.end() ; it++)
+			std::cout << *it << " | ";
+	std::cout << "\n";
 }
 
 int main() {
@@ -32,16 +40,44 @@ int main() {
 	list<int> myFillList(4, 67);
 	print_list(myFillList);
 
-	for (list<int>::iterator it = myList.begin(); it != myList.end() ; it++)
-		std::cout << *it << std::endl;
+	print_list(myList);
 
 	for (list<int>::reverse_iterator rit = myList.rbegin(); rit != myList.rend() ; rit++)
 		std::cout << *rit << std::endl;
 	
 	std::cout << "Iterator LIst :\n";
 	list<int> itList(myList.begin(), myList.end());
-	for (list<int>::iterator it = itList.begin(); it != itList.end() ; it++)
-		std::cout << *it << std::endl;
+	print_list(itList);
+
+	itList.assign(2, 42);
+	print_list(itList);
+	itList.assign(5, 20);
+	print_list(itList);
+	itList.assign(myFillList.begin(), myFillList.end());
+	print_list(itList);
+
+	list<int>::iterator retIt = itList.insert(itList.begin(), 42);
+	print_list(itList);
+	std::cout << *retIt << std::endl;
+
+	itList.insert(++itList.begin(), 4, 0);
+	print_list(itList);
+
+	itList.insert(++itList.begin(), 5);
+	print_list(itList);
+
+	retIt = itList.erase(itList.begin());
+	print_list(itList);
+	std::cout << *retIt << std::endl;
+
+	retIt = itList.erase(itList.begin(), --itList.end());
+	print_list(itList);
+	std::cout << *retIt << std::endl;
+
+	itList.swap(myFillList);
+	print_list(itList);
+	print_list(myFillList);
+
 	// list<int> copyList;
 	// copyList = myList;
 	// list<int>::const_iterator cit = myList.begin();

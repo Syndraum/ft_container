@@ -196,8 +196,8 @@ namespace ft {
 			}
 
 			void insert (iterator position, size_type n, const value_type& val) {
-				iterator cursor;
-				node * elm = 0;
+				iterator	cursor;
+				node		*elm = 0;
 
 				for (cursor = begin(); cursor != position; cursor++) { continue; }
 				for (size_type i = 0; i < n; i++){
@@ -216,8 +216,8 @@ namespace ft {
 					InputIterator first,
 					typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last
 				) {
-				iterator cursor;
-				node * elm = 0;
+				iterator	cursor;
+				node		*elm = 0;
 
 				for (cursor = begin(); cursor != position; cursor++) { continue; }
 				for (InputIterator it = first; it != last; it++){
@@ -228,6 +228,20 @@ namespace ft {
 					elm->previous->next = elm;
 				}
 				_size += ft::distance(first, last);
+			}
+
+			iterator erase (iterator position) {
+				iterator	cursor;
+				node		*elm;
+
+				for (cursor = begin(); cursor != position; cursor++) { continue; }
+				elm = cursor.getNode();
+				elm->previous->next = elm->next;
+				elm->next->previous = elm->previous;
+				cursor = iterator(elm->next);
+				delete elm;
+				_size--;
+				return (cursor);
 			}
 
 			void resize (size_type n, value_type val = value_type()) {

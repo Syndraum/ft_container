@@ -327,7 +327,20 @@ namespace ft {
 				}
 			}
 
-			
+			template <class Predicate>
+			void remove_if (Predicate pred) {
+				iterator jump;
+
+				for (iterator it = begin(); it != end(); it++)
+				{
+					if (pred(*it)){
+						jump = it;
+						jump--;
+						erase(it);
+						it = jump;
+					}
+				}
+			}
 	};
 }
 

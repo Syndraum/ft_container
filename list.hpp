@@ -351,7 +351,19 @@ namespace ft {
 					}
 					last = it;
 				}
-				
+			}
+
+			template <class BinaryPredicate>
+			void unique (BinaryPredicate binary_pred) {
+				iterator last = begin();
+
+				for (iterator it = ++begin(); it != end(); it++){
+					if (binary_pred(*it, *last)){
+						erase(it);
+						it = last;
+					}
+					last = it;
+				}
 			}
 	};
 }

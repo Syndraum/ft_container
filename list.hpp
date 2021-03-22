@@ -262,6 +262,15 @@ namespace ft {
 				return (cursor);
 			}
 
+			void swap (list& x) {
+				ft::swap(this->_size, x._size);
+				ft::swap(this->_front.next, x._front.next);
+				ft::swap(this->_back.previous, x._back.previous);
+				ft::swap(this->_back.previous->next, x._back.previous->next);
+				ft::swap(this->_front.next->previous, x._front.next->previous);
+				ft::swap(this->_allocator, x._allocator);
+			}
+
 			void resize (size_type n, value_type val = value_type()) {
 				if (n < size()){
 					while (size() > n)

@@ -32,6 +32,6 @@ int main ()
   for (list<double>::iterator it=first.begin(); it!=first.end(); ++it){
     std::cout << ' ' << *it;
   }
-  std::cout << '\n' << "NIQUE" << '\n';
+  std::cout << '\n';
   return 0;
 }

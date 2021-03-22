@@ -331,8 +331,7 @@ namespace ft {
 			void remove_if (Predicate pred) {
 				iterator jump;
 
-				for (iterator it = begin(); it != end(); it++)
-				{
+				for (iterator it = begin(); it != end(); it++){
 					if (pred(*it)){
 						jump = it;
 						jump--;
@@ -340,6 +339,19 @@ namespace ft {
 						it = jump;
 					}
 				}
+			}
+
+			void unique() {
+				iterator last = begin();
+
+				for (iterator it = ++begin(); it != end(); it++){
+					if (*it == *last){
+						erase(it);
+						it = last;
+					}
+					last = it;
+				}
+				
 			}
 	};
 }

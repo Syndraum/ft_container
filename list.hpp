@@ -392,6 +392,18 @@ namespace ft {
 					this->splice(this->end(), x);
 				}
 			}
+
+			void reverse() {
+				node * cursor = 0;
+
+				ft::swap(_front.next, _back.previous);
+				_front.next->next = &_front;
+				_back.previous->previous = &_back;
+				for (iterator it = begin(); it != end(); it++ ){
+					cursor = it.getNode();
+					ft::swap(cursor->next, cursor->previous);
+				}
+			}
 	};
 }
 

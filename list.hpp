@@ -397,14 +397,31 @@ namespace ft {
 				node * cursor = 0;
 
 				ft::swap(_front.next, _back.previous);
-				_front.next->next = &_front;
-				_back.previous->previous = &_back;
+				ft::swap(_front.next->next, _back.previous->previous);
 				for (iterator it = begin(); it != end(); it++ ){
 					cursor = it.getNode();
 					ft::swap(cursor->next, cursor->previous);
 				}
 			}
 	};
+
+	// template <class T, class Alloc>
+	// bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+	// 	if (lhs.size() != rhs.size())
+	// 		return (false);
+	// 	// list<T,Alloc>iterator lit = lhs.begin();
+	// 	typename list<T,Alloc>::iterator rit = rhs.begin();
+	// 	for (typename list<T,Alloc>::iterator lit = lhs.begin(); lit != lit.end(); lit++){
+	// 		if (*lit != *rit)
+	// 			return (false);
+	// 	}
+	// 	return (true);
+	// }
+
+	// template <class T, class Alloc>
+	// bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+	// 	return (!(lhs == rhs));
+	// }
 }
 
 #endif

@@ -59,30 +59,29 @@ namespace ft {
 				clear();
 			}
 
-			// list& operator= (const list& x) {
-			// 	this->clear();
-			// 	const_iterator it;
-			// 	for (it = x.begin(); it != x.end(); it++){
-			// 		this->push_back(*it);
-			// 	}
-			// 	return (*this);
-			// }
+			list& operator= (const list& x) {
+				this->clear();
+				const_iterator it;
+				for (it = x.begin(); it != x.end(); it++)
+					this->push_back(*it);
+				return (*this);
+			}
 
 			iterator begin() {
 				return (iterator(_front.next));
 			}
 
-			// const_iterator begin() const {
-			// 	return (const_iterator(_front.next));
-			// }
+			const_iterator begin() const {
+				return (const_iterator(_front.next));
+			}
 
 			iterator end() {
 				return (iterator(&_back));
 			}
 
-			// const_iterator end() const {
-			// 	return (const_iterator(&_back));
-			// }
+			const_iterator end() const {
+				return (const_iterator(&_back));
+			}
 
 			reverse_iterator rbegin() {
 				return (reverse_iterator(&_back));
@@ -422,6 +421,11 @@ namespace ft {
 	// bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
 	// 	return (!(lhs == rhs));
 	// }
+
+	template <class T, class Alloc>
+	void swap (list<T,Alloc>& x, list<T,Alloc>& y) {
+		x.swap(y);
+	}
 }
 
 #endif

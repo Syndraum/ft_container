@@ -15,6 +15,8 @@ void print_list(list<T> & myList) {
 	std::cout << "\n";
 }
 
+bool single_digit (const int& value) { return (value<10); }
+
 int main() {
 	list<int> myList;
 	myList.push_front(1);
@@ -77,6 +79,28 @@ int main() {
 	itList.swap(myFillList);
 	print_list(itList);
 	print_list(myFillList);
+
+	list<int>::iterator	it = itList.begin();
+	it++;
+
+	// itList.splice(it, myList, myList.begin(), myList.end());
+	// itList.splice(it, myList);
+	// itList.splzice(it, myList, (myList.begin())++ );
+	print_list(itList);
+	print_list(myList);
+
+	itList.remove(67);
+	print_list(itList);
+
+	int myints[]= {15,36,7,17,20,39,4,1};
+	list<int> mylist (myints,myints+8);
+	mylist.remove_if (single_digit);
+	print_list(mylist);
+
+	int myints2[]= {1,1,1,17,20,39,4,4,1};
+	list<int> mylist2 (myints2,myints2+9);
+	mylist2.unique();
+	print_list(mylist2);
 
 	// list<int> copyList;
 	// copyList = myList;

@@ -288,17 +288,29 @@ namespace ft {
 			}
 
 			void splice (iterator position, list& x) {
+				splice(position, x, x.begin(), x.end());
+			}
+
+			void splice (iterator position, list& x, iterator i) {
+				iterator inc = iterator(i);
+				splice (position, x, i, ++inc);
+			}
+
+			void splice (iterator position, list& x, iterator first, iterator last) {
 				node * end = position.getNode();
 				node * begin = end->previous;
+				node * new_first = first.getNode()->previous;
+				node * new_last = last.getNode();
+				size_type diff = ft::distance(first, last);
 
-				begin->next = x._front.next;
+				begin->next = new_first->next;
 				begin->next->previous = begin;
-				end->previous = x._back.previous;
+				end->previous = new_last->previous;
 				end->previous->next = end;
-				x._front.next = &x._back;
-				x._back.previous = &x._front;
-				this->_size += x.size();
-				x._size = 0;
+				new_first->next = new_last;
+				new_last->previous = new_first;
+				this->_size += diff;
+				x._size -= diff;
 			}
 	};
 }

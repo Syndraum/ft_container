@@ -286,6 +286,20 @@ namespace ft {
 				while (size() > 0) 
 					pop_front();
 			}
+
+			void splice (iterator position, list& x) {
+				node * end = position.getNode();
+				node * begin = end->previous;
+
+				begin->next = x._front.next;
+				begin->next->previous = begin;
+				end->previous = x._back.previous;
+				end->previous->next = end;
+				x._front.next = &x._back;
+				x._back.previous = &x._front;
+				this->_size += x.size();
+				x._size = 0;
+			}
 	};
 }
 

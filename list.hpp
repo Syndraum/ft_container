@@ -361,6 +361,37 @@ namespace ft {
 					last = it;
 				}
 			}
+
+			void merge (list& x) {
+				list<T> tmp;
+
+				if (this != &x){
+					while (!(this->empty() || x.empty())) {
+						if (this->front() < x.front())
+							tmp.splice(tmp.end(), *this, this->begin());
+						else
+							tmp.splice(tmp.end(), x, x.begin());
+					}
+					this->splice(this->begin(), tmp);
+					this->splice(this->end(), x);
+				}
+			}
+
+			template <class Compare>
+			void merge (list& x, Compare comp) {
+				list<T> tmp;
+
+				if (this != &x){
+					while (!(this->empty() || x.empty())) {
+						if (comp(this->front(), x.front()))
+							tmp.splice(tmp.end(), *this, this->begin());
+						else
+							tmp.splice(tmp.end(), x, x.begin());
+					}
+					this->splice(this->begin(), tmp);
+					this->splice(this->end(), x);
+				}
+			}
 	};
 }
 

@@ -312,6 +312,22 @@ namespace ft {
 				this->_size += diff;
 				x._size -= diff;
 			}
+
+			void remove (const value_type& val) {
+				iterator jump;
+
+				for (iterator it = begin(); it != end(); it++)
+				{
+					if (*it == val){
+						jump = it;
+						jump--;
+						erase(it);
+						it = jump;
+					}
+				}
+			}
+
+			
 	};
 }
 

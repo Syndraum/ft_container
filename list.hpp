@@ -69,8 +69,6 @@ namespace ft {
 			// }
 
 			iterator begin() {
-				if (empty())
-					return (iterator());
 				return (iterator(_front.next));
 			}
 
@@ -79,8 +77,6 @@ namespace ft {
 			// }
 
 			iterator end() {
-				if (empty())
-					return (iterator());
 				return (iterator(&_back));
 			}
 

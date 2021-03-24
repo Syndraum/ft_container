@@ -55,8 +55,11 @@ namespace ft {
 				for (InputIterator it = first; it != last; it++)
 					push_back(*it);
 			}
-
-			// list(const list & x) {this = x;}
+			list(const list & x) : _front(node(T())), _back(node(T())), _size(0), _allocator(x._allocator) {
+				_front.next = &_back;
+				_back.previous = &_front;
+				*this = x;
+			}
 			~list(void) {
 				clear();
 			}

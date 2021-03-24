@@ -8,7 +8,9 @@ namespace ft {
 	private:
 	public:
 		node(void) : data(T()), previous(0), next(0) {}
+		// node(T *x) : data(*x), previous(0), next(0) {}
 		node(const T & data) : data(data), previous(0), next(0) {}
+		node(T &x, node *previous, node *next) : data(x), previous(previous), next(next) {}
 		~node(void) {}
 
 		node &operator=(const node & x){
@@ -21,8 +23,7 @@ namespace ft {
 		}
 
 		operator node<const T>() {
-			// node< const T > new_node(this->data)
-			return node<const T>(const_cast< T& >(this->data));
+			return node<const T>(this->data, reinterpret_cast<ft::node<const T> *>(previous), reinterpret_cast<ft::node<const T> *>(next));
 		}
 
 		T		data;

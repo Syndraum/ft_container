@@ -22,11 +22,11 @@ int main() {
 	myList.resize(20, 42);
 	myList.resize(2, 42);
 
-	list<int> copyList;
-	copyList = myList;
+	// list<int> copyList;
+	// copyList = myList;
 	// list<int>::const_iterator cit = myList.begin();
 	// std::cout << *cit << std::endl;
-	for (list<int>::iterator it = copyList.begin(); it != copyList.end() ; it++)
+	for (list<int>::const_iterator it = myList.begin(); it != myList.end() ; it++)
 		std::cout << *it << std::endl;
 
 	return 0;

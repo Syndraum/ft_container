@@ -2,8 +2,10 @@
 # define LIST_H
 
 #include <cstdlib>
+#include "utils.hpp"
 #include "list_iterator.hpp"
 #include "node.hpp"
+#include "allocator.hpp"
 #include "reverse_iterator.hpp"
 
 namespace ft {
@@ -68,19 +70,19 @@ namespace ft {
 			}
 
 			iterator begin() {
-				return (iterator(_front.next));
+				return (iterator(*(_front.next)));
 			}
 
 			const_iterator begin() const {
-				return (const_iterator(_front.next));
+				return (const_iterator(*(_front.next)));
 			}
 
 			iterator end() {
-				return (iterator(&_back));
+				return (iterator(_back));
 			}
 
 			const_iterator end() const {
-				return (const_iterator(&_back));
+				return (const_iterator(_back));
 			}
 
 			reverse_iterator rbegin() {

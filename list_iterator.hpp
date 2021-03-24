@@ -8,7 +8,7 @@
 
 namespace ft
 {
-	template < typename T >
+	template < typename T>
 	class list_iterator
 	{
 	public:
@@ -21,7 +21,8 @@ namespace ft
 		typedef ft::node<T>									node;
 
 		list_iterator() : _node(0) {}
-		list_iterator(node *x) : _node(x) {}
+		// list_iterator(node *x) : _node(x) {}
+		list_iterator(node &x) : _node(&x) {}
 		list_iterator(const iterator &x) { *this = x; }
 		~list_iterator() {}
 
@@ -41,11 +42,11 @@ namespace ft
 			return (!(x == y));
 		}
 
-		// operator list_iterator<const T>() {
-		// 	ft::node<const T> new_node(*this->_node);
-		// 	// new_node.previous = *this->_node->previous;
-		// 	return list_iterator<const T>(&new_node);
-		// }
+		operator list_iterator<const T>() {
+			// ft::node<const T> new_node = node(*_node, _node->previous, _node->next);
+			ft::node<const T> new_mode = static_cast< ft::node< const T > >(*this->_node);
+			return list_iterator<const T>(new_mode);
+		}
 
 		value_type &operator*() const { return (_node->data); }
 		value_type *operator->() const { return (&_node->node); }

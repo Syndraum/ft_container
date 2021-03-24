@@ -33,6 +33,43 @@ namespace ft {
 			size_type	_size;
 			Alloc		_allocator;
 
+			node * partition(node *start, node *end){
+				T		cmp = end->data;
+				node	*i = end->previous;
+				
+				while (i->data > cmp && !(i->previous == 0))
+					i = i->previous;
+
+				for (node *j = start; j != i->next; j = j->next)
+				{
+					// std::cout << "j->data : " << j->data << " > " << cmp << " ?\n";
+					if (j->data > cmp){
+						// std::cout << "YES ---- ";
+						ft::swap(j->data, i->data);
+						i = i->previous;
+						j = j->previous;
+					}
+					// std::cout << "NEXT\n";
+				}
+				// std::cout << "ROUND\n";
+				i = i->next;
+				ft::swap(end->data, i->data);
+				return (i);
+			}
+
+			void _quickSort(node* start, node *end) {
+				// std::cout << "myList contains:";
+				// for (iterator it = begin(); it != this->end(); ++it)
+				// 	std::cout << ' ' << *it;
+				// std::cout << '\n';
+				// std::cout << "sort between : " << start->data << " and " << end->data << "\n";
+				if (!empty() && start != end && end->next != start){
+					node *pivot = partition(start, end);
+					_quickSort(start, pivot->previous);
+					_quickSort(pivot->next, end);
+				}
+			}
+
 		public:
 			list (const allocator_type& alloc = allocator_type()) : _front(node(T())), _back(node(T())), _size(0), _allocator(alloc) {
 				_front.next = &_back;
@@ -399,6 +436,10 @@ namespace ft {
 					this->splice(this->begin(), tmp);
 					this->splice(this->end(), x);
 				}
+			}
+
+			void sort() {
+				_quickSort(begin().getNode(), end().getNode()->previous);
 			}
 
 			void reverse() {

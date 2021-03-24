@@ -61,6 +61,10 @@ namespace ft {
 				clear();
 			}
 
+			operator const list<T>(){
+				return (const_cast< list<T> >(*this));
+			}
+
 			list& operator= (const list& x) {
 				this->clear();
 				const_iterator it;
@@ -70,13 +74,11 @@ namespace ft {
 			}
 
 			iterator begin() {
-				// std::cout << "begin\n";
 				return (iterator(*(_front.next)));
 			}
 
 			const_iterator begin() const {
-				// std::cout << "begin const\n";
-				return (const_iterator(*(_front.next)));
+				return (const_iterator(reinterpret_cast<ft::node<const int> *>(_front.next)));
 			}
 
 			iterator end() {
@@ -84,7 +86,7 @@ namespace ft {
 			}
 
 			const_iterator end() const {
-				return (const_iterator(_back));
+				return (const_iterator(reinterpret_cast<ft::node<const int> *>(_back.previous->next)));
 			}
 
 			reverse_iterator rbegin() {
@@ -408,23 +410,23 @@ namespace ft {
 			}
 	};
 
-	// template <class T, class Alloc>
-	// bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
-	// 	if (lhs.size() != rhs.size())
-	// 		return (false);
-	// 	// list<T,Alloc>iterator lit = lhs.begin();
-	// 	typename list<T,Alloc>::iterator rit = rhs.begin();
-	// 	for (typename list<T,Alloc>::iterator lit = lhs.begin(); lit != lit.end(); lit++){
-	// 		if (*lit != *rit)
-	// 			return (false);
-	// 	}
-	// 	return (true);
-	// }
+	template <class T, class Alloc>
+	bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+		if (lhs.size() != rhs.size())
+			return (false);
+		typename list<T,Alloc>::const_iterator rit = rhs.begin();
+		for (typename list<T,Alloc>::const_iterator lit = lhs.begin(); lit != lhs.end(); lit++){
+			if (*lit != *rit)
+				return (false);
+			++rit;
+		}
+		return (true);
+	}
 
-	// template <class T, class Alloc>
-	// bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
-	// 	return (!(lhs == rhs));
-	// }
+	template <class T, class Alloc>
+	bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+		return (!(lhs == rhs));
+	}
 
 	template <class T, class Alloc>
 	void swap (list<T,Alloc>& x, list<T,Alloc>& y) {

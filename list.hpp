@@ -42,29 +42,50 @@ namespace ft {
 
 				for (node *j = start; j != i->next; j = j->next)
 				{
-					// std::cout << "j->data : " << j->data << " > " << cmp << " ?\n";
 					if (j->data > cmp){
-						// std::cout << "YES ---- ";
 						ft::swap(j->data, i->data);
 						i = i->previous;
 						j = j->previous;
 					}
-					// std::cout << "NEXT\n";
 				}
-				// std::cout << "ROUND\n";
+				i = i->next;
+				ft::swap(end->data, i->data);
+				return (i);
+			}
+
+			template<typename Compare>
+			node * partition(node *start, node *end, Compare comp){
+				T		cmp = end->data;
+				node	*i = end->previous;
+				
+				while (comp(cmp, i->data) && !(i->previous == 0))
+					i = i->previous;
+
+				for (node *j = start; j != i->next; j = j->next)
+				{
+					if (comp(cmp, j->data)){
+						ft::swap(j->data, i->data);
+						i = i->previous;
+						j = j->previous;
+					}
+				}
 				i = i->next;
 				ft::swap(end->data, i->data);
 				return (i);
 			}
 
 			void _quickSort(node* start, node *end) {
-				// std::cout << "myList contains:";
-				// for (iterator it = begin(); it != this->end(); ++it)
-				// 	std::cout << ' ' << *it;
-				// std::cout << '\n';
-				// std::cout << "sort between : " << start->data << " and " << end->data << "\n";
 				if (!empty() && start != end && end->next != start){
 					node *pivot = partition(start, end);
+					_quickSort(start, pivot->previous);
+					_quickSort(pivot->next, end);
+				}
+			}
+
+			template<typename Compare>
+			void _quickSort(node* start, node *end, Compare comp) {
+				if (!empty() && start != end && end->next != start){
+					node *pivot = partition(start, end, comp);
 					_quickSort(start, pivot->previous);
 					_quickSort(pivot->next, end);
 				}
@@ -440,6 +461,11 @@ namespace ft {
 
 			void sort() {
 				_quickSort(begin().getNode(), end().getNode()->previous);
+			}
+
+			template <class Compare>	
+			void sort (Compare comp) {
+				_quickSort(begin().getNode(), end().getNode()->previous, comp);
 			}
 
 			void reverse() {

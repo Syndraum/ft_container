@@ -47,12 +47,12 @@ int main ()
     std::cout << ' ' << *it;
   std::cout << '\n';
 
-//   mylist.sort(compare_nocase);
+  mylist.sort(compare_nocase);
 
-//   std::cout << "mylist contains:";
-//   for (it=mylist.begin(); it!=mylist.end(); ++it)
-//     std::cout << ' ' << *it;
-//   std::cout << '\n';
+  std::cout << "mylist contains:";
+  for (sit=mylist.begin(); sit!=mylist.end(); ++sit)
+    std::cout << ' ' << *sit;
+  std::cout << '\n';
 
   return 0;
 }

@@ -26,6 +26,9 @@ int main() {
 	// copyList = myList;
 	// list<int>::const_iterator cit = myList.begin();
 	// std::cout << *cit << std::endl;
+	// list<int>::const_iterator it = myList.begin();
+	// std::cout << "data : " << *it << std::endl;
+	// std::cout << "previous : " << it.getNode()->previous << std::endl;
 	for (list<int>::const_iterator it = myList.begin(); it != myList.end() ; it++)
 		std::cout << *it << std::endl;
 

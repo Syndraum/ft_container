@@ -70,10 +70,12 @@ namespace ft {
 			}
 
 			iterator begin() {
+				// std::cout << "begin\n";
 				return (iterator(*(_front.next)));
 			}
 
 			const_iterator begin() const {
+				// std::cout << "begin const\n";
 				return (const_iterator(*(_front.next)));
 			}
 

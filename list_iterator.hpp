@@ -21,7 +21,7 @@ namespace ft
 		typedef ft::node<T>									node;
 
 		list_iterator() : _node(0) {}
-		// list_iterator(node *x) : _node(x) {}
+		list_iterator(node *x) : _node(x) {}
 		list_iterator(node &x) : _node(&x) {}
 		list_iterator(const iterator &x) { *this = x; }
 		~list_iterator() {}
@@ -43,9 +43,8 @@ namespace ft
 		}
 
 		operator list_iterator<const T>() {
-			// ft::node<const T> new_node = node(*_node, _node->previous, _node->next);
-			ft::node<const T> new_mode = static_cast< ft::node< const T > >(*this->_node);
-			return list_iterator<const T>(new_mode);
+			ft::node<const T> * new_node = reinterpret_cast<ft::node<const int> *>(this->_node);
+			return list_iterator<const T>(new_node);
 		}
 
 		value_type &operator*() const { return (_node->data); }

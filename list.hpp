@@ -167,7 +167,6 @@ namespace ft {
 			}
 
 			bool	empty() const{
-
 				if (_front.next != &_back)
 					return false;
 				return true;
@@ -215,8 +214,6 @@ namespace ft {
 			}
 
 			void pop_front () {
-				if (empty())
-					return ;
 				node * next_node = _front.next->next;
 				delete _front.next;
 				_front.next = next_node;
@@ -235,8 +232,6 @@ namespace ft {
 			}
 
 			void pop_back() {
-				if (empty())
-					return ;
 				node * previous_node = _back.previous->previous;
 				delete _back.previous;
 				_back.previous = previous_node;
@@ -338,6 +333,10 @@ namespace ft {
 					x._front.next = &x._back;
 					x._back.previous = &x._front;
 				}
+				else{
+					ft::swap(this->_front.next, x._front.next);
+					ft::swap(this->_back.previous, x._back.previous);
+				}
 				this->_back.previous->next = &this->_back;
 				x._back.previous->next = &x._back;
 				this->_front.next->previous = &this->_front;
@@ -358,8 +357,9 @@ namespace ft {
 			}
 
 			void clear () {
-				while (size() > 0) 
+				while (!empty()){
 					pop_front();
+				}
 			}
 
 			void splice (iterator position, list& x) {

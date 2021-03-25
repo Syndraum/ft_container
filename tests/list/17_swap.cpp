@@ -32,7 +32,6 @@ int main ()
   for (list<int>::iterator it=empty.begin(); it!=empty.end(); it++)
     std::cout << ' ' << *it;
   std::cout << '\n';
-  std::cout << "size : " << empty.size() << "\n";
 
   first.swap(empty);
 
@@ -40,13 +39,21 @@ int main ()
   for (list<int>::iterator it=first.begin(); it!=first.end(); it++)
     std::cout << ' ' << *it;
   std::cout << '\n';
-  std::cout << "size : " << first.size() << "\n";
 
   std::cout << "empty contains:";
   for (list<int>::iterator it=empty.begin(); it!=empty.end(); it++)
     std::cout << ' ' << *it;
   std::cout << '\n';
-  std::cout << "size : " << empty.size() << "\n";
+
+  std::cout << "first contains:";
+  for (list<int>::reverse_iterator it=first.rbegin(); it!=first.rend(); it++)
+    std::cout << ' ' << *it;
+  std::cout << '\n';
+
+  std::cout << "empty contains:";
+  for (list<int>::reverse_iterator it=empty.rbegin(); it!=empty.rend(); it++)
+    std::cout << ' ' << *it;
+  std::cout << '\n';
 
   return 0;
 }

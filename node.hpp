@@ -23,7 +23,11 @@ namespace ft {
 		}
 
 		operator node<const T>() {
-			return node<const T>(this->data, reinterpret_cast<ft::node<const T> *>(previous), reinterpret_cast<ft::node<const T> *>(next));
+			return node<const T>(
+				this->data,
+				reinterpret_cast<ft::node<const T> *>(previous),
+				reinterpret_cast<ft::node<const T> *>(next)
+			);
 		}
 
 		T		data;

@@ -43,7 +43,7 @@ namespace ft
 		}
 
 		operator list_iterator<const T>() {
-			ft::node<const T> * new_node = reinterpret_cast<ft::node<const int> *>(this->_node);
+			ft::node<const T> * new_node = reinterpret_cast<ft::node<const T> *>(this->_node);
 			return list_iterator<const T>(new_node);
 		}
 

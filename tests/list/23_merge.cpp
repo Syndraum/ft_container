@@ -17,8 +17,19 @@ int main ()
   second.push_back (7.1);
   second.push_back (1.4);
 
-//   first.sort();
-//   second.sort();
+  first.sort();
+  second.sort();
+
+	std::cout << "first contains:";
+  for (list<double>::iterator it=first.begin(); it!=first.end(); ++it){
+    std::cout << ' ' << *it;
+  }
+  std::cout << '\n';
+  std::cout << "seconde contains:";
+  for (list<double>::iterator it=second.begin(); it!=second.end(); ++it){
+    std::cout << ' ' << *it;
+  }
+  std::cout << '\n';
 
   first.merge(second);
 

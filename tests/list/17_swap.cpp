@@ -20,18 +20,19 @@ int main ()
     std::cout << ' ' << *it;
   std::cout << '\n';
 
-//   first.swap(empty);
-//   first.swap(empty);
+  first.swap(empty);
+  std::cout << "NIQUE" << std::endl;
+  first.swap(empty);
 
-//   std::cout << "first contains:";
-//   for (list<int>::iterator it=first.begin(); it!=first.end(); it++)
-//     std::cout << ' ' << *it;
-//   std::cout << '\n';
+  std::cout << "first contains:";
+  for (list<int>::iterator it=first.begin(); it!=first.end(); it++)
+    std::cout << ' ' << *it;
+  std::cout << '\n';
 
-//   std::cout << "empty contains:";
-//   for (list<int>::iterator it=empty.begin(); it!=empty.end(); it++)
-//     std::cout << ' ' << *it;
-//   std::cout << '\n';
+  std::cout << "empty contains:";
+  for (list<int>::iterator it=empty.begin(); it!=empty.end(); it++)
+    std::cout << ' ' << *it;
+  std::cout << '\n';
 
   return 0;
 }

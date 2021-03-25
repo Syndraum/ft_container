@@ -325,11 +325,24 @@ namespace ft {
 			}
 
 			void swap (list& x) {
+				if (x.empty()) {
+					x._front.next = this->_front.next;
+					x._back.previous = this->_back.previous;
+					this->_front.next = &this->_back;
+					this->_back.previous = &this->_front;
+				}
+				else if (this->empty())
+				{
+					this->_front.next = x._front.next;
+					this->_back.previous = x._back.previous;
+					x._front.next = &x._back;
+					x._back.previous = &x._front;
+				}
+				this->_back.previous->next = &this->_back;
+				x._back.previous->next = &x._back;
+				this->_front.next->previous = &this->_front;
+				x._front.next->previous = &x._front;
 				ft::swap(this->_size, x._size);
-				ft::swap(this->_front.next, x._front.next);
-				ft::swap(this->_back.previous, x._back.previous);
-				ft::swap(this->_back.previous->next, x._back.previous->next);
-				ft::swap(this->_front.next->previous, x._front.next->previous);
 				ft::swap(this->_allocator, x._allocator);
 			}
 

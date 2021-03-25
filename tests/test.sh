@@ -11,7 +11,7 @@ STANDAR_OUPUT_FILE=std.out
 FT_OUPUT_FILE=ft.out
 DEBUG=0
 VERBOSE=1
-LEAKS=1
+LEAKS=0
 newline=1
 
 

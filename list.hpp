@@ -184,7 +184,15 @@ namespace ft {
 				return (_front.next->data);
 			}
 
+			const_reference front() const{
+				return (_front.next->data);
+			}
+
 			reference back(){
+				return (_back.previous->data);
+			}
+
+			const_reference back() const{
 				return (_back.previous->data);
 			}
 

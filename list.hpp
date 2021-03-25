@@ -139,7 +139,7 @@ namespace ft {
 			}
 
 			const_iterator begin() const {
-				return (const_iterator(reinterpret_cast<ft::node<const int> *>(_front.next)));
+				return (const_iterator(reinterpret_cast<ft::node<const T> *>(_front.next)));
 			}
 
 			iterator end() {
@@ -147,7 +147,7 @@ namespace ft {
 			}
 
 			const_iterator end() const {
-				return (const_iterator(reinterpret_cast<ft::node<const int> *>(_back.previous->next)));
+				return (const_iterator(reinterpret_cast<ft::node<const T> *>(_back.previous->next)));
 			}
 
 			reverse_iterator rbegin() {

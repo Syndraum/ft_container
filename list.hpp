@@ -154,17 +154,17 @@ namespace ft {
 				return (reverse_iterator(&_back));
 			}
 
-			// const_reverse_iterator rbegin() const {
-			// 	return (reverse_iterator(&_back));
-			// }
+			const_reverse_iterator rbegin() const {
+				return (const_reverse_iterator(&_back));
+			}
 
 			reverse_iterator rend() {
 				return (reverse_iterator(_front.next));
 			}
 
-			// const_reverse_iterator rend() const {
-			// 	return (reverse_iterator(_front.next));
-			// }
+			const_reverse_iterator rend() const {
+				return (const_reverse_iterator(_front.next));
+			}
 
 			bool	empty() const{
 

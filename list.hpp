@@ -86,8 +86,8 @@ namespace ft {
 			void _quickSort(node* start, node *end, Compare comp) {
 				if (!empty() && start != end && end->next != start){
 					node *pivot = partition(start, end, comp);
-					_quickSort(start, pivot->previous);
-					_quickSort(pivot->next, end);
+					_quickSort(start, pivot->previous, comp);
+					_quickSort(pivot->next, end, comp);
 				}
 			}
 

@@ -455,7 +455,8 @@ namespace ft {
 				while (!x.empty() && tmp != this->end()) {
 					if (*(x.begin()) < *tmp)
 						this->splice(tmp, *this, x.begin());
-					tmp++;
+					else
+						tmp++;
 				}
 				this->splice(this->end(), x);
 			}
@@ -467,7 +468,8 @@ namespace ft {
 				while (!x.empty() && tmp != this->end()) {
 					if (comp(*(x.begin()), *tmp))
 						this->splice(tmp, *this, x.begin());
-					tmp++;
+					else
+						tmp++;
 				}
 				this->splice(this->end(), x);
 			}

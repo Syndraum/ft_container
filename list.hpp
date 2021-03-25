@@ -442,34 +442,26 @@ namespace ft {
 			}
 
 			void merge (list& x) {
-				list<T> tmp;
+				iterator tmp = this->begin();
 
-				if (this != &x){
-					while (!(this->empty() || x.empty())) {
-						if (this->front() < x.front())
-							tmp.splice(tmp.end(), *this, this->begin());
-						else
-							tmp.splice(tmp.end(), x, x.begin());
-					}
-					this->splice(this->begin(), tmp);
-					this->splice(this->end(), x);
+				while (!x.empty() && tmp != this->end()) {
+					if (*(x.begin()) < *tmp)
+						this->splice(tmp, *this, x.begin());
+					tmp++;
 				}
+				this->splice(this->end(), x);
 			}
 
 			template <class Compare>
 			void merge (list& x, Compare comp) {
-				list<T> tmp;
+				iterator tmp = this->begin();
 
-				if (this != &x){
-					while (!(this->empty() || x.empty())) {
-						if (comp(this->front(), x.front()))
-							tmp.splice(tmp.end(), *this, this->begin());
-						else
-							tmp.splice(tmp.end(), x, x.begin());
-					}
-					this->splice(this->begin(), tmp);
-					this->splice(this->end(), x);
+				while (!x.empty() && tmp != this->end()) {
+					if (comp(*(x.begin()), *tmp))
+						this->splice(tmp, *this, x.begin());
+					tmp++;
 				}
+				this->splice(this->end(), x);
 			}
 
 			void sort() {

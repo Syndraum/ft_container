@@ -48,7 +48,7 @@ namespace ft
 		}
 
 		value_type &operator*() const { return (_node->data); }
-		value_type *operator->() const { return (&_node->node); }
+		value_type *operator->() const { return (&_node->data); }
 
 		iterator &operator++()
 		{

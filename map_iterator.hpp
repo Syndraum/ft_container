@@ -56,7 +56,7 @@ namespace ft {
 			// }
 			else{
 				_node = _node->parent;
-				while (_node && _node->right == last) {
+				while (_node->parent && _node->right == last) {
 					last = this->_node;
 					_node = _node->parent;
 				}
@@ -87,7 +87,7 @@ namespace ft {
 			// }
 			else{
 				_node = _node->parent;
-				while (_node && _node->left == last) {
+				while (_node->parent && _node->left == last) {
 					last = this->_node;
 					_node = _node->parent;
 				}

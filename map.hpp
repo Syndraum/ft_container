@@ -44,7 +44,7 @@ namespace ft {
 
 		map(
 			const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type()) : _root(0), _size(0), _comp(comp), _allocator(alloc) {}
+			const allocator_type& alloc = allocator_type()) : _root(btree_type()), _size(0), _comp(comp), _allocator(alloc) {}
 		~map() {
 			clear();
 		}
@@ -54,7 +54,7 @@ namespace ft {
 		}
 
 		iterator end() {
-			return (iterator());
+			return (iterator(_root));
 		}
 
 		bool empty() const {
@@ -72,8 +72,8 @@ namespace ft {
 		}
 
 		mapped_type& operator[] (const key_type& k) {
-			btree_type	*cursor = _root;
-			btree_type	*last = 0;
+			btree_type	*cursor = _root.left;
+			btree_type	*last = &_root;
 
 			while (cursor && k != cursor->value->first){
 				last = cursor;
@@ -84,8 +84,10 @@ namespace ft {
 			}
 			if (!cursor){
 				btree_type *node = create_node(k, last);
-				if (!last)
-					_root = node;
+				if (last == &_root) {
+					last->left = node;
+					last->right = node;
+				}
 				else if (key_compare()(k, last->value->first))
 					last->left = node;
 				else
@@ -97,8 +99,9 @@ namespace ft {
 		}
 
 		void clear() {
-			_apply_suffix(&map::delete_node, _root);
-			_root = 0;
+			_apply_suffix(&map::delete_node, _root.left);
+			_root.left = 0;
+			_root.right = 0;
 			_size = 0;
 		}
 
@@ -116,7 +119,7 @@ namespace ft {
 		}
 
 	private:
-		btree_type		*_root;
+		btree_type		_root;
 		size_type		_size;
 		key_compare		_comp;
 		allocator_type	_allocator;
@@ -168,14 +171,14 @@ namespace ft {
 		}
 
 		btree_type	*_first() const {
-			btree_type *node = _root;
+			btree_type *node = _root.left;
 			while (node->left)
 				node = node->left;
 			return (node);
 		}
 
 		btree_type	*_last() const {
-			btree_type *node = _root;
+			btree_type *node = _root.left;
 			while (node->right)
 				node = node->right;
 			return (node);

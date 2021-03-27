@@ -19,7 +19,7 @@ int main(){
 	mymap['a'] = 3;
 	mymap['f'] = 1;
 	mymap['b'] = 0;
-	// mymap.print();
+	mymap.print();
 	std::cout << "d : " << mymap['d'] << "\n";
 
 	ft::map<char, int>::iterator cit = mymap.begin();
@@ -30,6 +30,10 @@ int main(){
 	
 	for (ft::map<char, int>::iterator it = cit; it != mymap.end(); it--)
 		std::cout << "[" << it->first << "] : " << it->second << "\n";
+
+	for (ft::map<char, int>::reverse_iterator rit = mymap.rbegin(); rit != mymap.rend(); rit++)
+	std::cout << "[" << rit->first << "] : " << rit->second << "\n";
+
 
 	return 0;
 }

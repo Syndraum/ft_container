@@ -38,8 +38,8 @@ namespace ft {
 			return (!(x == y));
 		}
 
-		value_type &operator*() const { return (&_node->value); }
-		value_type *operator->() const { return (_node->value); }
+		reference	operator*() const { return (&(_node->value)); }
+		pointer		operator->() const { return (_node->value); }
 
 		iterator &operator++()
 		{

@@ -25,6 +25,9 @@ namespace ft {
 		typedef value_type&								reference;
 		typedef const value_type&						const_reference;
 		typedef ft::map_iterator<value_type>			iterator;
+		typedef ft::map_iterator<const value_type>		const_iterator;
+		typedef ft::reverse_iterator< iterator >		reverse_iterator;
+		typedef ft::reverse_iterator< const_iterator >	const_reverse_iterator;
 		typedef value_type*								pointer;
 		typedef const value_type*						const_pointer;
 		typedef std::ptrdiff_t							difference_type;
@@ -53,8 +56,24 @@ namespace ft {
 			return (iterator(_first()));
 		}
 
+		// const_iterator begin() const {
+
+		// }
+
 		iterator end() {
 			return (iterator(_root));
+		}
+
+		// const_iterator end() const {
+
+		// }
+
+		reverse_iterator rbegin() {
+			return (reverse_iterator(_root));
+		}
+
+		reverse_iterator rend() {
+			return (reverse_iterator(_root));
 		}
 
 		bool empty() const {
@@ -115,7 +134,7 @@ namespace ft {
 
 
 		void	print() {
-			_apply(_print_node, _root);
+			_apply(_print_node, _root.left);
 		}
 
 	private:

@@ -67,7 +67,10 @@ namespace ft {
 		}
 
 		pointer operator->() const {
-			return &(operator*());
+			iterator_type	tmp(this->_base_iterator);
+			tmp--;
+			return(tmp.operator->());
+			// return &(operator*());
 		}
 
 		reference operator[] (difference_type n) const {

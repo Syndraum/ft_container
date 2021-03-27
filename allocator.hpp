@@ -52,6 +52,10 @@ namespace ft{
 			return (&x);
 		}
 
+		pointer allocate() {
+			return (allocate(1));
+		}
+
 		pointer allocate (size_type n) {
 			if (n == 0)
 				return (0);

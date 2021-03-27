@@ -43,7 +43,9 @@ namespace ft {
 		map(
 			const key_compare& comp = key_compare(),
 			const allocator_type& alloc = allocator_type()) : _root(0), _size(0), _comp(comp), _allocator(alloc) {}
-		~map() {}
+		~map() {
+			clear();
+		}
 
 		bool empty() const {
 			if (_size)
@@ -71,9 +73,10 @@ namespace ft {
 					cursor = cursor->right;
 			}
 			if (!cursor){
-				btree_type *node = new btree_type();
-				value_type *pair = new value_type(k);
-				node->value = pair;
+				btree_type *node = create_node(k);
+				// btree_type *node = new btree_type();
+				// value_type *pair = new value_type(k);
+				// node->value = pair;
 				if (!last)
 					_root = node;
 				else if (key_compare()(k, last->value->first))
@@ -81,8 +84,15 @@ namespace ft {
 				else
 					last->right = node;
 				cursor = node;
+				_size++;
 			}
 			return(cursor->value->second);
+		}
+
+		void clear() {
+			_apply_suffix(&map::delete_node, _root);
+			_root = 0;
+			_size = 0;
 		}
 
 		key_compare key_comp() const {
@@ -115,6 +125,31 @@ namespace ft {
 				func(*node);
 				_apply(func, node->right);
 			}
+		}
+
+		void	_apply_suffix(void (map::*func)(btree_type*), btree_type *node) {
+			if (node) {
+				_apply_suffix(func, node->left);
+				_apply_suffix(func, node->right);
+				(this->*func)(node);
+			}
+		}
+
+		btree_type *create_node(const key_type &key, const mapped_type &value = mapped_type()) {
+			btree_type *node = new btree_type();
+			node->value = _allocator.allocate();
+			_allocator.construct(node->value, value_type(key, value));
+			return (node);
+		}
+		
+		void	destroy_pair(btree_type *node){
+			_allocator.destroy(node->value);
+		}
+
+		void	delete_node(btree_type *node){
+			destroy_pair(node);
+			_allocator.deallocate(node->value);
+			delete(node);
 		}
 	};
 }

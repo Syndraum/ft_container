@@ -79,7 +79,7 @@ namespace ft{
 	struct pair
 	{
 		pair(Key &key) : first(key), second(T()) {}
-		pair(Key &key, T &value) : first(key), second(value) {}
+		pair(const Key &key, const T &value) : first(key), second(value) {}
 		Key	first;
 		T	second;
 	};

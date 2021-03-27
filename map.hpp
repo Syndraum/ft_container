@@ -173,6 +173,13 @@ namespace ft {
 				node = node->left;
 			return (node);
 		}
+
+		btree_type	*_last() const {
+			btree_type *node = _root;
+			while (node->right)
+				node = node->right;
+			return (node);
+		}
 	};
 }
 

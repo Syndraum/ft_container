@@ -92,6 +92,7 @@ namespace ft {
 					_node = _node->parent;
 				}
 			}
+			return (*this);
 		}
 
 		iterator operator--(int)

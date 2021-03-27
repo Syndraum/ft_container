@@ -1,6 +1,7 @@
 #ifndef MAP_HPP
 # define MAP_HPP
 
+#include "map_iterator.hpp"
 #include "utils.hpp"
 #include "allocator.hpp"
 #include "btree.hpp"
@@ -23,6 +24,7 @@ namespace ft {
 		typedef Alloc									allocator_type;
 		typedef value_type&								reference;
 		typedef const value_type&						const_reference;
+		// typedef ft::map_iterator<value_type>			iterator;
 		typedef value_type*								pointer;
 		typedef const value_type*						const_pointer;
 		typedef std::ptrdiff_t							difference_type;
@@ -46,6 +48,10 @@ namespace ft {
 		~map() {
 			clear();
 		}
+
+		// iterator begin() {
+
+		// }
 
 		bool empty() const {
 			if (_size)
@@ -73,10 +79,7 @@ namespace ft {
 					cursor = cursor->right;
 			}
 			if (!cursor){
-				btree_type *node = create_node(k);
-				// btree_type *node = new btree_type();
-				// value_type *pair = new value_type(k);
-				// node->value = pair;
+				btree_type *node = create_node(k, last);
 				if (!last)
 					_root = node;
 				else if (key_compare()(k, last->value->first))
@@ -139,6 +142,14 @@ namespace ft {
 			btree_type *node = new btree_type();
 			node->value = _allocator.allocate();
 			_allocator.construct(node->value, value_type(key, value));
+			return (node);
+		}
+
+		btree_type *create_node(const key_type &key, btree_type *parent, const mapped_type &value = mapped_type()) {
+			btree_type *node = new btree_type();
+			node->value = _allocator.allocate();
+			_allocator.construct(node->value, value_type(key, value));
+			node->parent = parent;
 			return (node);
 		}
 		

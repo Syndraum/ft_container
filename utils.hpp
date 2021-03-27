@@ -48,7 +48,7 @@ namespace ft{
 		y = tmp;
 	}
 
-	template <class InputIterator1, class InputIterator2>
+	template <typename InputIterator1, typename InputIterator2>
 	bool lexicographical_compare (
 		InputIterator1 first1, InputIterator1 last1,
 		InputIterator2 first2, InputIterator2 last2) {
@@ -62,6 +62,28 @@ namespace ft{
 		}
 		return (first2!=last2);
 	}
+
+	template <class Arg1, class Arg2, class Result>
+	struct binary_function {
+		typedef Arg1 first_argument_type;
+		typedef Arg2 second_argument_type;
+		typedef Result result_type;
+	};
+
+	template <typename T>
+	struct less : ft::binary_function <T,T,bool> {
+		bool operator() (const T& x, const T& y) const {return x<y;}
+	};
+
+	template <typename Key, typename T>
+	struct pair
+	{
+		pair(Key &key) : first(key), second(T()) {}
+		pair(Key &key, T &value) : first(key), second(value) {}
+		Key	first;
+		T	second;
+	};
+	
 }
 
 #endif

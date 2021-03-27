@@ -33,24 +33,12 @@ namespace ft {
 			size_type	_size;
 			Alloc		_allocator;
 
-			node * partition(node *start, node *end){
-				T		cmp = end->data;
-				node	*i = end->previous;
-				
-				while (i->data > cmp && !(i->previous == 0))
-					i = i->previous;
+			static bool is_equal(T &x, T &y) {
+				return (x == y);
+			}
 
-				for (node *j = start; j != i->next; j = j->next)
-				{
-					if (j->data > cmp){
-						ft::swap(j->data, i->data);
-						i = i->previous;
-						j = j->previous;
-					}
-				}
-				i = i->next;
-				ft::swap(end->data, i->data);
-				return (i);
+			static bool is_less(T &x, T &y) {
+				return (x < y);
 			}
 
 			template<typename Compare>
@@ -75,11 +63,7 @@ namespace ft {
 			}
 
 			void _quickSort(node* start, node *end) {
-				if (!empty() && start != end && end->next != start){
-					node *pivot = partition(start, end);
-					_quickSort(start, pivot->previous);
-					_quickSort(pivot->next, end);
-				}
+				_quickSort(start, end, is_less);
 			}
 
 			template<typename Compare>
@@ -399,8 +383,7 @@ namespace ft {
 			void remove (const value_type& val) {
 				iterator jump;
 
-				for (iterator it = begin(); it != end(); it++)
-				{
+				for (iterator it = begin(); it != end(); it++){
 					if (*it == val){
 						jump = it;
 						jump--;
@@ -425,15 +408,7 @@ namespace ft {
 			}
 
 			void unique() {
-				iterator last = begin();
-
-				for (iterator it = ++begin(); it != end(); it++){
-					if (*it == *last){
-						erase(it);
-						it = last;
-					}
-					last = it;
-				}
+				unique(is_equal);
 			}
 
 			template <class BinaryPredicate>
@@ -450,15 +425,7 @@ namespace ft {
 			}
 
 			void merge (list& x) {
-				iterator tmp = this->begin();
-
-				while (!x.empty() && tmp != this->end()) {
-					if (*(x.begin()) < *tmp)
-						this->splice(tmp, *this, x.begin());
-					else
-						tmp++;
-				}
-				this->splice(this->end(), x);
+				merge(x, is_less);
 			}
 
 			template <class Compare>

@@ -16,7 +16,7 @@ namespace ft
 		typedef std::ptrdiff_t								difference_type;
 		typedef T*											pointer;
 		typedef T&											reference;
-		typedef ft::random_access_iterator_tag				iterator_category;
+		typedef ft::bidirectional_iterator_tag				iterator_category;
 		typedef list_iterator								iterator;
 		typedef ft::node<T>									node;
 

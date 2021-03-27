@@ -24,7 +24,7 @@ namespace ft {
 		typedef Alloc									allocator_type;
 		typedef value_type&								reference;
 		typedef const value_type&						const_reference;
-		// typedef ft::map_iterator<value_type>			iterator;
+		typedef ft::map_iterator<value_type>			iterator;
 		typedef value_type*								pointer;
 		typedef const value_type*						const_pointer;
 		typedef std::ptrdiff_t							difference_type;
@@ -49,9 +49,13 @@ namespace ft {
 			clear();
 		}
 
-		// iterator begin() {
+		iterator begin() {
+			return (iterator(_first()));
+		}
 
-		// }
+		iterator end() {
+			return (iterator());
+		}
 
 		bool empty() const {
 			if (_size)
@@ -161,6 +165,13 @@ namespace ft {
 			destroy_pair(node);
 			_allocator.deallocate(node->value);
 			delete(node);
+		}
+
+		btree_type	*_first() const {
+			btree_type *node = _root;
+			while (node->left)
+				node = node->left;
+			return (node);
 		}
 	};
 }

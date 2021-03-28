@@ -159,7 +159,14 @@ namespace ft {
 				parent->left = pivot;
 			else
 				parent->right = pivot;
-			delete_node(to_erase);
+			this->delete_node(to_erase);
+			_size--;
+		}
+
+		size_type erase (const key_type& k) {
+			iterator it = this->find(k);
+			this->erase(it);
+			return (1);
 		}
 
 		void clear() {

@@ -36,10 +36,14 @@ int main(){
 
 	ft::map<char, int> mysupermap;
 	// ft::pair<char, int> pa('a', 100);
-	mysupermap.insert(ft::pair<char, int>('a', 100));
-	for (ft::map<char, int>::iterator it = mysupermap.begin(); it != mysupermap.end(); it--)
+	mysupermap.insert(ft::pair<char, int>('e', 100));
+	for (ft::map<char, int>::iterator it = mysupermap.begin(); it != mysupermap.end(); it++)
 		std::cout << "[" << it->first << "] : " << it->second << "\n";
-	mysupermap.insert(ft::pair<char, int>('a', 200));
+	mysupermap.insert(ft::pair<char, int>('c', 200));
+	mysupermap.insert(ft::pair<char, int>('b', 400));
+	mysupermap.insert(ft::pair<char, int>('b', 600));
+	for (ft::map<char, int>::iterator it = mysupermap.begin(); it != mysupermap.end(); it++)
+		std::cout << "[" << it->first << "] : " << it->second << "\n";
 
 	return 0;
 }

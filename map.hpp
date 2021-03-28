@@ -99,30 +99,7 @@ namespace ft {
 		}
 
 		mapped_type& operator[] (const key_type& k) {
-			btree_type	*cursor = _root.left;
-			btree_type	*last = &_root;
-
-			while (cursor && k != cursor->value->first){
-				last = cursor;
-				if (key_compare()(k, cursor->value->first))
-					cursor = cursor->left;
-				else 
-					cursor = cursor->right;
-			}
-			if (!cursor){
-				btree_type *node = create_node(k, last);
-				if (last == &_root) {
-					last->left = node;
-					last->right = node;
-				}
-				else if (key_compare()(k, last->value->first))
-					last->left = node;
-				else
-					last->right = node;
-				cursor = node;
-				_size++;
-			}
-			return(cursor->value->second);
+			return (insert(value_type(k)).first->second);
 		}
 
 		ft::pair<iterator,bool> insert(const value_type& val) {
@@ -130,7 +107,7 @@ namespace ft {
 			btree_type	*last = &_root;
 			bool		is_exist = true;
 
-			while (cursor && cursor->value->first)
+			while (cursor && cursor->value->first != val.first)
 			{
 				last = cursor;
 				if (key_compare()(val.first, cursor->value->first))

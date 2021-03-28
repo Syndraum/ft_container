@@ -132,6 +132,36 @@ namespace ft {
 			return (ft::pair<iterator, bool>(cursor ,!is_exist));
 		}
 
+		void erase (iterator position) {
+			btree_type *to_erase = position.getNode();
+			btree_type *parent = to_erase->parent;
+			btree_type *pivot = 0;
+
+			if (to_erase->left) {
+				pivot = to_erase->left;
+				if (to_erase->right){
+					btree_type *cursor = pivot;
+					while (cursor->right)
+						cursor = cursor->right;
+					cursor->right = to_erase->right;
+					cursor->right->parent = cursor;
+				}
+			}
+			else if (to_erase->right)
+				pivot = to_erase->right;
+			if (pivot)
+				pivot->parent = parent;
+			if (parent == &_root){
+				parent->left = pivot;
+				parent->right = pivot;
+			}
+			else if (parent->left == to_erase)
+				parent->left = pivot;
+			else
+				parent->right = pivot;
+			delete_node(to_erase);
+		}
+
 		void clear() {
 			_apply_suffix(&map::delete_node, _root.left);
 			_root.left = 0;

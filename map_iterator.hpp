@@ -50,10 +50,6 @@ namespace ft {
 				while(_node->left)
 					_node = _node->left;
 			}
-			// else if (_node->left){
-			// 	while(_node->left)
-			// 		_node = _node->left;
-			// }
 			else{
 				_node = _node->parent;
 				while (_node->parent && _node->right == last) {
@@ -81,10 +77,6 @@ namespace ft {
 				while(_node->right)
 					_node = _node->right;
 			}
-			// else if (_node->left){
-			// 	while(_node->left)
-			// 		_node = _node->left;
-			// }
 			else{
 				_node = _node->parent;
 				while (_node->parent && _node->left == last) {
@@ -102,7 +94,7 @@ namespace ft {
 			return (tmp);
 		}
 
-		btree *	getNode(){
+		btree *getNode(){
 			return (this->_node);
 		}
 

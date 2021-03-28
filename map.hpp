@@ -147,6 +147,23 @@ namespace ft {
 			return (value_compare(_comp));
 		}
 
+		iterator find (const key_type& k) {
+			btree_type	*cursor = _root.left;
+
+			while (cursor) {
+				if (key_compare()(k, cursor->value->first))
+					cursor = cursor->left;
+				else if (key_compare()( cursor->value->first, k))
+					cursor = cursor->right;
+				else
+					return (iterator(cursor));
+			}
+			return (end());
+		}
+
+		// const_iterator find (const key_type& k) const {
+
+		// }
 
 		void	print() {
 			_apply(_print_node, _root.left);

@@ -213,6 +213,12 @@ namespace ft {
 
 		// }
 
+		size_type count (const key_type& k) const {
+			if (this->find(k) != end())
+				return (1);
+			return (0);
+		}
+
 		void	print() {
 			_apply(_print_node, _root.left);
 		}

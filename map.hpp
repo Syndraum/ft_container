@@ -129,7 +129,7 @@ namespace ft {
 				is_exist = false;
 				_size++;
 			}
-			return (ft::pair<iterator, bool>(cursor ,is_exist));
+			return (ft::pair<iterator, bool>(cursor ,!is_exist));
 		}
 
 		void clear() {

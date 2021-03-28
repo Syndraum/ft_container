@@ -78,9 +78,17 @@ namespace ft{
 	template <typename Key, typename T>
 	struct pair
 	{
+		pair() : first(Key()), second(T()) {}
 		pair(Key &key) : first(key), second(T()) {}
 		pair(const Key &key, const T &value) : first(key), second(value) {}
 		// pair(pair<Key, T> &x) : first(x.first), second(x.second) {}
+		pair<Key, T> &operator=(pair<Key, T> x) {
+			if (this != &x) {
+				this->first = x.first;
+				this->second = x.second;
+			}
+			return (*this);
+		}
 		Key	first;
 		T	second;
 

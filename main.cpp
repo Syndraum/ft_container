@@ -34,6 +34,12 @@ int main(){
 	for (ft::map<char, int>::reverse_iterator rit = mymap.rbegin(); rit != mymap.rend(); rit++)
 	std::cout << "[" << rit->first << "] : " << rit->second << "\n";
 
+	ft::map<char, int> mysupermap;
+	// ft::pair<char, int> pa('a', 100);
+	mysupermap.insert(ft::pair<char, int>('a', 100));
+	for (ft::map<char, int>::iterator it = mysupermap.begin(); it != mysupermap.end(); it--)
+		std::cout << "[" << it->first << "] : " << it->second << "\n";
+	mysupermap.insert(ft::pair<char, int>('a', 200));
 
 	return 0;
 }

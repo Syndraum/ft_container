@@ -125,6 +125,36 @@ namespace ft {
 			return(cursor->value->second);
 		}
 
+		ft::pair<iterator,bool> insert(const value_type& val) {
+			btree_type	*cursor = _root.left;
+			btree_type	*last = &_root;
+			bool		is_exist = true;
+
+			while (cursor && cursor->value->first)
+			{
+				last = cursor;
+				if (key_compare()(val.first, cursor->value->first))
+					cursor = cursor->left;
+				else 
+					cursor = cursor->right;
+			}
+			if (!cursor) {
+				btree_type *node = create_node(val.first, last, val.second);
+				if (last == &_root) {
+					last->left = node;
+					last->right = node;
+				}
+				else if (key_compare()(val.first, last->value->first))
+					last->left = node;
+				else
+					last->right = node;
+				cursor = node;
+				is_exist = false;
+				_size++;
+			}
+			return (ft::pair<iterator, bool>(cursor ,is_exist));
+		}
+
 		void clear() {
 			_apply_suffix(&map::delete_node, _root.left);
 			_root.left = 0;

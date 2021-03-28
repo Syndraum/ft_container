@@ -80,8 +80,13 @@ namespace ft{
 	{
 		pair(Key &key) : first(key), second(T()) {}
 		pair(const Key &key, const T &value) : first(key), second(value) {}
+		// pair(pair<Key, T> &x) : first(x.first), second(x.second) {}
 		Key	first;
 		T	second;
+
+		operator pair<const Key,  T>(){
+			return (pair<const Key, T>(first, second));
+		}
 	};
 	
 }

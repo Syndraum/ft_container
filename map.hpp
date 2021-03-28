@@ -169,6 +169,17 @@ namespace ft {
 			return (1);
 		}
 
+		void erase (iterator first, iterator last) {
+			iterator next = first;
+
+			for (iterator it = first; it != last; it = next)
+			{
+				next++;
+				this->erase(it);
+			}
+			
+		}
+
 		void clear() {
 			_apply_suffix(&map::delete_node, _root.left);
 			_root.left = 0;

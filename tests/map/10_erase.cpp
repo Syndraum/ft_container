@@ -20,8 +20,8 @@ int main ()
 
   mymap.erase ('c');                  // erasing by key
 
-//   it=mymap.find ('e');
-//   mymap.erase ( it, mymap.end() );    // erasing by range
+  it=mymap.find ('e');
+  mymap.erase ( it, mymap.end() );    // erasing by range
 
   // show content:
   for (it=mymap.begin(); it!=mymap.end(); ++it)

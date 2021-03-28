@@ -4,5 +4,6 @@
 
 #include "vector.hpp"
 #include "list.hpp"
+#include "map.hpp"
 
 #endif

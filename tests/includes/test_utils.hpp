@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include <list>
+#include <map>
+#include <utility>
 #include <algorithm>
 
 # define NAMESPACE_FT ft

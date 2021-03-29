@@ -232,6 +232,10 @@ namespace ft {
 			return (it);
 		}
 
+		// const_iterator lower_bound (const key_type& k) const {
+
+		// }
+
 		iterator upper_bound (const key_type& k) {
 			iterator it = this->begin();
 
@@ -239,6 +243,23 @@ namespace ft {
 				it++;
 			return (it);
 		}
+
+		// const_iterator upper_bound (const key_type& k) const {
+
+		// }
+
+		pair<iterator,iterator>	equal_range (const key_type& k) {
+			iterator it = this->begin();
+
+			while (it != this->end() && (this->key_comp()(k, it->first) || this->key_comp()(it->first, k)))
+				it++;
+			iterator upper = it;
+			return (pair<iterator, iterator>(it, ++upper));
+		}
+
+		// pair<const_iterator,const_iterator> equal_range (const key_type& k) const {
+
+		// }
 
 	private:
 		btree_type		_root;

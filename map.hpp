@@ -96,17 +96,17 @@ namespace ft {
 			return (reverse_iterator(_root));
 		}
 
-		// const_reverse_iterator rbegin() const {
-
-		// }
+		const_reverse_iterator rbegin() const {
+			return (const_reverse_iterator(_root));
+		}
 
 		reverse_iterator rend() {
 			return (reverse_iterator(_first()));
 		}
 
-		// const_reverse_iterator rend() const {
-
-		// }
+		const_reverse_iterator rend() const {
+			return (const_reverse_iterator(_first()));
+		}
 
 		bool empty() const {
 			if (_size)
@@ -296,9 +296,19 @@ namespace ft {
 			return (end());
 		}
 
-		// const_iterator find (const key_type& k) const {
+		const_iterator find (const key_type& k) const {
+			btree_type	*cursor = _root.left;
 
-		// }
+			while (cursor) {
+				if (key_compare()(k, cursor->value->first))
+					cursor = cursor->left;
+				else if (key_compare()( cursor->value->first, k))
+					cursor = cursor->right;
+				else
+					return (const_iterator(reinterpret_cast<const_btree_type *>(cursor)));
+			}
+			return (end());
+		}
 
 		size_type count (const key_type& k) const {
 			if (this->find(k) != end())

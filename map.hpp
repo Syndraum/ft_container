@@ -48,6 +48,12 @@ namespace ft {
 		map(
 			const key_compare& comp = key_compare(),
 			const allocator_type& alloc = allocator_type()) : _root(btree_type()), _size(0), _comp(comp), _allocator(alloc) {}
+		template <class InputIterator>
+		map (InputIterator first, InputIterator last,
+			const key_compare& comp = key_compare(),
+			const allocator_type& alloc = allocator_type()) : _root(btree_type()), _size(0), _comp(comp), _allocator(alloc) {
+				insert(first, last);
+			}
 		~map() {
 			clear();
 		}

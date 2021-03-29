@@ -64,7 +64,7 @@ namespace ft {
 				this->clear();
 				this->_comp = x._comp;
 				this->_allocator = x._allocator;
-				if (!x.empty())
+				// if (!x.empty())
 					this->insert(x.begin(), x.end());
 			}
 			return (*this);
@@ -87,6 +87,8 @@ namespace ft {
 		}
 
 		const_iterator end() const {
+			if (empty())
+				return(const_iterator());
 			return (const_iterator(reinterpret_cast<const_btree_type *>(_root.left->parent)));
 		}
 

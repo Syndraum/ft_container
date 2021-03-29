@@ -180,6 +180,18 @@ namespace ft {
 			
 		}
 
+		void swap (map& x) {
+			ft::swap(this->_size, x._size);
+			ft::swap(this->_comp, x._comp);
+			ft::swap(this->_allocator, x._allocator);
+			ft::swap(this->_root.left, x._root.left);
+			ft::swap(this->_root.right, x._root.right);
+			if (this->_root.left)
+				this->_root.left->parent = &this->_root;
+			if (x._root.left)
+				x._root.left->parent = &x._root;
+		}
+
 		void clear() {
 			_apply_suffix(&map::delete_node, _root.left);
 			_root.left = 0;

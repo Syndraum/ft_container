@@ -64,12 +64,11 @@ namespace ft {
 				this->clear();
 				this->_comp = x._comp;
 				this->_allocator = x._allocator;
-				btree_type cusor = x._root;
 				
-				// const_iterator it;
+				// const_iterator it ;
 				// for(it = x.begin(); it != x.end(); it++)
 				// 	insert(*it);
-				// this->insert(x.begin(), x.end());
+				this->insert(x.begin(), x.end());
 			}
 			return (*this);
 		}
@@ -91,7 +90,7 @@ namespace ft {
 		}
 
 		const_iterator end() const {
-			return (const_iterator(reinterpret_cast<const_btree_type *>(_root)));
+			return (const_iterator(reinterpret_cast<const_btree_type *>(_root.left->parent)));
 		}
 
 		reverse_iterator rbegin() {
@@ -414,6 +413,10 @@ namespace ft {
 			while (node->right)
 				node = node->right;
 			return (node);
+		}
+
+		const	btree_type& getRoot(){
+			return(*_root);
 		}
 	};
 }

@@ -96,6 +96,13 @@ namespace ft{
 		operator pair<const Key,  T>(){
 			return (pair<const Key, T>(first, second));
 		}
+
+		template <typename U, typename V>
+		operator pair<U, V>(){
+			return (pair<const Key, T>(
+				static_cast<U>(first),
+				static_cast<V>(second)));
+		}
 	};
 	
 }

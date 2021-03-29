@@ -85,7 +85,7 @@ namespace ft {
 		// }
 
 		reverse_iterator rend() {
-			return (reverse_iterator(_root));
+			return (reverse_iterator(_first()));
 		}
 
 		// const_reverse_iterator rend() const {

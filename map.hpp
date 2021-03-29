@@ -53,6 +53,8 @@ namespace ft {
 		}
 
 		iterator begin() {
+			if (empty())
+				return(end());
 			return (iterator(_first()));
 		}
 
@@ -148,20 +150,37 @@ namespace ft {
 					return (position);
 			}
 			btree_type *node = create_node(val.first, val.second);
-			if (this->key_comp()(val.first, position->first)) {
-				if (position.getNode()->left)
-					(--position).getNode()->right = node;
-				else
-					position.getNode()->left = node;
+			if (position == last){
+				position.getNode()->left = node;
+				position.getNode()->right = node;
 			}
-			else{
-				if (position.getNode()->right)
-					(++position).getNode()->left = node;
-				else
-					position.getNode()->right = node;
+			else {
+				if (position == this->end())
+					ft::swap(position, last);
+				if (this->key_comp()(val.first, position->first)) {
+					if (position.getNode()->left)
+						(--position).getNode()->right = node;
+					else
+						position.getNode()->left = node;
+				}
+				else{
+					if (position.getNode()->right)
+						(++position).getNode()->left = node;
+					else
+						position.getNode()->right = node;
+				}
 			}
 			node->parent = position.getNode();
+			_size++;
 			return (iterator(node));
+		}
+
+		template <class InputIterator>
+		void insert (InputIterator first, InputIterator last) {
+			iterator last_insert = this->begin();
+
+			for (InputIterator it = first; it != last; it++)
+				last_insert = this->insert(last_insert, *it);
 		}
 
 		void erase (iterator position) {

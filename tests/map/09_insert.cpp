@@ -27,17 +27,18 @@ int main ()
 //   mymap.insert (it, pair<char,int>('c',400));  // no max efficiency inserting
 
 //   // third insert function version (range insertion):
-//   map<char,int> anothermap;
-//   anothermap.insert(mymap.begin(),mymap.find('c'));
+  map<char,int> anothermap;
+  std::cout << "BEGIN\n";
+  anothermap.insert(mymap.begin(),mymap.find('c'));
 
 //   // showing contents:
   std::cout << "mymap contains:\n";
   for (it=mymap.begin(); it!=mymap.end(); ++it)
     std::cout << it->first << " => " << it->second << '\n';
 
-//   std::cout << "anothermap contains:\n";
-//   for (it=anothermap.begin(); it!=anothermap.end(); ++it)
-//     std::cout << it->first << " => " << it->second << '\n';
+  std::cout << "anothermap contains:\n";
+  for (it=anothermap.begin(); it!=anothermap.end(); ++it)
+    std::cout << it->first << " => " << it->second << '\n';
 
   return 0;
 }

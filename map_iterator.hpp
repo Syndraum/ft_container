@@ -15,6 +15,7 @@ namespace ft {
 		typedef ft::bidirectional_iterator_tag				iterator_category;
 		typedef map_iterator								iterator;
 		typedef ft::btree<T>								btree;
+		typedef ft::btree<const T>							const_btree;
 
 		map_iterator() : _node(0) {}
 		map_iterator(btree *x) : _node(x) {}
@@ -23,7 +24,7 @@ namespace ft {
 		~map_iterator() {}
 
 		operator map_iterator<const T>(){
-			return (map_iterator<const T>(_node));
+			return (map_iterator<const T>(reinterpret_cast< const_btree *>(_node)));
 		}
 
 		iterator &operator=(const iterator &x)

@@ -132,6 +132,38 @@ namespace ft {
 			return (ft::pair<iterator, bool>(cursor ,!is_exist));
 		}
 
+		iterator insert (iterator position, const value_type& val) {
+			iterator last = &_root;
+			iterator tmp;
+
+			while (position != this->end() && tmp != position)
+			{
+				tmp = last;
+				last = position;
+				if (this->key_comp()(val.first, position->first))
+					position--;
+				else if (this->key_comp()(position->first, val.first))
+					position++;
+				else
+					return (position);
+			}
+			btree_type *node = create_node(val.first, val.second);
+			if (this->key_comp()(val.first, position->first)) {
+				if (position.getNode()->left)
+					(--position).getNode()->right = node;
+				else
+					position.getNode()->left = node;
+			}
+			else{
+				if (position.getNode()->right)
+					(++position).getNode()->left = node;
+				else
+					position.getNode()->right = node;
+			}
+			node->parent = position.getNode();
+			return (iterator(node));
+		}
+
 		void erase (iterator position) {
 			btree_type *to_erase = position.getNode();
 			btree_type *parent = to_erase->parent;

@@ -20,30 +20,17 @@ int main(){
 	mymap['f'] = 1;
 	mymap['b'] = 0;
 	mymap.print();
-	std::cout << "d : " << mymap['d'] << "\n";
 
-	ft::map<char, int>::iterator cit = mymap.begin();
-	for (ft::map<char, int>::iterator it = mymap.begin(); it != mymap.end(); it++)
-		std::cout << "[" << it->first << "] : " << it->second << "\n";
-	for (size_t i = 1; i < mymap.size(); i++)
-		cit++;
-	
-	for (ft::map<char, int>::iterator it = cit; it != mymap.end(); it--)
-		std::cout << "[" << it->first << "] : " << it->second << "\n";
+	// ft::map<char, int> const const_map(mymap);
 
-	for (ft::map<char, int>::reverse_iterator rit = mymap.rbegin(); rit != mymap.rend(); rit++)
-	std::cout << "[" << rit->first << "] : " << rit->second << "\n";
+	ft::map<char, int>::iterator it = mymap.begin();
+	ft::map<char, int>::btree_type *node = it.getNode();
+	std::cout << "value : " << node->value->first << "\n";
 
-	ft::map<char, int> mysupermap;
-	// ft::pair<char, int> pa('a', 100);
-	mysupermap.insert(ft::pair<char, int>('e', 100));
-	for (ft::map<char, int>::iterator it = mysupermap.begin(); it != mysupermap.end(); it++)
-		std::cout << "[" << it->first << "] : " << it->second << "\n";
-	mysupermap.insert(ft::pair<char, int>('c', 200));
-	mysupermap.insert(ft::pair<char, int>('b', 400));
-	mysupermap.insert(ft::pair<char, int>('b', 600));
-	for (ft::map<char, int>::iterator it = mysupermap.begin(); it != mysupermap.end(); it++)
-		std::cout << "[" << it->first << "] : " << it->second << "\n";
+	ft::map<char, int>::btree_type const *const_node = it.getNode();
+	std::cout << "value : " << const_node->value->first << "\n";
+	ft::map<char, int>::iterator cit(mymap.begin());
+	std::cout << "value : " << cit->first << "\n";
 
 	return 0;
 }

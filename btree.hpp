@@ -11,9 +11,10 @@ namespace ft{
 
 		btree() : value(0), left(0), right(0), parent(0) {}
 		btree(value_type *x) : value(x), left(0), right(0), parent(0) {}
+		btree(const btree &x) : value(x.value), left(x.left), right(x.right), parent(x.parent) {}
 
 		operator btree<const T>(){
-			return(btree<const T>(value));
+			return(btree<const T>(value, left, right, parent));
 		}
 
 		value_type	*value;

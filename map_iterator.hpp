@@ -22,6 +22,10 @@ namespace ft {
 		map_iterator(const iterator &x) { *this = x; }
 		~map_iterator() {}
 
+		operator map_iterator<const T>(){
+			return (map_iterator<const T>(_node));
+		}
+
 		iterator &operator=(const iterator &x)
 		{
 			_node = x._node;

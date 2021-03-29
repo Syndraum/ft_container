@@ -33,6 +33,7 @@ namespace ft {
 		typedef std::ptrdiff_t							difference_type;
 		typedef std::size_t								size_type;
 		typedef ft::btree<value_type>					btree_type;
+		typedef ft::btree<const value_type>				const_btree_type;
 
 		struct value_compare : public ft::binary_function< value_type, value_type, bool>
 		{
@@ -58,23 +59,40 @@ namespace ft {
 			clear();
 		}
 
+		map& operator= (const map& x){
+			if (this != &x) {
+				this->clear();
+				this->_comp = x._comp;
+				this->_allocator = x._allocator;
+				btree_type cusor = x._root;
+				
+				// const_iterator it;
+				// for(it = x.begin(); it != x.end(); it++)
+				// 	insert(*it);
+				// this->insert(x.begin(), x.end());
+			}
+			return (*this);
+		}
+
 		iterator begin() {
 			if (empty())
 				return(end());
 			return (iterator(_first()));
 		}
 
-		// const_iterator begin() const {
-
-		// }
+		const_iterator begin() const {
+			if (empty())
+				return(end());
+			return (const_iterator(reinterpret_cast<const_btree_type *>(_first())));
+		}
 
 		iterator end() {
 			return (iterator(_root));
 		}
 
-		// const_iterator end() const {
-
-		// }
+		const_iterator end() const {
+			return (const_iterator(reinterpret_cast<const_btree_type *>(_root)));
+		}
 
 		reverse_iterator rbegin() {
 			return (reverse_iterator(_root));
@@ -250,6 +268,8 @@ namespace ft {
 		}
 
 		void clear() {
+			if (this->empty())
+				return ;
 			_apply_suffix(&map::delete_node, _root.left);
 			_root.left = 0;
 			_root.right = 0;

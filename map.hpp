@@ -223,6 +223,23 @@ namespace ft {
 			_apply(_print_node, _root.left);
 		}
 
+		
+		iterator lower_bound (const key_type& k) {
+			iterator it = this->begin();
+
+			while (it != this->end() && this->key_comp()(it->first, k))
+				it++;
+			return (it);
+		}
+
+		iterator upper_bound (const key_type& k) {
+			iterator it = this->begin();
+
+			while (it != this->end() && !this->key_comp()(k, it->first))
+				it++;
+			return (it);
+		}
+
 	private:
 		btree_type		_root;
 		size_type		_size;

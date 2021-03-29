@@ -64,10 +64,6 @@ namespace ft {
 				this->clear();
 				this->_comp = x._comp;
 				this->_allocator = x._allocator;
-				
-				// const_iterator it ;
-				// for(it = x.begin(); it != x.end(); it++)
-				// 	insert(*it);
 				this->insert(x.begin(), x.end());
 			}
 			return (*this);

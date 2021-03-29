@@ -13,8 +13,8 @@ int main ()
   mymap['d']=200;
 
   it = mymap.find('b');
-//   if (it != mymap.end())
-//     mymap.erase (it);
+  if (it != mymap.end())
+    mymap.erase (it);
 
   // print content:
   std::cout << "elements in mymap:" << '\n';

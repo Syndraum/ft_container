@@ -99,7 +99,7 @@ namespace ft{
 
 		template <typename U, typename V>
 		operator pair<U, V>(){
-			return (pair<const Key, T>(
+			return (pair<U, V>(
 				static_cast<U>(first),
 				static_cast<V>(second)));
 		}

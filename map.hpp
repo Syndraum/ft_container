@@ -39,10 +39,10 @@ namespace ft {
 		{
 			protected:
 				Compare _comp;
-				value_compare(Compare comp) : _comp(comp) {}
 			public:
+				value_compare(Compare comp) : _comp(comp) {}
 				bool operator() (const value_type& x, const value_type& y) const {
-					return comp(x.first, y.first);
+					return _comp(x.first, y.first);
 				}
 		};
 

@@ -438,6 +438,45 @@ namespace ft {
 		}
 	};
 
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator==(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
+		typename map<Key, T, Compare>::const_iterator rit = rhs.begin();
+
+		if (lhs.size() != rhs.size())
+			return (false);
+		for (typename ft::map<Key, T, Compare>::const_iterator lit = lhs.begin(); lit != lhs.end(); lit++){
+			if (*lit != *rit)
+				return (false);
+			rit++;
+		}
+		return (true);
+	}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator!=(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
+		return (!(lhs == rhs));
+	}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator<(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
+		return(ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator>(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
+		return (rhs < lhs);
+	}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator>=(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
+		return (!(lhs < rhs));
+	}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator<=(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
+		return (!(rhs < lhs));
+	}
+
 	template <class T, class Alloc>
 	void swap (map<T,Alloc>& x, map<T,Alloc>& y) {
 		x.swap(y);

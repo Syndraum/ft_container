@@ -104,6 +104,21 @@ namespace ft{
 				static_cast<V>(second)));
 		}
 	};
+
+	template<class Key, class T>
+	bool	operator==(const ft::pair<Key, T>& lhs, const ft::pair<Key, T>& rhs){
+		return (lhs.first == rhs.first && lhs.second == rhs.second);
+	}
+
+	template<class Key, class T>
+	bool	operator!=(const ft::pair<Key, T>& lhs, const ft::pair<Key, T>& rhs){
+		return (!(lhs == rhs));
+	}
+
+	template<class Key, class T>
+	bool	operator<(const ft::pair<Key, T>& lhs, const ft::pair<Key, T>& rhs){
+		return lhs.first < rhs.first || (lhs.first == rhs.first && lhs.second < rhs.second);
+	}
 	
 }
 

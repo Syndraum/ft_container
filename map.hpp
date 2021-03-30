@@ -437,6 +437,11 @@ namespace ft {
 			return(*_root);
 		}
 	};
+
+	template <class T, class Alloc>
+	void swap (map<T,Alloc>& x, map<T,Alloc>& y) {
+		x.swap(y);
+	}
 }
 
 #endif

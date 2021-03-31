@@ -14,5 +14,7 @@ int main ()
   }
   else std::cout << "The map could not hold 1000 elements.\n";
 
+  std::cout << "max size : " << mymap.max_size() << std::endl;
+
   return 0;
 }

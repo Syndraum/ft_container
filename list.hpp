@@ -175,7 +175,8 @@ namespace ft {
 			}
 
 			size_type max_size() const {
-				return (_allocator.max_size());
+				return(((pow(2, ENVIRONMENT) - 1.0 ) / (sizeof(value_type) + sizeof(ft::node<T>))));
+				// return (_allocator.max_size());
 			}
 
 			reference front(){

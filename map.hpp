@@ -119,7 +119,7 @@ namespace ft {
 		}
 
 		size_type max_size() const {
-			return (_allocator.max_size());
+			return(((pow(2, ENVIRONMENT) - 1.0 ) / (sizeof(value_type) + sizeof(ft::btree<value_type>))));
 		}
 
 		mapped_type& operator[] (const key_type& k) {

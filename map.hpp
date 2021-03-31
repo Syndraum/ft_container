@@ -1,7 +1,6 @@
 #ifndef MAP_HPP
 # define MAP_HPP
 
-#include "iterator.hpp"
 #include "map_iterator.hpp"
 #include "reverse_iterator.hpp"
 #include "utils.hpp"

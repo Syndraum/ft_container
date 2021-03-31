@@ -1,8 +1,8 @@
 #ifndef LIST_ITERATOR_HPP
 # define LIST_ITERATOR_HPP
 
+#include <iterator>
 #include <cstddef>
-#include "iterator.hpp"
 #include "utils.hpp"
 #include "node.hpp"
 
@@ -16,7 +16,7 @@ namespace ft
 		typedef std::ptrdiff_t								difference_type;
 		typedef T*											pointer;
 		typedef T&											reference;
-		typedef ft::bidirectional_iterator_tag				iterator_category;
+		typedef std::bidirectional_iterator_tag				iterator_category;
 		typedef list_iterator								iterator;
 		typedef ft::node<T>									node;
 

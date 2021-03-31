@@ -1,8 +1,8 @@
 #ifndef VECTOR_ITERATOR_HPP
 #define VECTOR_ITERATOR_HPP
 
+#include <iterator>
 #include <cstddef>
-#include "iterator.hpp"
 #include "utils.hpp"
 
 namespace ft
@@ -15,7 +15,7 @@ namespace ft
 		typedef std::ptrdiff_t								difference_type;
 		typedef T*											pointer;
 		typedef T&											reference;
-		typedef ft::random_access_iterator_tag				iterator_category;
+		typedef std::random_access_iterator_tag				iterator_category;
 		typedef vector_iterator								iterator;
 
 		vector_iterator() : _p(0) {}

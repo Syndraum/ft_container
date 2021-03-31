@@ -14,8 +14,6 @@ VERBOSE=1
 LEAKS=1
 newline=1
 
-
-
 #			print_message(message, type)
 function	print_message {
 	type=$2
@@ -84,7 +82,7 @@ function	container_test {
 	done
 	if [ "$2" != "" ];then
 		if [ $LEAKS -eq 1 ];then
-		valgrind --leak-check=full ./ft.out
+		valgrind --leak-check=full $DIRSCRIPT/ft.out
 		fi
 	fi
 }

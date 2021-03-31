@@ -23,7 +23,7 @@ int main(int argc, char * argv[], char * envp[]){
 	if (pid == -1)
 		return(EXIT_FAILURE);
 	else if (pid == 0)
-		execve("./tests/test.sh", argv + 1, envp);
+		execve("./tests/test.sh", argv, envp);
 	else
 		waitpid(pid, &status, 0);
 	return 0;

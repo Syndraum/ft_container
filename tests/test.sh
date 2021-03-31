@@ -75,7 +75,7 @@ function	unit_test {
 
 #			container_test(name, n=none)
 function	container_test {
-	print_message $1
+	print_message $1 $warning
 	for file in $DIRSCRIPT/$1/$2*
 	do
 		unit_test $file

@@ -175,8 +175,9 @@ namespace ft {
 			}
 
 			size_type max_size() const {
-				return(((pow(2, ENVIRONMENT) - 1.0 ) / (sizeof(value_type) + sizeof(ft::node<T>))));
-				// return (_allocator.max_size());
+				if (is_integral<value_type>::value)
+					return(((pow(2, ENVIRONMENT) - 1.0 ) / (sizeof(value_type) + sizeof(ft::node<value_type>) - 4)));
+				return(((pow(2, ENVIRONMENT) - 1.0 ) / (sizeof(value_type) + sizeof(ft::node<value_type>) - 8)));
 			}
 
 			reference front(){

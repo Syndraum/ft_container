@@ -41,17 +41,31 @@ namespace ft {
 				return (x < y);
 			}
 
+			node *create_node(const value_type &x){
+				node *new_node = new node();
+				new_node->data = _allocator.allocate();
+				_allocator.construct(new_node->data, value_type(x));
+				return (new_node);
+			}
+
+			void	destroy_node(node *node){
+				_allocator.destroy(node->data);
+			}
+
+			void	delete_node(node *node){
+				destroy_node(node);
+				_allocator.deallocate(node->data);
+				delete(node);
+			}
+
 			template<typename Compare>
 			node * partition(node *start, node *end, Compare comp){
-				T		cmp = end->data;
+				T		cmp = *(end->data);
 				node	*i = end->previous;
-				
-				while (comp(cmp, i->data) && !(i->previous == 0))
-					i = i->previous;
 
 				for (node *j = start; j != i->next; j = j->next)
 				{
-					if (comp(cmp, j->data)){
+					if (comp(cmp, *(j->data))){
 						ft::swap(j->data, i->data);
 						i = i->previous;
 						j = j->previous;
@@ -76,11 +90,11 @@ namespace ft {
 			}
 
 		public:
-			list (const allocator_type& alloc = allocator_type()) : _front(node(T())), _back(node(T())), _size(0), _allocator(alloc) {
+			list (const allocator_type& alloc = allocator_type()) : _front(node()), _back(node()), _size(0), _allocator(alloc) {
 				_front.next = &_back;
 				_back.previous = &_front;
 			}
-			list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _front(node(T())), _back(node(T())), _size(0), _allocator(alloc) {
+			list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _front(node()), _back(node()), _size(0), _allocator(alloc) {
 				_front.next = &_back;
 				_back.previous = &_front;
 				for (size_type i = 0; i < n; i++)
@@ -91,13 +105,13 @@ namespace ft {
 			list (
 				InputIterator first,
 				typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last,
-				const allocator_type& alloc = allocator_type()) : _front(node(T())), _back(node(T())), _size(0), _allocator(alloc) {
+				const allocator_type& alloc = allocator_type()) : _front(node()), _back(node()), _size(0), _allocator(alloc) {
 				_front.next = &_back;
 				_back.previous = &_front;
 				for (InputIterator it = first; it != last; it++)
 					push_back(*it);
 			}
-			list(const list & x) : _front(node(T())), _back(node(T())), _size(0), _allocator(x._allocator) {
+			list(const list & x) : _front(node()), _back(node()), _size(0), _allocator(x._allocator) {
 				_front.next = &_back;
 				_back.previous = &_front;
 				*this = x;
@@ -165,19 +179,19 @@ namespace ft {
 			}
 
 			reference front(){
-				return (_front.next->data);
+				return (*(_front.next->data));
 			}
 
 			const_reference front() const{
-				return (_front.next->data);
+				return (*(_front.next->data));
 			}
 
 			reference back(){
-				return (_back.previous->data);
+				return (*(_back.previous->data));
 			}
 
 			const_reference back() const{
-				return (_back.previous->data);
+				return (*(_back.previous->data));
 			}
 
 			template <class InputIterator>
@@ -196,7 +210,7 @@ namespace ft {
 			}
 
 			void push_front (const value_type& val){
-				list::node * elm = new node(val);
+				node *elm = create_node(val);
 
 				elm->next = _front.next;
 				elm->previous = &_front;
@@ -207,14 +221,14 @@ namespace ft {
 
 			void pop_front () {
 				node * next_node = _front.next->next;
-				delete _front.next;
+				delete_node(_front.next);
 				_front.next = next_node;
 				next_node->previous = &_front;
 				_size--;
 			}
 
 			void push_back (const value_type& val) {
-				list::node * elm = new node(val);
+				node *elm = create_node(val);
 
 				elm->previous = _back.previous;
 				elm->next = &_back;
@@ -225,7 +239,8 @@ namespace ft {
 
 			void pop_back() {
 				node * previous_node = _back.previous->previous;
-				delete _back.previous;
+				// delete _back.previous;
+				delete_node(_back.previous);
 				_back.previous = previous_node;
 				previous_node->next = &_back;
 				_size--;
@@ -233,7 +248,7 @@ namespace ft {
 
 			iterator insert (iterator position, const value_type& val) {
 				iterator cursor;
-				node * elm = new node(val);
+				node *elm = create_node(val);
 
 				for (cursor = begin(); cursor != position; cursor++) { continue; }
 				elm->previous = cursor.getNode()->previous;
@@ -250,7 +265,7 @@ namespace ft {
 
 				for (cursor = begin(); cursor != position; cursor++) { continue; }
 				for (size_type i = 0; i < n; i++){
-					elm = new node(val);
+					elm = create_node(val);
 					elm->previous = cursor.getNode()->previous;
 					elm->next = cursor.getNode();
 					elm->next->previous = elm;
@@ -270,7 +285,7 @@ namespace ft {
 
 				for (cursor = begin(); cursor != position; cursor++) { continue; }
 				for (InputIterator it = first; it != last; it++){
-					elm = new node(*it);
+					elm = create_node(*it);
 					elm->previous = cursor.getNode()->previous;
 					elm->next = cursor.getNode();
 					elm->next->previous = elm;
@@ -288,7 +303,7 @@ namespace ft {
 				elm->previous->next = elm->next;
 				elm->next->previous = elm->previous;
 				cursor = iterator(elm->next);
-				delete elm;
+				delete_node(elm);
 				_size--;
 				return (cursor);
 			}
@@ -305,7 +320,7 @@ namespace ft {
 					elm->previous->next = elm->next;
 					elm->next->previous = elm->previous;
 					cursor++;
-					delete elm;
+					delete_node(elm);
 				}
 				_size -= diff;
 				return (cursor);

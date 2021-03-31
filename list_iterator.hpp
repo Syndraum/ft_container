@@ -47,8 +47,8 @@ namespace ft
 			return list_iterator<const T>(new_node);
 		}
 
-		value_type &operator*() const { return (_node->data); }
-		value_type *operator->() const { return (&_node->data); }
+		value_type &operator*() const { return (*(_node->data)); }
+		value_type *operator->() const { return (_node->data); }
 
 		iterator &operator++()
 		{

@@ -46,21 +46,25 @@ function	print_success {
 
 #			unit_test(path)
 function	unit_test {
-	IN=$1
+	if [ "$DIRSCRIPT" != "." ];then
+		IN=$(echo $1 | sed "s|$DIRSCRIPT||g")
+	else
+		IN=$1
+	fi
 	container_name=$(echo "$IN" | cut -d/ -f 2)
 	test_name=$(echo "$IN" | cut -d/ -f 3 | cut -d. -f 1)
-	STD_LOG=./log/"$container_name"_"$test_name"_std
-	FT_LOG=./log/"$container_name"_"$test_name"_ft
+	STD_LOG=$DIRSCRIPT/log/"$container_name"_"$test_name"_std
+	FT_LOG=$DIRSCRIPT/log/"$container_name"_"$test_name"_ft
 
 	newline=0
 	if [ $VERBOSE -eq 1 ];then
 		print_message $test_name" : "
 		newline=1
 	fi;
-	clang++ -Werror -Wextra -Wall -std=c++98 -I./includes $file -D NAMESPACE=std -o std.out &>> $STD_LOG || { print_warning "complilation with standar namespace fail, skip test " ; return 1; }
-	./std.out &>> $STD_LOG || { print_warning "exec with standar namespace fail, skip test "; return 1; }
-	clang++ -Werror -Wextra -Wall -g -std=c++98 -I ../ -I./includes -include ./includes/ft_utils.hpp $file -D NAMESPACE=ft -o ft.out &>> $FT_LOG || { print_error "compilation_fail " ; return 1; }
-	./ft.out &>> $FT_LOG || { print_error "SEGFAULT "; return 1; }
+	clang++ -Werror -Wextra -Wall -std=c++98 -I$DIRSCRIPT/includes $file -D NAMESPACE=std -o $DIRSCRIPT/std.out &>> $STD_LOG || { print_warning "complilation with standar namespace fail, skip test " ; return 1; }
+	$DIRSCRIPT/std.out &>> $STD_LOG || { print_warning "exec with standar namespace fail, skip test "; return 1; }
+	clang++ -Werror -Wextra -Wall -g -std=c++98 -I $DIRSCRIPT/../ -I$DIRSCRIPT/includes -include $DIRSCRIPT/includes/ft_utils.hpp $file -D NAMESPACE=ft -o $DIRSCRIPT/ft.out &>> $FT_LOG || { print_error "compilation_fail " ; return 1; }
+	$DIRSCRIPT/ft.out &>> $FT_LOG || { print_error "SEGFAULT "; return 1; }
 	diff $STD_LOG $FT_LOG &>> $FT_LOG
 	if [ $? -eq 0 ];then
 		print_success "[OK] "
@@ -74,7 +78,7 @@ function	unit_test {
 #			container_test(name, n=none)
 function	container_test {
 	print_message $1
-	for file in ./$1/$2*
+	for file in $DIRSCRIPT/$1/$2*
 	do
 		unit_test $file
 	done
@@ -85,13 +89,23 @@ function	container_test {
 	fi
 }
 
-containers=(vector)
+containers=(vector list map)
 
-rm -rf log
-mkdir -p log
+if [ -n $BASH_SOURCE -a ! "$BASH_SOURCE" = "" ];then
+	DIRSCRIPT=$(dirname -- "$BASH_SOURCE") > /dev/null
+	SCRIPTPATH=$BASH_SOURCE
+else
+	DIRSCRIPT=$(dirname -- "$0") > /dev/null
+	SCRIPTPATH=$0
+fi
+
+rm -rf $DIRSCRIPT/log
+mkdir -p $DIRSCRIPT/log
 
 if [ -z $1 ];then
-	container_test vector
+	for container in ${containers[@]}; do
+		container_test $container
+	done
 else
 	container_test $1 $2
 fi

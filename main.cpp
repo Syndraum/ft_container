@@ -1,6 +1,7 @@
 #include "list.hpp"
 #include "vector.hpp"
 #include "map.hpp"
+#include "stack.hpp"
 #include <iostream>
 #include <string>
 
@@ -31,9 +32,12 @@ int main(){
 		std::cout << *it << " ";
 	std::cout << '\n';
 
-	for (ft::vector<int>::const_reverse_iterator cit = mylist.rbegin(); cit != mylist.rend(); cit++)
-		std::cout << *cit << " ";
-	std::cout << '\n';
+	ft::stack<int> mystack;
+	std::cout << "size : " << mystack.size() << "\n";
+
+	// for (ft::vector<int>::const_reverse_iterator cit = mylist.rbegin(); cit != mylist.rend(); cit++)
+	// 	std::cout << *cit << " ";
+	// std::cout << '\n';
 
 	// ft::map<char, int> const const_map(mymap);
 

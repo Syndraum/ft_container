@@ -161,6 +161,8 @@ namespace ft {
 			iterator last = &_root;
 			iterator tmp;
 
+			if (position == end() && this->size())
+				position = iterator(position.getNode()->left);
 			while (position != this->end() && tmp != position)
 			{
 				tmp = last;

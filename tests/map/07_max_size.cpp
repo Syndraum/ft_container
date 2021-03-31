@@ -6,6 +6,7 @@ int main ()
 {
   int i;
   map<int,int> mymap;
+  std::map<int,int> cmp;
 
   if (mymap.max_size()>1000)
   {
@@ -14,7 +15,11 @@ int main ()
   }
   else std::cout << "The map could not hold 1000 elements.\n";
 
-  std::cout << "max size : " << mymap.max_size() << std::endl;
+  if (mymap.max_size() > (cmp.max_size() - 1000) && mymap.max_size() < (cmp.max_size() + 1000))
+    std::cout << "max size : OK" << std::endl;
+  else
+    std::cout << "max size : KO" << std::endl;
+  
 
   return 0;
 }

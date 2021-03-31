@@ -20,7 +20,7 @@ int main ()
 
   --it;       // it points now to the second 20            ^
 
-  std::vector<int> myvector (2,30);
+  vector<int> myvector (2,30);
   mylist.insert (it,myvector.begin(),myvector.end());
                                                 // 1 10 20 30 30 20 2 3 4 5
                                                 //               ^

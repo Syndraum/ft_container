@@ -6,6 +6,8 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <stack>
+#include <queue>
 #include <utility>
 #include <algorithm>
 

@@ -5,5 +5,7 @@
 #include "vector.hpp"
 #include "list.hpp"
 #include "map.hpp"
+#include "stack.hpp"
+#include "queue.hpp"
 
 #endif

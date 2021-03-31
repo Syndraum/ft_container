@@ -87,7 +87,7 @@ function	container_test {
 	fi
 }
 
-containers=(vector list map)
+containers=(vector list map stack queue)
 
 if [ -n $BASH_SOURCE -a ! "$BASH_SOURCE" = "" ];then
 	DIRSCRIPT=$(dirname -- "$BASH_SOURCE") > /dev/null

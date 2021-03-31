@@ -49,10 +49,10 @@ int main() {
 	print(l2);
 	l.merge(l2);
 	print(l);
-	// l.unique();
-	// print(l);
-	// l.reverse();
-	// print(l);
+	l.unique();
+	print(l);
+	l.reverse();
+	print(l);
 	std::cout << std::endl;
 
 	// list<int> copyList;

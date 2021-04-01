@@ -107,7 +107,7 @@ if [ -z $1 ];then
 	done
 else
 	for container in ${containers[@]}; do
-		if [ "$container" == "$1" ];then
+		if [ "$container" = "$1" ];then
 			container_test $1 $2
 			FOUND=1
 		fi

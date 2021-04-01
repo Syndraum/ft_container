@@ -13,6 +13,7 @@ DEBUG=0
 VERBOSE=1
 LEAKS=1
 newline=1
+FOUND=0
 
 #			print_message(message, type)
 function	print_message {
@@ -105,6 +106,14 @@ if [ -z $1 ];then
 		container_test $container
 	done
 else
-	container_test $1 $2
+	for container in ${containers[@]}; do
+		if [ "$container" == "$1" ];then
+			container_test $1 $2
+			FOUND=1
+		fi
+	done
+	if [ $FOUND -eq 0 ];then
+		print_message "Container name '$1' does not match" $error
+	fi
 fi
 

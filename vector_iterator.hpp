@@ -21,6 +21,7 @@ namespace ft
 
 		vector_iterator() : _p(0) {}
 		vector_iterator(value_type &x) : _p(&x) {}
+		vector_iterator(value_type *x) : _p(x) {}
 		vector_iterator(const iterator &x) { *this = x; }
 		virtual ~vector_iterator(void) {}
 

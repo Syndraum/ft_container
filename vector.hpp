@@ -248,7 +248,12 @@ namespace ft{
 		}
 
 		const_reference at (size_type n) const {
-			return (at(n));
+			std::stringstream tmp;
+			if (n >= size()){
+				tmp << "vector::_M_range_check: __n (which is " << n << ") >= this->size() (which is " << size() << ")";
+				throw std::out_of_range(tmp.str());
+			}
+			return (_data[n]);
 		}
 
 		reference front() {

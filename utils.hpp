@@ -33,10 +33,10 @@ namespace ft{
 	template<typename T>
 		struct enable_if<true, T> { typedef T type; };
 
-	template<typename InputIterator>
-	std::ptrdiff_t distance (InputIterator first, InputIterator last){
+	template<typename InputIterator1, typename InputIterator2>
+	std::ptrdiff_t distance (InputIterator1 first, InputIterator2 last){
 		std::ptrdiff_t diff = 0;
-		for (InputIterator it = first; it != last; it++)
+		for (InputIterator1 it = first; it != last; it++)
 			diff++;
 		return (diff);
 	}

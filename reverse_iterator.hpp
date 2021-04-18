@@ -29,7 +29,7 @@ namespace ft {
 		}
 
 		reverse_iterator operator+ (difference_type n) const {
-			return ( _base_iterator - n);
+			return ( reverse_iterator(_base_iterator - n));
 		}
 
 		reverse_iterator& operator++() {
@@ -49,7 +49,7 @@ namespace ft {
 		}
 
 		reverse_iterator operator- (difference_type n) const {
-			return ( _base_iterator + n);
+			return ( reverse_iterator(_base_iterator + n));
 		}
 
 		reverse_iterator& operator--() {
@@ -133,10 +133,10 @@ namespace ft {
 	}
 
 	template <class Iterator>
-	reverse_iterator<Iterator> operator- (
-		typename reverse_iterator<Iterator>::difference_type n,
-		const reverse_iterator<Iterator>& rev_it){
-			return (rev_it - n);
+	typename reverse_iterator<Iterator>::difference_type operator- (
+		const reverse_iterator<Iterator>& lhs,
+		const reverse_iterator<Iterator>& rhs){
+			return(ft::distance(lhs.base(), rhs.base()));
 	}
 }
 

@@ -364,7 +364,7 @@ namespace ft{
 		}
 
 		iterator erase (iterator first, iterator last) {
-			iterator next = first + 1;
+			iterator next = first;
 			difference_type diff = last - first;
 			difference_type to_first = first - begin();
 			difference_type to_end = end() - (first + diff);

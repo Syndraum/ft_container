@@ -17,6 +17,7 @@ namespace ft
 		typedef T&											reference;
 		typedef std::random_access_iterator_tag				iterator_category;
 		typedef vector_iterator								iterator;
+		typedef vector_iterator<const T>					const_iterator;
 
 		vector_iterator() : _p(0) {}
 		vector_iterator(value_type &x) : _p(&x) {}
@@ -27,16 +28,6 @@ namespace ft
 		{
 			_p = x._p;
 			return (*this);
-		}
-
-		friend bool operator==(const iterator &x, const iterator &y)
-		{
-			return (x._p == y._p);
-		}
-
-		friend bool operator!=(const iterator &x, const iterator &y)
-		{
-			return (!(x == y));
 		}
 
 		operator vector_iterator<const T>() {
@@ -86,22 +77,6 @@ namespace ft
 		{
 			return (_p - it._p);
 		}
-		friend bool operator<(const iterator &x, const iterator &y) 
-		{
-			return (x._p < y._p);
-		}
-		friend bool operator>(const iterator &x, const iterator &y) 
-		{
-			return (x._p > y._p);
-		}
-		friend bool operator<=(const iterator &x, const iterator &y) 
-		{
-			return (!(x > y));
-		}
-		friend bool operator>=(const iterator &x, const iterator &y) 
-		{
-			return (!(x < y));
-		}
 		iterator &operator+=(const int &n)
 		{
 			_p += n;
@@ -116,6 +91,39 @@ namespace ft
 	protected:
 		value_type *_p;
 	};
+
+	template < typename T, typename U >
+	bool operator==(const vector_iterator<T> &x, const vector_iterator<U> &y)
+	{
+		return (&x[0] == &y[0]);
+	}
+
+	template < typename T, typename U >
+	bool operator!=(const vector_iterator<T> &x, const vector_iterator<U> &y)
+	{
+		return (!(x == y));
+	}
+
+	template < typename T, typename U >
+	bool operator<(const vector_iterator<T> &x, const vector_iterator<U> &y) 
+	{
+		return (&x[0] < &y[0]);
+	}
+	template < typename T, typename U >
+	bool operator>(const vector_iterator<T> &x, const vector_iterator<U> &y) 
+	{
+		return (&x[0] > &y[0]);
+	}
+	template < typename T, typename U >
+	bool operator<=(const vector_iterator<T> &x, const vector_iterator<U> &y) 
+	{
+		return (!(x > y));
+	}
+	template < typename T, typename U >
+	bool operator>=(const vector_iterator<T> &x, const vector_iterator<U> &y) 
+	{
+		return (!(x < y));
+	}
 }
 
 #endif

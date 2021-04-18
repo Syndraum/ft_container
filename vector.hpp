@@ -343,21 +343,18 @@ namespace ft{
 			InputIterator first,
 			typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last) {
 			size_type n = ft::distance(first, last);
+			size_type diff_to_start = ft::distance(this->begin(), position);
 			size_type diff_incert_end = ft::distance(position, end());
-			size_type i = 0;
-			size_type j = 0;
 
-			if (size() + n > capacity()) {
+			if (size() + n > capacity()) 
 				realloc(size() + n);
+			for (size_type i = 0; i < diff_incert_end; i++){
+				construct(size() - 1 + n - i, _data[size() - 1 - i]);
+				destroy(size() - 1 - i);
 			}
-			for (j = 0; j < diff_incert_end; j++)
-			{
-				construct(size() - 1 + n - j, _data[size() - 1 - j]);
-				destroy(size() - 1 - j);
-			}
-			for (InputIterator it = last - 1; it != first - 1; it--){
-				construct(size() - 1 + n - j - i, *it);
-				i++;
+			for (InputIterator it = first; it != last; it++){
+				construct(diff_to_start, *it);
+				diff_to_start++;
 			}
 			_size += n;
 		}

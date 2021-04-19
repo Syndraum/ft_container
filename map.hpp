@@ -360,6 +360,8 @@ namespace ft {
 
 			while (it != this->end() && (this->key_comp()(k, it->first) || this->key_comp()(it->first, k)))
 				it++;
+			if (it == this->end())
+				return (pair<iterator, iterator>(this->begin(), this->begin()))
 			iterator upper = it;
 			return (pair<iterator, iterator>(it, ++upper));
 		}
@@ -369,7 +371,9 @@ namespace ft {
 
 			while (it != this->end() && (this->key_comp()(k, it->first) || this->key_comp()(it->first, k)))
 				it++;
-			iterator upper = it;
+			if (it == this->end())
+				return (pair<const_iterator, const_iterator>(this->begin(), this->begin()))
+			const_iterator upper = it;
 			return (pair<const_iterator, const_iterator>(it, ++upper));
 		}
 

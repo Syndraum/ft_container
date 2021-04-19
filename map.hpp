@@ -56,6 +56,9 @@ namespace ft {
 			const allocator_type& alloc = allocator_type()) : _root(btree_type()), _size(0), _comp(comp), _allocator(alloc) {
 				insert(first, last);
 			}
+		map (const map &x) : _root(btree_type()), _size(0), _comp(x._comp), _allocator(x._allocator){
+			insert(x.begin(), x.end());
+		}
 		~map() {
 			clear();
 		}

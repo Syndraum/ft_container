@@ -74,10 +74,10 @@ namespace ft
 		{
 			return (iterator(*(_p - n)));
 		}
-		difference_type operator-(const iterator &it) const
-		{
-			return (_p - it._p);
-		}
+		// difference_type operator-(const iterator &it) const
+		// {
+		// 	return (_p - it._p);
+		// }
 		iterator &operator+=(const int &n)
 		{
 			_p += n;
@@ -92,6 +92,12 @@ namespace ft
 	protected:
 		value_type *_p;
 	};
+
+	template < typename T, typename U >
+	typename vector_iterator<T>::difference_type operator-(const vector_iterator<T> &x, const vector_iterator<U> &y)
+	{
+		return (&x[0] - &y[0]);
+	}
 
 	template < typename T, typename U >
 	bool operator==(const vector_iterator<T> &x, const vector_iterator<U> &y)

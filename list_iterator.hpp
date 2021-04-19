@@ -32,16 +32,6 @@ namespace ft
 			return (*this);
 		}
 
-		friend bool operator==(const iterator &x, const iterator &y)
-		{
-			return (x._node == y._node);
-		}
-
-		friend bool operator!=(const iterator &x, const iterator &y)
-		{
-			return (!(x == y));
-		}
-
 		operator list_iterator<const T>() {
 			ft::node<const T> * new_node = reinterpret_cast<ft::node<const T> *>(this->_node);
 			return list_iterator<const T>(new_node);
@@ -74,13 +64,23 @@ namespace ft
 			return (tmp);
 		}
 
-		node *	getNode(){
+		node *	getNode() const{
 			return (this->_node);
 		}
 
 	protected:
 		node *_node;
 	};
+
+	template < typename T, typename U >
+	bool operator==(const list_iterator<T> &x, const list_iterator<U> &y){
+		return (x.getNode()->data == y.getNode()->data);
+	}
+
+	template < typename T, typename U >
+	bool operator!=(const list_iterator<T> &x, const list_iterator<U> &y){
+		return (!(x == y));
+	}
 }
 
 #endif

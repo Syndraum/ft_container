@@ -358,10 +358,10 @@ namespace ft {
 		pair<iterator,iterator>	equal_range (const key_type& k) {
 			iterator it = this->begin();
 
-			while (it != this->end() && (this->key_comp()(k, it->first) || this->key_comp()(it->first, k)))
+			while (it != this->end() && (this->key_comp()(it->first, k)))
 				it++;
-			if (it == this->end())
-				return (pair<iterator, iterator>(this->begin(), this->begin()))
+			if (it == this->end() || this->key_comp()(k, it->first))
+				return (pair<iterator, iterator>(it, it));
 			iterator upper = it;
 			return (pair<iterator, iterator>(it, ++upper));
 		}
@@ -369,10 +369,10 @@ namespace ft {
 		pair<const_iterator,const_iterator> equal_range (const key_type& k) const {
 			const_iterator it = this->begin();
 
-			while (it != this->end() && (this->key_comp()(k, it->first) || this->key_comp()(it->first, k)))
+			while (it != this->end() && (this->key_comp()(it->first, k)))
 				it++;
-			if (it == this->end())
-				return (pair<const_iterator, const_iterator>(this->begin(), this->begin()))
+			if (it == this->end() || this->key_comp()(k, it->first))
+				return (pair<const_iterator, const_iterator>(it, it));
 			const_iterator upper = it;
 			return (pair<const_iterator, const_iterator>(it, ++upper));
 		}

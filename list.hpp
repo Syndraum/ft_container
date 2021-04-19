@@ -449,13 +449,15 @@ namespace ft {
 			void merge (list& x, Compare comp) {
 				iterator tmp = this->begin();
 
-				while (!x.empty() && tmp != this->end()) {
-					if (comp(*(x.begin()), *tmp))
-						this->splice(tmp, *this, x.begin());
-					else
-						tmp++;
+				if (&x != this){
+					while (!x.empty() && tmp != this->end()) {
+						if (comp(*(x.begin()), *tmp))
+							this->splice(tmp, x, x.begin());
+						else
+							tmp++;
+					}
+					this->splice(this->end(), x);
 				}
-				this->splice(this->end(), x);
 			}
 
 			void sort() {

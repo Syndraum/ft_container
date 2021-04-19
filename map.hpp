@@ -376,10 +376,6 @@ namespace ft {
 		key_compare		_comp;
 		allocator_type	_allocator;
 
-		static void	_print_node(btree_type &node) {
-			std::cout << node.value->first << " ==> " << node.value->second << "\n";
-		}
-
 		template < typename Function >
 		void	_apply(Function func, btree_type *node) {
 			if (node) {

@@ -151,25 +151,21 @@ namespace ft{
 
 		iterator begin() {
 			if (empty())
-				return (iterator());
+				return (end());
 			return (iterator(_data[0]));
 		}
 
 		const_iterator begin() const {
 			if (empty())
-				return (const_iterator());
+				return (end());
 			return (const_iterator(_data[0]));
 		}
 
 		iterator end() {
-			if (empty())
-				return (iterator());
 			return (iterator(_data[size()]));
 		}
 
 		const_iterator end() const {
-			if (empty())
-				return (const_iterator());
 			return (const_iterator(_data[size()]));
 		}
 

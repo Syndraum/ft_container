@@ -4,14 +4,14 @@
 #include <iostream>
 #include <stdexcept>
 #include <sstream>
+#include <memory>
 
 #include "utils.hpp"
 #include "vector_iterator.hpp"
-#include "allocator.hpp"
 #include "reverse_iterator.hpp"
 
 namespace ft{
-	template < typename T, typename Alloc = ft::allocator<T> >
+	template < typename T, typename Alloc = std::allocator<T> >
 	class vector
 	{
 	public:
@@ -53,8 +53,8 @@ namespace ft{
 		}
 
 		void	deallocate() {
-			_allocator.deallocate(_data);
-			// _allocator.deallocate(_data, _capacity);
+			// _allocator.deallocate(_data);
+			_allocator.deallocate(_data, _capacity);
 		}
 
 		void	construct(size_type index, const_reference val, pointer data) {
@@ -194,17 +194,12 @@ namespace ft{
 		}
 
 		void		resize (size_type n, value_type val = value_type()) {
-			if (n > this->_capacity)
-				realloc(n);
-			if (n < this->_size){
-				for (size_type i = n; i < _size; i++)
-					destroy(i);
-			}
-			else {
-				for (size_type i = _size; i < n; i++)
-					construct(i, val);
-			}
-			this->_size = n;
+			reserve(n);
+			for (size_type i = n; i < _size; i++)
+				_allocator.destroy(_data + i);
+			for (size_type i = _size; i < n; i++)
+				_allocator.construct(_data + i, val);
+			_size = n;
 		}
 
 		void		reserve (size_type n) {
@@ -212,7 +207,7 @@ namespace ft{
 				if (n > _capacity)
 					realloc(get_fit_capacity(n));
 			} catch (std::exception& e) {
-				throw;
+				throw std::length_error("reserve");
 			}
 		}
 

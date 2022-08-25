@@ -108,43 +108,32 @@ namespace ft{
 		vector(
 			size_type n,
 			const value_type &val = value_type(),
-			const allocator_type& alloc = allocator_type()) : _size(n), _capacity(get_fit_capacity(n)), _allocator(alloc), _data(_allocator.allocate(_capacity)) {
-			for (size_t i = 0; i < n; i++)
-				construct(i, val);
+			const allocator_type& alloc = allocator_type()) : _size(0), _capacity(get_fit_capacity(n)), _allocator(alloc), _data(_allocator.allocate(_capacity)) {
+			insert(begin(), n, val);
 		}
 		template <typename InputIterator>
 		vector (
 			InputIterator first,
 			typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last,
-			const allocator_type& alloc = allocator_type()) : _size(ft::distance< InputIterator >(first, last)), _capacity(get_fit_capacity(ft::distance< InputIterator >(first, last))), _allocator(alloc), _data(_allocator.allocate(_capacity)) {
-				int i = 0;
-
-				for (InputIterator it = first; it != last; it++) {
-					construct(i, *it);
-					i++;
-				}
+			const allocator_type& alloc = allocator_type()) : _size(0), _capacity(get_fit_capacity(ft::distance< InputIterator >(first, last))), _allocator(alloc), _data(_allocator.allocate(_capacity)) {
+				insert(begin(), first, last);
 			}
-		vector (const vector& x) : _size(0), _capacity(0), _allocator(x._allocator), _data(0) {
-			this->_size = x._size;
-			this->_capacity = x._capacity;
-			this->_data = allocate(_capacity);
-			for (size_t i = 0; i < this->_size; i++)
-				construct(i, x._data[i]);
+		vector (const vector& x) : _size(0), _capacity(x._capacity), _allocator(x._allocator), _data(_allocator.allocate(_capacity)) {
+			insert(begin(), x.begin(), x.end());
 		}
 		~vector(void) {
 			clear();
-			deallocate();
+			_allocator.deallocate(_data, _capacity);
 		}
 		vector& operator= (const vector& x) {
 			if (this != &x){
 				clear();
-				deallocate();
-				this->_size = x._size;
-				this->_capacity = x._capacity;
-				this->_allocator = x._allocator;
-				this->_data = allocate(_capacity);
-				for (size_t i = 0; i < this->_size; i++)
-					construct(i, x._data[i]);
+				_allocator.deallocate(_data, _capacity);
+				_size = 0;
+				_capacity = x._capacity;
+				_allocator = x._allocator;
+				_data = _allocator.allocate(_capacity);
+				insert(begin(), x.begin(), x.end());
 			}
 			return (*this);
 		}
@@ -264,31 +253,28 @@ namespace ft{
 		}
 
 		template <class InputIterator>
-		void assign (
-				InputIterator first, 
-				typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last) {
+		void assign ( 
+			InputIterator first, 
+			typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last
+		) {
 			size_type n = ft::distance(first, last);
-			if (n > _capacity)
-				realloc(n);
-			for (size_type i = 0; i < _size; i++)
-				destroy(i);
-			_size = n;
-			int i = 0;
-			for (InputIterator it = first; it != last; it++){
-				construct(i, *it);
+			size_type i = 0;
+
+			clear();
+			reserve(n);
+			for (; first != last; first++) {
+				_allocator.construct(_data + i, *first);
 				i++;
 			}
-
+			_size = n;
 		}
 
 		void assign (size_type n, const value_type& val) {
-			if (n > _capacity)
-				realloc(n);
-			for (size_type i = 0; i < _size; i++)
-				destroy(i);
-			_size = n;
+			clear();
+			reserve(n);
 			for (size_t i = 0; i < n; i++)
-				construct(i, val);
+				_allocator.construct(_data + i, val);
+			_size = n;
 		}
 
 		void push_back (const value_type& val) {
@@ -307,24 +293,25 @@ namespace ft{
 		}
 
 		iterator insert (iterator position, const value_type& val) {
-			difference_type	tmp = position - begin();
+			difference_type	idx_position = position - begin();
+
 			insert(position, 1, val);
-			return (begin() + tmp);
+			return (begin() + idx_position);
 		}
 
-		void insert (iterator position, size_type n, const value_type& val) {
-			size_type to_end = end() - position;
-			size_type j = 0;
+		void insert (iterator position, size_type n, const value_type& val)
+		{
+			size_type idx_position = position - begin();
 
-			if (size() + n > capacity())
-				realloc(size() + n);
-			for (j = 0; j < to_end; j++)
+			reserve(_size + n);
+			position = begin() + idx_position;
+			for (iterator ite = end() - 1; ite != position - 1; ite--)
 			{
-				construct(size() - 1 + n - j, _data[size() - 1 - j]);
-				destroy(size() - 1 - j);
+				_allocator.construct(&*(ite + n), *ite);
+				_allocator.destroy(&(*ite));
 			}
 			for (size_type i = 0; i < n; i++)
-				construct(size() - 1 + n - j - i, val);
+				_allocator.construct(&*(position + i), val);
 			_size += n;
 		}
 
@@ -332,20 +319,22 @@ namespace ft{
 		void insert (
 			iterator position,
 			InputIterator first,
-			typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last) {
+			typename enable_if <!is_integral <InputIterator>::value, InputIterator >::type last
+			)
+		{
 			size_type n = ft::distance(first, last);
-			size_type diff_to_start = ft::distance(this->begin(), position);
-			size_type diff_incert_end = ft::distance(position, end());
+			size_type idx_position = position - begin();;
 
-			if (size() + n > capacity()) 
-				realloc(size() + n);
-			for (size_type i = 0; i < diff_incert_end; i++){
-				construct(size() - 1 + n - i, _data[size() - 1 - i]);
-				destroy(size() - 1 - i);
+			reserve(_size + n);
+			position = begin() + idx_position;
+			for (iterator ite = end() - 1; ite != position - 1; ite--)
+			{
+				_allocator.construct(&*(ite + n), *ite);
+				_allocator.destroy(&(*ite));
 			}
 			for (InputIterator it = first; it != last; it++){
-				construct(diff_to_start, *it);
-				diff_to_start++;
+				_allocator.construct(&*(position), *it);
+				position++;
 			}
 			_size += n;
 		}
@@ -354,21 +343,21 @@ namespace ft{
 			return (erase(position, position + 1));
 		}
 
-		iterator erase (iterator first, iterator last) {
-			iterator next = first;
-			difference_type diff = last - first;
-			difference_type to_first = first - begin();
-			difference_type to_end = end() - (first + diff);
+		iterator erase (iterator first, iterator last)
+		{
+			size_type n = last - first;
+			size_type i = 0;
 
-			for (difference_type i = 0; i < diff; i++)
-				destroy(to_first + i);
-			for (difference_type i = 0; i < to_end; i++)
+			for (iterator it = first; it != last; it++)
+				_allocator.destroy(&(*it));
+			for (iterator it = last; it != end(); it++)
 			{
-				construct(to_first + i, _data[(to_first + i + diff)]);
-				destroy(to_first + i + diff);
+				_allocator.construct(&(*first) + i, *it);
+				_allocator.destroy(&(*it));
+				i++;
 			}
-			_size -= diff;
-			return (next);
+			_size -= n;
+			return (first);
 		}
 
 		void swap (vector& x) {

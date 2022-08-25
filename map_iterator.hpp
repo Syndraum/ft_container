@@ -15,8 +15,8 @@ namespace ft {
 		typedef T&											reference;
 		typedef std::bidirectional_iterator_tag				iterator_category;
 		typedef map_iterator								iterator;
-		typedef ft::btree<T>								btree;
-		typedef ft::btree<const T>							const_btree;
+		typedef ft::btree_node<T>							btree;
+		typedef ft::btree_node<const T>						const_btree;
 
 		map_iterator() : _node(0) {}
 		map_iterator(btree *x) : _node(x) {}

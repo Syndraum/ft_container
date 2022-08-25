@@ -2,6 +2,7 @@
 # define UTILS_HPP
 
 #include <cstddef>
+#include "iterator_traits.hpp"
 
 namespace ft{
 	template <typename T, T val>
@@ -33,13 +34,27 @@ namespace ft{
 	template<typename T>
 		struct enable_if<true, T> { typedef T type; };
 
-	template<typename InputIterator1, typename InputIterator2>
-	std::ptrdiff_t distance (InputIterator1 first, InputIterator2 last){
-		std::ptrdiff_t diff = 0;
-		for (InputIterator1 it = first; it != last; it++)
-			diff++;
-		return (diff);
+	template<typename InputIterator>
+	typename ft::iterator_traits<InputIterator>::difference_type
+    distance (InputIterator first, InputIterator last)
+	{
+		typename ft::iterator_traits<InputIterator>::difference_type n = 0;
+
+		// if (typenameft::iterator_traits<InputIterator>::iterator_category == std::random_access_iterator_tag)
+		// 	return (last - first);
+
+		// if (ft::iterator_traits<InputIterator>::iterator_category == std::random_access_iterator_tag)
+		for (; first != last; ++first)
+			++n;
+		return (n);
 	}
+	// template<typename InputIterator1, typename InputIterator2>
+	// std::ptrdiff_t distance (InputIterator1 first, InputIterator2 last){
+	// 	std::ptrdiff_t diff = 0;
+	// 	for (InputIterator1 it = first; it != last; it++)
+	// 		diff++;
+	// 	return (diff);
+	// }
 
 	template<typename T>
 	void swap(T & x, T &y) {
@@ -104,6 +119,12 @@ namespace ft{
 				static_cast<V>(second)));
 		}
 	};
+
+	template <class T1,class T2>
+	pair<T1,T2> make_pair (T1 x, T2 y)
+	{
+		return ( pair<T1,T2>(x,y) );
+	}
 
 	template<class Key, class T>
 	bool	operator==(const ft::pair<Key, T>& lhs, const ft::pair<Key, T>& rhs){
